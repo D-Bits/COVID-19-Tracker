@@ -34,3 +34,9 @@ Steps:
 - Create a `.env` file, and add the necessary environment variables.
 - Once you have created a db in Postgres, run the `CREATE TABLE` queries in the `tables.sql` file to build the db.
 - Run the `main.py` file (with `venv` activated) from a terminal to load data into the database.
+
+## Future Goals
+***
+
+- Automate updating the database with new data
+- Build web client for database
