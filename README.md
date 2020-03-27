@@ -40,3 +40,4 @@ Steps:
 
 - Automate updating the database with new data
 - Build web client for database
+- Implement data visualization
