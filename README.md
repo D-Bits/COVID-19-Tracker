@@ -2,7 +2,7 @@
 
 A database for tracker the novel corona virus, and ETL tools for it.
 
-## Goal
+## Project Goal
 ***
 
 Build a database to store global data for the SARS2-CoV-2 (Covid 19) pandemic
