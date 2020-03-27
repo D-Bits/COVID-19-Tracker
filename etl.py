@@ -13,7 +13,7 @@ def summary_etl():
         # Drop slug field from DataFrame
         cleaned_data = df.drop(['Slug'], axis=1)
         # Write DataFrame to summary table in db
-        cleaned_data.to_sql('summary', engine, index_label='id', if_exists='append', method='multi')
+        cleaned_data.to_sql('summary', engine, index_label='id', if_exists='replace', method='multi')
 
     # Throw exception if DataFrame is empty
     except EmptyDataError:
