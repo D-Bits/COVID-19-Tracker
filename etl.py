@@ -12,8 +12,6 @@ def summary_etl():
         df = pd.DataFrame(summary_json['Countries'])
         # Drop slug field from DataFrame
         cleaned_data = df.drop(['Slug'], axis=1)
-        # Dump cleaned API data to temp CSV file
-        cleaned_data.to_csv("data/summary.csv", sep=",")
         # Write DataFrame to summary table in db
         cleaned_data.to_sql('summary', engine, index_label='id', if_exists='append', method='multi')
 
