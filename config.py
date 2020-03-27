@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 from os import getenv
 from psycopg2 import connect
 from sqlalchemy import create_engine
+from requests import get
 
 
 # Enable load environment variables from .env file
@@ -23,4 +24,6 @@ engine = create_engine(f"postgresql+psycopg2://{db_user}:{db_pass}@{db_host}:{db
 """
 Define API endpoints
 """
-
+# All available data, for all countries 
+summary = get("https://api.covid19api.com/summary")
+summary_json = summary.json()
