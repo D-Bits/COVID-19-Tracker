@@ -3,6 +3,7 @@
 * the COVID 19 tracker database
 */
 
+-- Basic data organized, by country
 CREATE TABLE Summary
 (
 	id SERIAL,
@@ -15,3 +16,6 @@ CREATE TABLE Summary
 	"TotalRecovered" INT,
 	PRIMARY KEY(id)
 );
+
+
+
