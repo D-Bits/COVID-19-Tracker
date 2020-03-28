@@ -21,8 +21,3 @@ def summary_etl():
     # Throw exception if table does not exist in DB.
     except UndefinedTable:
         input("Error: Table does not exist in database! Press enter to exit.")
-    # Throw exception is data source cannot be found
-    except FileNotFoundError:
-        input('Error: Data source cannot be found! Press enter to exit.')
-
-
