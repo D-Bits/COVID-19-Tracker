@@ -6,6 +6,12 @@ SELECT "Country", "TotalDeaths", "NewDeaths"
 FROM public.summary
 ORDER BY "TotalDeaths" DESC, "NewDeaths" DESC;
 
+-- Show total global deaths
+CREATE VIEW total_global_deaths
+AS 
+SELECT sum("TotalDeaths") AS "Worldwide Deaths"
+FROM public.summary;
+
 -- Show the number of new cases in descending order
 CREATE VIEW new_cases_by_country
 AS 
