@@ -22,7 +22,7 @@ def data_etl(data_src, table, dropped_records):
         # Write DataFrame to summary table in db
         cleaned_data.to_sql(table, engine, index_label='id', if_exists='replace', method='multi')
         # Show the no. of records written to the db
-        print(f"{len(cleaned_data)} records successfully written to 'summary' table.")
+        print(f"{len(cleaned_data)} records successfully written to {table} table.")
 
     # Throw exception if DataFrame is empty
     except EmptyDataError:

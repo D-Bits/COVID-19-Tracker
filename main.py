@@ -1,5 +1,5 @@
 from config import summary_json, usa_json
-from etl import summary_etl, data_etl
+from etl import data_etl
 
 
 if __name__ == "__main__":
