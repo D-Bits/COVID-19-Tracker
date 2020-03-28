@@ -23,8 +23,10 @@ CREATE TABLE us_cases
 (
 	id SERIAL,
 	"Province" VARCHAR(255),
-	"Lat" INT,
-	"Lon" INT,
+	"Lat" DEC,
+	"Lon" DEC,
 	"Date" TIMESTAMP,
-	"Cases" INT
+	"Cases" INT,
+	"Staus" VARCHAR(255),
+	PRIMARY KEY(id)
 );
