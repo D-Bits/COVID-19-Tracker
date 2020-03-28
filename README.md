@@ -38,6 +38,6 @@ Steps:
 ## Future Goals
 ***
 
-- Automate updating the database with new data
+- Setup an automated pipeline to keep data up-to-date
 - Build web client for database
 - Implement data visualization
