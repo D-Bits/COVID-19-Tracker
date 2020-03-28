@@ -13,9 +13,16 @@ SELECT "Country", "NewConfirmed"
 FROM public.summary
 ORDER BY "NewConfirmed" DESC;
 
--- Show the number of recoveries by country
-CREATE VIEW recoveries_by_country
+-- Show the total number of recoveries by country
+CREATE VIEW total_recoveries_by_country
 AS 
 SELECT "Country", "TotalRecovered", "NewRecovered"
 FROM public.summary
 ORDER BY "TotalRecovered" DESC;
+
+-- Show the total number of recoveries by country
+CREATE VIEW new_recoveries_by_country
+AS 
+SELECT "Country", "NewRecovered", "TotalRecovered"
+FROM public.summary
+ORDER BY "NewRecovered" DESC;
