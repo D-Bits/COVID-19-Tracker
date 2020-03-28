@@ -5,7 +5,7 @@ from sqlalchemy import create_engine
 from requests import get
 
 
-# Enable load environment variables from .env file
+# Enable loading environment variables from .env file
 load_dotenv()
 
 # Load db credentials from environment vars
@@ -27,3 +27,7 @@ Define API endpoints
 # All available data, for all countries 
 summary = get("https://api.covid19api.com/summary")
 summary_json = summary.json()
+
+# All confirmed U.S. cases
+usa_cases = get("https://api.covid19api.com/country/us/status/confirmed/live")
+usa_json = usa_cases.json()
