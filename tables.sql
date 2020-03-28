@@ -8,6 +8,7 @@ CREATE TABLE summary
 (
 	id SERIAL,
 	"Country" VARCHAR(255) NOT NULL,
+	"Slug" VARCHAR(255),
 	"NewConfirmed" INT,
 	"TotalConfirmed" INT,
 	"NewDeaths" INT,
@@ -24,6 +25,6 @@ CREATE TABLE us_cases
 	"Province" VARCHAR(255),
 	"Lat" INT,
 	"Lon" INT,
-	"Date": TIMESTAMP,
-	"Cases" INT,
+	"Date" TIMESTAMP,
+	"Cases" INT
 );
