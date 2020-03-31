@@ -24,7 +24,7 @@ def all_cases():
 
 
 # Show the top 20 countries with the most cases
-def top_20():
+def top20_cases():
 
     try:
         df = pd.DataFrame(summary_json['Countries'])
@@ -32,6 +32,7 @@ def top_20():
         filtered_data = df.filter(items=['Country', 'NewConfirmed', 'TotalConfirmed'])
         # Drop redundant records obtained from API
         cleaned_data = filtered_data.drop([0, 93, 98, 165, 171, 199, 219, 221])
+        
         # Filter top countries
         return cleaned_data.nlargest(20, 'TotalConfirmed')
     
@@ -83,3 +84,4 @@ def cases_per_province(country_name, province_name):
     except HTTPError:
 
         return f"ERROR: HTTP error {HTTPError.errno}"
+

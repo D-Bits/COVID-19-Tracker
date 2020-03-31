@@ -5,15 +5,15 @@ A database for tracker the novel corona virus, and ETL tools for it.
 ## Project Goal
 ***
 
-Build a database to store global data for the SARS2-CoV-2 (Covid 19) pandemic, using [Postman's APIs](https://documenter.getpostman.com/view/10808728/SzS8rjbc?version=latest).
+Build a program, and a database, to analyze and store global data for the SARS2-CoV-2 (Covid 19) pandemic, using [Postman's APIs](https://documenter.getpostman.com/view/10808728/SzS8rjbc?version=latest).
 
 ## Core Tools
 ***
 
 - Python
-- PostgreSQL
 - Pandas
 - Requests
+- PostgreSQL
 
 ## Project Setup
 *** 
