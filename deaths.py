@@ -16,7 +16,7 @@ def global_deaths():
         # Drop redundant records obtained from API
         cleaned_data = filtered_data.drop([0, 93, 98, 165, 171, 199, 219, 221])
 
-        print(cleaned_data)
+        return cleaned_data
     
     except:
         return "An unknown error occured. We apologize for the inconvience."

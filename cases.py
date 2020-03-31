@@ -16,7 +16,7 @@ def all_cases():
         filtered_data = df.filter(items=['Country', 'NewConfirmed', 'TotalConfirmed'])
         # Drop redundant records obtained from API
         cleaned_data = filtered_data.drop([0, 93, 98, 165, 171, 199, 219, 221])
-
+    
         return cleaned_data
 
     except:
