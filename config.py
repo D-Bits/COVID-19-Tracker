@@ -19,7 +19,7 @@ db_port = getenv('DB_PORT')
 db_connection = connect(database=db_name, host=db_host, user=db_user, password=db_pass)
 
 # Create a SQLAlchemy engine to execute queries
-engine = create_engine(f"postgresql+psycopg2://{db_user}:{db_pass}@{db_host}:{db_port}/covid19")
+engine = create_engine(f"postgresql+psycopg2://{db_user}:{db_pass}@{db_host}:{db_port}/{db_name}")
 
 """
 Define API endpoints
