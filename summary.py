@@ -11,4 +11,7 @@ def all_cases():
     # Drop redundant records obtained from API
     cleaned_data = df.drop([0, 93, 98, 165, 171, 199, 219])
 
-    print(cleaned_data)
+    return cleaned_data
+
+
+print(all_cases())
