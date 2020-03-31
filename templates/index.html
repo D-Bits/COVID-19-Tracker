@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block title %}Home {% endblock %}
+
+{% block content %}
+
+    <h2>Global Data Summary</h2>
+    <!--TODO: Render summary DataFrame in template-->                
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Country</th>
+                <th>New Confirmed</th>
+                <th>Total Confirmed</th>
+                <th>New Deaths</th>
+                <th>Total Deaths</th>
+                <th>New Recovered</th>
+                <th>Total Recovered</th>
+            </tr>
+        </thead>
+        {% for nation in data %}
+            <tbody>
+                <tr>
+                    <td>{{nation.Country}}</td>
+                    <td>{{nation.NewConfirmed}}</td>
+                    <td>{{nation.TotalConfirmed}}</td>
+                    <td>{{nation.NewDeaths}}</td>
+                    <td>{{nation.TotalDeaths}}</td>
+                    <td>{{nation.NewRecovered}}</td>
+                    <td>{{nation.TotalRecovered}}</td>
+                </tr>
+            </tbody>
+        {% endfor %}
+            </table>   
+    
+{% endblock %}
+ 
