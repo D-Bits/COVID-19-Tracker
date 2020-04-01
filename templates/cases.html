@@ -17,14 +17,26 @@
         </thead>
         
     {% for nation in data %}
-            <tbody>
-                <tr>
-                <td>{{nation.Country}}</td>
-                <td>{{nation.NewConfirmed}}</td>
-                <td>{{nation.TotalConfirmed}}</td>
-                </tr>
-            </tbody>
+        <tbody>
+            <tr>
+            <td>{{nation.Country}}</td>
+            <td>{{nation.NewConfirmed}}</td>
+            <td>{{nation.TotalConfirmed}}</td>
+            </tr>
+        </tbody>
     {% endfor %}
+        <thead>
+            <tr>
+                <th>Total New Confirmed</th>
+                <th>Total Global Confirmed Confirmed</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{total.NewConfirmed}}</td>
+                <td>{{total.TotalConfirmed}}</td>
+            </tr>
+        </tbody>
     </table>
 
 {% endblock %}

@@ -47,8 +47,11 @@ def cases():
     sorted_data = df.sort_values(by='TotalConfirmed', ascending=False)
     # Convert the DataFrame to a dictionary
     df_dict = sorted_data.to_dict(orient='records')
+
+    # Sum total cases worldwide
+    total_cases = df.sum(axis=0)
     
-    return render_template('cases.html', data=df_dict)
+    return render_template('cases.html', data=df_dict, total=total_cases)
 
 
 if __name__ == "__main__":
