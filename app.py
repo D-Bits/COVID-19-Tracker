@@ -49,9 +49,28 @@ def cases():
     df_dict = sorted_data.to_dict(orient='records')
 
     # Sum total cases worldwide
-    total_cases = df.sum(axis=0)
+    total_cases = filtered_data.sum(axis=0)
     
     return render_template('cases.html', data=df_dict, total=total_cases)
+
+
+@app.route('/deaths')
+def deaths():
+
+    df = pd.DataFrame(summary_json['Countries'])
+    # Show only "NewConfirmed" and "TotalConfirmed", and countries names
+    filtered_data = df.filter(items=['Country', 'NewDeaths', 'TotalDeaths'])
+    # Drop redundant records obtained from API
+    cleaned_data = filtered_data.drop([0, 93, 98, 165, 171, 199, 219, 221])
+    # Sort TotalConfirmed in descending order
+    sorted_data = df.sort_values(by='TotalDeaths', ascending=False)
+    # Convert the DataFrame to a dictionary
+    df_dict = sorted_data.to_dict(orient='records')
+
+    # Sum total cases worldwide
+    total_deaths = filtered_data.sum(axis=0)
+    
+    return render_template('deaths.html', data=df_dict, total=total_deaths)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block title %}Deaths {% endblock %}
+
+{% block content %}
+
+<h2>Deaths by Country</h2>
+
+    <table class="table table-striped">
+
+        <thead>
+            <tr>
+                <th>Country</th>
+                <th>New Confirmed</th>
+                <th>Total Confirmed</th>
+            </tr>
+        </thead>
+        
+    {% for nation in data %}
+        <tbody>
+            <tr>
+            <td>{{nation.Country}}</td>
+            <td>{{nation.NewDeaths}}</td>
+            <td>{{nation.TotalDeaths}}</td>
+            </tr>
+        </tbody>
+    {% endfor %}
+        <thead>
+            <tr>
+                <th>Total Global New Confirmed</th>
+                <th>Total Global Confirmed</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{total.NewDeaths}}</td>
+                <td>{{total.TotalDeaths}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+{% endblock %}
