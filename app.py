@@ -4,6 +4,7 @@ from os import getenv
 from config import summary_json
 import pandas as pd
 
+
 # Load environment variables from local .env file
 load_dotenv() 
 
