@@ -45,6 +45,7 @@ def index():
 def about():
 
     return render_template('about.html')
+    
 
 # Route for cases page
 @app.route('/cases')
