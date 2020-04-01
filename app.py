@@ -9,6 +9,8 @@ import pandas as pd
 load_dotenv() 
 
 app = Flask(__name__)
+# Load secret key
+app.config['SECRET_KEY'] = getenv("SECRET_KEY")
 
 # Load environment type from environment var
 ENV = getenv("ENV")
