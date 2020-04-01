@@ -41,6 +41,10 @@ def index():
 
 
 # TODO: Build route and template for about page
+@app.route('/about')
+def about():
+
+    return render_template('about.html')
 
 # Route for cases page
 @app.route('/cases')
@@ -76,7 +80,7 @@ def deaths():
     return render_template('deaths.html', data=df_dict)
 
 
-# TODO: Implement routing logic for recoveries
+# Routing logic for recoveries
 @app.route('/recoveries')
 def recoveries():
 
@@ -91,6 +95,10 @@ def recoveries():
     df_dict = sorted_data.to_dict(orient='records')
     
     return render_template('recoveries.html', data=df_dict)
+
+
+# TODO: Calculate averages for deaths and recoveries
+    
 
 
 if __name__ == "__main__":
