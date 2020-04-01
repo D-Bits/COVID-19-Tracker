@@ -77,6 +77,20 @@ def deaths():
 
 
 # TODO: Implement routing logic for recoveries
+@app.route('/recoveries')
+def recoveries():
+
+    df = pd.DataFrame(summary_json['Countries'])
+    # Show only "NewDeaths" and "TotalDeaths", and countries names
+    filtered_data = df.filter(items=['Country', 'NewRecovered', 'TotalRecovered'])
+    # Drop redundant records obtained from API
+    cleaned_data = filtered_data.drop([0, 93, 98, 165, 171, 199, 219, 221])
+    # Sort TotalConfirmed in descending order
+    sorted_data = df.sort_values(by='TotalRecovered', ascending=False)
+    # Convert the DataFrame to a dictionary
+    df_dict = sorted_data.to_dict(orient='records')
+    
+    return render_template('recoveries.html', data=df_dict)
 
 
 if __name__ == "__main__":
