@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block title %}Cases {% endblock %}
+
+{% block content %}
+
+<h2>Cases by Country</h2>
+
+    <table class="table table-striped">
+
+        <thead>
+            <tr>
+                <th>Country</th>
+                <th>New Confirmed</th>
+                <th>Total Confirmed</th>
+            </tr>
+        </thead>
+        
+    {% for nation in data %}
+            <tbody>
+                <tr>
+                <td>{{nation.Country}}</td>
+                <td>{{nation.NewConfirmed}}</td>
+                <td>{{nation.TotalConfirmed}}</td>
+                </tr>
+            </tbody>
+    {% endfor %}
+    </table>
+
+{% endblock %}

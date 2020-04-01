@@ -1,7 +1,6 @@
 from flask import Flask, render_template
 from dotenv import load_dotenv
 from os import getenv
-from summary import sum_data
 from config import summary_json
 import pandas as pd
 
@@ -35,6 +34,21 @@ def index():
 
     return render_template('index.html', data=df_dict)
 
+
+@app.route('/cases')
+def cases():
+
+    df = pd.DataFrame(summary_json['Countries'])
+    # Show only "NewConfirmed" and "TotalConfirmed", and countries names
+    filtered_data = df.filter(items=['Country', 'NewConfirmed', 'TotalConfirmed'])
+    # Drop redundant records obtained from API
+    cleaned_data = filtered_data.drop([0, 93, 98, 165, 171, 199, 219, 221])
+    # Sort TotalConfirmed in descending order
+    sorted_data = df.sort_values(by='TotalConfirmed', ascending=False)
+    # Convert the DataFrame to a dictionary
+    df_dict = sorted_data.to_dict(orient='records')
+    
+    return render_template('cases.html', data=df_dict)
 
 
 if __name__ == "__main__":
