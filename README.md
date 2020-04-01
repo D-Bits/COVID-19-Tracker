@@ -5,7 +5,7 @@ A database for tracker the novel corona virus, and ETL tools for it.
 ## Project Goal
 ***
 
-Build a program, and a database, to analyze and store global data for the SARS2-CoV-2 (Covid 19) pandemic, using [Postman's APIs](https://documenter.getpostman.com/view/10808728/SzS8rjbc?version=latest).
+Build a program, and a database, to analyze and store global data for the SARS2-CoV-2 (Covid 19) pandemic, using [Postman's APIs](https://documenter.getpostman.com/view/10808728/SzS8rjbc?version=latest). This started out as a simple console program to obtain, and analyze data. It has since eveolved into a Flask application.
 
 ## Core Tools
 ***
@@ -13,6 +13,7 @@ Build a program, and a database, to analyze and store global data for the SARS2-
 - Python
 - Pandas
 - Requests
+- Flask
 - PostgreSQL
 
 ## Project Setup
@@ -32,8 +33,7 @@ Steps:
 - Create, and activate a `venv`.
 - Run `pip install -r requirements.txt` to install dependencies.
 - Create a `.env` file, and add the necessary environment variables.
-- Once you have created a db in Postgres, run the `CREATE TABLE` queries in the `tables.sql` file to build the db.
-- Run the `main.py` file (with `venv` activated) from a terminal to load data into the database.
+- Run `python app.py` to start the dev server.
 
 ## Future Goals
 ***
