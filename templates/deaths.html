@@ -11,8 +11,8 @@
         <thead>
             <tr>
                 <th>Country</th>
-                <th>New Deaths</th>
                 <th>Total Deaths</th>
+                <th>New Deaths</th>     
             </tr>
         </thead>
         
@@ -20,23 +20,12 @@
         <tbody>
             <tr>
             <td>{{nation.Country}}</td>
-            <td>{{nation.NewDeaths}}</td>
             <td>{{nation.TotalDeaths}}</td>
+            <td>{{nation.NewDeaths}}</td>
             </tr>
         </tbody>
     {% endfor %}
-        <thead>
-            <tr>
-                <th>Total Global New Deaths</th>
-                <th>Total Global Deaths</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>{{total.NewDeaths}}</td>
-                <td>{{total.TotalDeaths}}</td>
-            </tr>
-        </tbody>
+        
     </table>
 
 {% endblock %}

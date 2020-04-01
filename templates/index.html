@@ -9,6 +9,30 @@
     
     <!--TODO: Render summary DataFrame in template-->                
     <table class="table table-striped">
+
+        <thead>
+            <tr>
+                <th></th>
+                <th>Total Global New Confirmed Cases</th>
+                <th>Total Global Confirmed Cases</th>
+                <th>Total Global New Deaths</th>
+                <th>Total Global Confirmed Deaths</th>
+                <th>Total Global New Recoveries</th>
+                <th>Total Global Confirmed Recoveries</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td></td>
+                <td>{{total.NewConfirmed}}</td>
+                <td>{{total.TotalConfirmed}}</td>
+                <td>{{total.NewDeaths}}</td>
+                <td>{{total.TotalDeaths}}</td>
+                <td>{{total.NewRecovered}}</td>
+                <td>{{total.TotalRecovered}}</td>
+            </tr>
+        </tbody>
+
         <thead>
             <tr>
                 <th>Country</th>

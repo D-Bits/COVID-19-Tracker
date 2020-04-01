@@ -43,7 +43,20 @@
     </nav>
 
     <div class="container">
-      
+
+        <h4>Current Date:</h4>
+        <h5 id="now"></h5>
+        <script>
+            var today = new Date();
+            var dd = today.getDate();
+            // Account for the fact that Jan is 0 in JS
+            var mm = today.getMonth()+1;
+            var yyyy = today.getFullYear();
+            today = mm + '-' + dd + '-' + yyyy     
+
+            document.getElementById("now").innerHTML = today;
+        </script>
+
         {% block content %}
       
         {% endblock %}  

@@ -32,10 +32,12 @@ def index():
     df = pd.DataFrame(summary_json['Countries'])
     # Drop redundant records obtained from API
     cleaned_data = df.drop([0, 93, 98, 165, 171, 199, 219, 221])
+    # Show totals for all columns
+    total = cleaned_data.sum(axis=0)
     # Convert the DataFrame to a dictionary
     df_dict = cleaned_data.to_dict(orient='records')
 
-    return render_template('index.html', data=df_dict)
+    return render_template('index.html', data=df_dict, total=total)
 
 
 @app.route('/cases')

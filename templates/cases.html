@@ -11,8 +11,8 @@
         <thead>
             <tr>
                 <th>Country</th>
-                <th>New Confirmed</th>
                 <th>Total Confirmed</th>
+                <th>New Confirmed</th>
             </tr>
         </thead>
         
@@ -20,23 +20,12 @@
         <tbody>
             <tr>
             <td>{{nation.Country}}</td>
-            <td>{{nation.NewConfirmed}}</td>
             <td>{{nation.TotalConfirmed}}</td>
+            <td>{{nation.NewConfirmed}}</td>
             </tr>
         </tbody>
     {% endfor %}
-        <thead>
-            <tr>
-                <th>Total Global New Confirmed</th>
-                <th>Total Global Confirmed</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>{{total.NewConfirmed}}</td>
-                <td>{{total.TotalConfirmed}}</td>
-            </tr>
-        </tbody>
+      
     </table>
 
 {% endblock %}
