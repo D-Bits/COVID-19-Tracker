@@ -21,7 +21,7 @@ if ENV == 'dev':
 else:
     app.debug = False
 
-# TODO: Implement routing logic for all data sets/templates
+
 """ Routing logic """
 
 # Routing/Controller logic for home page/summary data
@@ -40,6 +40,9 @@ def index():
     return render_template('index.html', data=df_dict, total=total)
 
 
+# TODO: Build route and template for about page
+
+# Route for cases page
 @app.route('/cases')
 def cases():
 
@@ -52,13 +55,11 @@ def cases():
     sorted_data = df.sort_values(by='TotalConfirmed', ascending=False)
     # Convert the DataFrame to a dictionary
     df_dict = sorted_data.to_dict(orient='records')
-
-    # Sum total cases worldwide
-    total_cases = filtered_data.sum(axis=0)
     
-    return render_template('cases.html', data=df_dict, total=total_cases)
+    return render_template('cases.html', data=df_dict)
 
 
+# Route for deaths page 
 @app.route('/deaths')
 def deaths():
 
@@ -71,11 +72,11 @@ def deaths():
     sorted_data = df.sort_values(by='TotalDeaths', ascending=False)
     # Convert the DataFrame to a dictionary
     df_dict = sorted_data.to_dict(orient='records')
-
-    # Sum total cases worldwide
-    total_deaths = filtered_data.sum(axis=0)
     
-    return render_template('deaths.html', data=df_dict, total=total_deaths)
+    return render_template('deaths.html', data=df_dict)
+
+
+# TODO: Implement routing logic for recoveries
 
 
 if __name__ == "__main__":
