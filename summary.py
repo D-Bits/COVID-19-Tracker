@@ -5,7 +5,7 @@ from config import summary_json
 import pandas as pd 
 
 
-def all_cases():
+def summary_data():
 
     df = pd.DataFrame(summary_json['Countries'])
     # Drop redundant records obtained from API
@@ -14,4 +14,5 @@ def all_cases():
     return cleaned_data
 
 
-print(all_cases())
+# For passing into Flask routes
+sum_data = summary_data()

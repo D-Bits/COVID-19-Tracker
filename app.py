@@ -30,8 +30,10 @@ def index():
     df = pd.DataFrame(summary_json['Countries'])
     # Drop redundant records obtained from API
     cleaned_data = df.drop([0, 93, 98, 165, 171, 199, 219])
+    # Convert the DataFrame to a dictionary
+    df_dict = cleaned_data.to_dict(orient='records')
 
-    return render_template('index.html', data=cleaned_data)
+    return render_template('index.html', data=df_dict)
 
 
 
