@@ -112,6 +112,13 @@ def not_found(error):
     return render_template('500.html')
 
 
+# 503 Handler
+@app.errorhandler(503)
+def not_found(error):
+
+    return render_template('503.html')
+
+
 # TODO: Calculate averages for deaths and recoveries
     
 
