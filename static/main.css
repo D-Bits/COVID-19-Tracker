@@ -73,6 +73,7 @@ th.header-row {
     max-width: 100%;
     border: 3.5px solid #0066cc;
     border-radius: 15px;
+    margin-bottom: 3.5%;
 }
 
 /*For 500 errors template*/
