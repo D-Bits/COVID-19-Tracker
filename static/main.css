@@ -1,4 +1,8 @@
 
+body {
+    margin: 0;
+}
+
 .container {
     text-align: center;
     margin-top: 2.5%;
@@ -50,9 +54,19 @@
     margin-bottom: 5%;
 }
 
-.header-row {
-    position: sticky;
+/*Styles for all tables and their data*/
+table {
+    position: relative;
+    border-collapse: collapse;
 }
+
+th.header-row {
+    position: sticky;
+    top: 0;
+    background-color: #ffffff;
+    border-bottom: 2.5px solid #2d2d2d;
+}
+
 
 /*For 404 template img*/
 .four-oh-four-img {
