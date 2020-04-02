@@ -32,6 +32,7 @@ Steps:
 - Run `pip install -r requirements.txt` to install dependencies.
 - Create a `.env` file, and add the necessary environment variables.
 - Run `python app.py` to start the dev server.
+- Navigate to `localhost:5000` in your web browser to preview the web client and data.
 
 ## Future Goals
 ***
