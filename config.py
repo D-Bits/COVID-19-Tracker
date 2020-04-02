@@ -8,19 +8,6 @@ from requests import get
 # Enable loading environment variables from .env file
 load_dotenv()
 
-# Load db credentials from environment vars
-db_host = getenv('DB_HOST')
-db_name = getenv("DB_NAME")
-db_user = getenv('DB_USER')
-db_pass = getenv('DB_PASS')
-db_port = getenv('DB_PORT')
-
-# Establish db connection
-db_connection = connect(database=db_name, host=db_host, user=db_user, password=db_pass)
-
-# Create a SQLAlchemy engine to execute queries
-engine = create_engine(f"postgresql+psycopg2://{db_user}:{db_pass}@{db_host}:{db_port}/{db_name}")
-
 """
 Define API endpoints
 """
