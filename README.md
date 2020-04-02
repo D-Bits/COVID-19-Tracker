@@ -10,21 +10,19 @@ Build a program, and a database, to analyze and store global data for the SARS2-
 ## Core Tools
 ***
 
-- Python
+- Python 3
 - Pandas
 - Requests
 - Flask
-- PostgreSQL
 
 ## Project Setup
 *** 
 
-**How to setup the project locally on one's own machine:**
+**Running the Client Locally:**
 
 Required Technologies:
 
 - Python 3
-- PostgreSQL
 
 Steps:
 
