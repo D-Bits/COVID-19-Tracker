@@ -40,7 +40,6 @@ def index():
     return render_template('index.html', data=df_dict, total=total)
 
 
-# TODO: Build route and template for about page
 @app.route('/about')
 def about():
 
