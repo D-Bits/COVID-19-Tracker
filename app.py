@@ -45,7 +45,7 @@ def index():
 def about():
 
     return render_template('about.html')
-    
+
 
 # Route for cases page
 @app.route('/cases')
@@ -96,6 +96,20 @@ def recoveries():
     df_dict = sorted_data.to_dict(orient='records')
     
     return render_template('recoveries.html', data=df_dict)
+
+
+# 404 Handler
+@app.errorhandler(404)
+def not_found(error):
+
+    return render_template('404.html')
+
+
+# 500 Handler
+@app.errorhandler(500)
+def not_found(error):
+
+    return render_template('500.html')
 
 
 # TODO: Calculate averages for deaths and recoveries

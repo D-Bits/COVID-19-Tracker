@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block title %}404 {% endblock %}
+
+{% block content %}
+
+    <h4>Error 404: Page not Found</h4>
+
+    <img class="four-oh-four-img" src="{{ url_for('static', filename='404.jpg') }}" alt="" srcset="">
+
+    <br>
+
+    <h4><a href="{{ url_for('index')}}">Back to Home</a></h4>
+
+{% endblock %}
