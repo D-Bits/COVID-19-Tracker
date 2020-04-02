@@ -31,7 +31,7 @@ def index():
 
     df = pd.DataFrame(summary_json['Countries'])
     # Drop redundant records obtained from API
-    cleaned_data = df.drop([0, 93, 98, 165, 171, 199, 219, 221])
+    cleaned_data = df.drop([0, 93, 98, 165, 171, 199, 221])
     # Show totals for all columns
     total = cleaned_data.sum(axis=0)
     # Convert the DataFrame to a dictionary
