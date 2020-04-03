@@ -31,7 +31,7 @@ def index():
 
     df = pd.DataFrame(summary_json['Countries'])
     # Drop redundant records obtained from API
-    cleaned_data = df.drop([0, 93, 101, 125, 168, 169, 170, 171, 175, 193, 199, 223])
+    cleaned_data = df.drop([0, 93, 101, 125, 168, 169, 170, 171, 175, 193, 199, 205, 223])
     # Show totals for all columns
     total = cleaned_data.sum(axis=0)
     # Convert the DataFrame to a dictionary
@@ -55,7 +55,7 @@ def cases():
     # Show only "NewConfirmed" and "TotalConfirmed", and countries names
     filtered_data = df.filter(items=['Country', 'NewConfirmed', 'TotalConfirmed'])
     # Drop redundant records obtained from API
-    cleaned_data = filtered_data.drop([0, 93, 101, 125, 168, 169, 170, 171, 175, 193, 199, 223])
+    cleaned_data = filtered_data.drop([0, 93, 101, 125, 168, 169, 170, 171, 175, 193, 199, 205, 223])
     # Sort TotalConfirmed in descending order
     sorted_data = df.sort_values(by='TotalConfirmed', ascending=False)
     # Convert the DataFrame to a dictionary
@@ -72,7 +72,7 @@ def deaths():
     # Show only "NewConfirmed" and "TotalConfirmed", and countries names
     filtered_data = df.filter(items=['Country', 'NewDeaths', 'TotalDeaths'])
     # Drop redundant records obtained from API
-    cleaned_data = filtered_data.drop([0, 93, 101, 125, 168, 169, 170, 171, 175, 193, 199, 223])
+    cleaned_data = filtered_data.drop([0, 93, 101, 125, 168, 169, 170, 171, 175, 193, 199, 205, 223])
     # Sort TotalConfirmed in descending order
     sorted_data = df.sort_values(by='TotalDeaths', ascending=False)
     # Convert the DataFrame to a dictionary
@@ -89,7 +89,7 @@ def recoveries():
     # Show only "NewDeaths" and "TotalDeaths", and countries names
     filtered_data = df.filter(items=['Country', 'NewRecovered', 'TotalRecovered'])
     # Drop redundant records obtained from API
-    cleaned_data = filtered_data.drop([0, 93, 101, 125, 168, 169, 170, 171, 175, 193, 199, 223])
+    cleaned_data = filtered_data.drop([0, 93, 101, 125, 168, 169, 170, 171, 175, 193, 199, 205, 223])
     # Sort TotalConfirmed in descending order
     sorted_data = df.sort_values(by='TotalRecovered', ascending=False)
     # Convert the DataFrame to a dictionary
@@ -117,12 +117,9 @@ def not_found(error):
 def not_found(error):
 
     return render_template('503.html')
-
-
-# TODO: Calculate averages for deaths and recoveries
     
 
-# TODO: Add tools for the end user to use
+# TODO: Add tools for file downloads
 
 
 if __name__ == "__main__":
