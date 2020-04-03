@@ -6,26 +6,28 @@
 
 <h2>Deaths by Country</h2>
 
-    <table class="table table-striped">
+    <div style="overflow-x: auto;">
+        <table class="table table-striped">
 
-        <thead>
-            <tr>
-                <th class="header-row">Country</th>
-                <th class="header-row">Total Deaths</th>
-                <th class="header-row">New Deaths</th>     
-            </tr>
-        </thead>
-        
-    {% for nation in data %}
-        <tbody>
-            <tr>
-            <td>{{nation.Country}}</td>
-            <td>{{nation.TotalDeaths}}</td>
-            <td>{{nation.NewDeaths}}</td>
-            </tr>
-        </tbody>
-    {% endfor %}
-        
-    </table>
+            <thead>
+                <tr>
+                    <th class="header-row">Country</th>
+                    <th class="header-row">Total Deaths</th>
+                    <th class="header-row">New Deaths</th>     
+                </tr>
+            </thead>
+            
+        {% for nation in data %}
+            <tbody>
+                <tr>
+                <td>{{nation.Country}}</td>
+                <td>{{nation.TotalDeaths}}</td>
+                <td>{{nation.NewDeaths}}</td>
+                </tr>
+            </tbody>
+        {% endfor %}
+            
+        </table>
+    </div>
 
 {% endblock %}
