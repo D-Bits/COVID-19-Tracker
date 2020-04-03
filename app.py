@@ -107,14 +107,14 @@ def not_found(error):
 
 # 500 Handler
 @app.errorhandler(500)
-def not_found(error):
+def five_hundred_error(error):
 
     return render_template('500.html')
 
 
 # 503 Handler
 @app.errorhandler(503)
-def not_found(error):
+def five_oh_three_error(error):
 
     return render_template('503.html')
     
