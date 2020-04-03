@@ -15,6 +15,6 @@ class DataFrameTests(TestCase):
         df = pd.DataFrame(summary_json['Countries'])
         df = pd.DataFrame(summary_json['Countries'])
         # Drop redundant records obtained from API
-        cleaned_data = df.drop([0, 93, 101, 125, 168, 169, 170, 171, 175, 193, 199, 223])
+        cleaned_data = df.drop([0, 93, 101, 125, 168, 169, 170, 171, 172, 175, 194, 199, 205, 224])
 
-        self.assertEqual(len(cleaned_data), 217)
+        self.assertEqual(len(cleaned_data), 215)
