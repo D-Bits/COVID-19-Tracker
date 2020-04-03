@@ -1,6 +1,6 @@
 # COVID-19-Tracker
 
-A database for tracker the novel corona virus, and ETL tools for it.
+A client for tracking the novel corona virus, and various other tools for it.
 
 ## Project Goal
 ***
@@ -30,13 +30,15 @@ Steps:
 - Open a terminal, and cd into repo.
 - Create, and activate a `venv`.
 - Run `pip install -r requirements.txt` to install dependencies.
-- Create a `.env` file, and add the necessary environment variables.
+- Create a `.env` file in the root of the project directory, and add the following environment variables:
+    - `ENV=dev`
+    - `SECRET_KEY=(long, random string of characters)`
 - Run `python app.py` to start the dev server.
 - Navigate to `localhost:5000` in your web browser to preview the web client and data.
 
 ## Future Goals
 ***
 
-- Setup an automated pipeline to keep data up-to-date
-- Build web client for database
-- Implement data visualization
+- Add CLI tools for users running the client locally.
+- More statistics and data
+- Implement data visualization.
