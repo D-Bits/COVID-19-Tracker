@@ -32,11 +32,12 @@ def index():
     df = pd.DataFrame(summary_json['Countries'])
     # Drop redundant records obtained from API
     cleaned_data = df.drop([0, 93, 101, 125, 168, 169, 170, 171, 172, 175, 194, 199, 205, 224])
-    
+    # Order countries in alphabetical order
+    ordered_df = cleaned_data.sort_values('Country', ascending=True)
     # Show totals for all columns
     total = cleaned_data.sum(axis=0)
     # Convert the DataFrame to a dictionary
-    df_dict = cleaned_data.to_dict(orient='records')
+    df_dict = ordered_df.to_dict(orient='records')
 
     return render_template('index.html', data=df_dict, total=total)
 
