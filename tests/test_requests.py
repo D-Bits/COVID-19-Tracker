@@ -12,4 +12,3 @@ class RequestsTests(TestCase):
     def test_endpoints(self):
 
         self.assertEqual(summary.status_code, 200)
-        self.assertEqual(usa_cases.status_code, 200)
