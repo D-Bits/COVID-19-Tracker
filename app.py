@@ -116,7 +116,7 @@ def no_data():
     # Convert the DataFrame to a dictionary
     df_dict = ordered_df.to_dict(orient='records')
     
-    return render_template('null.html', data=df_dict)
+    return render_template('null_countries.html', data=df_dict)
 
 
 # 404 Handler
