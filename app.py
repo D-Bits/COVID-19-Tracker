@@ -100,7 +100,7 @@ def recoveries():
     return render_template('recoveries.html', data=df_dict)
 
 
-# TODO: Add route & template for countries with no data/0 cases 
+# Route for countries with no data/0 cases 
 @app.route('/null')
 def no_data():
 
@@ -145,4 +145,7 @@ def five_oh_three_error(error):
 
 if __name__ == "__main__":
     
-    app.run() 
+    if ENV == "dev":
+        app.run()
+    else:
+        pass 
