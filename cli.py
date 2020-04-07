@@ -5,7 +5,8 @@ running the client locally.
 Functionality:
 1. Dump data to a CSV file.
 """
-import pandas as pd 
+import pandas as pd
+from datetime import datetime, date 
 from config import summary_json
 
 
@@ -26,9 +27,9 @@ def csv_dump(location):
     ordered_df = cleaned_data.sort_values('Country', ascending=True)
 
     # Dump the DataFrame to a CSV file, in a location of the user's choosing
-    ordered_df.to_csv(location)
+    ordered_df.to_csv(f"{location}/summary_dump_{date.today()}.csv", sep=",")
 
-    print("DataFrame dumped to:", location)
+    print("DataFrame successfully dumped to:", location)
 
 
 def main():
