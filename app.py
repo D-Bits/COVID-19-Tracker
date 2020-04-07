@@ -147,6 +147,6 @@ if __name__ == "__main__":
     
     # Ensure app.run() is only used in development.
     if ENV == "dev":
-        app.run()
+        app.run(debug=True)
     else:
         pass 
