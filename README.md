@@ -18,7 +18,7 @@ Build a program, and a database, to analyze and store global data for the SARS2-
 ## Project Setup
 *** 
 
-**Running the Client Locally:**
+## Running the Client Locally:
 
 Required Technologies:
 
@@ -35,6 +35,10 @@ Steps:
     - `SECRET_KEY=(long, random string of characters)`
 - Run `python app.py` to start the dev server.
 - Navigate to `localhost:5000` in your web browser to preview the web client and data.
+
+## Using CLI Tools
+
+This client now also comes with some basic command line interface (CLI) tools, for users running the client locally. To use the CLI tools, activate your `venv`, run `cli.py` from the root of the project directory, and simply follow the prompts.
 
 ## Future Goals
 ***
