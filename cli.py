@@ -30,7 +30,7 @@ def csv_dump(location):
         # Dump the DataFrame to a CSV file, in a location of the user's choosing
         ordered_df.to_csv(f"{location}/summary_dump_{date.today()}.csv", sep=",")
 
-        print("DataFrame successfully dumped to:", location)
+        print('DataFrame successfully dumped to:', location, f'as "summary_dump_{date.today()}.csv"')
 
     except FileNotFoundError:
 
