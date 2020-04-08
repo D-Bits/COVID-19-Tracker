@@ -1,25 +1,12 @@
 from flask import Flask, render_template
 from dotenv import load_dotenv
 from os import getenv
-from config import summary_json
+from config import summary_json, app, ENV
 import pandas as pd
 
 
 # Load environment variables from local .env file
 load_dotenv() 
-
-app = Flask(__name__)
-# Load secret key
-app.config['SECRET_KEY'] = getenv("SECRET_KEY")
-
-# Load environment type from environment var
-ENV = getenv("ENV")
-
-# Ensure debug is only on in development!
-if ENV == 'dev':
-    app.debug = True
-else:
-    app.debug = False
 
 
 """ Routing logic """
