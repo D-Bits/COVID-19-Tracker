@@ -50,8 +50,6 @@ def main():
     else:
         print("Invalid value entered. Try again, please.")
         main()
-    
-    main()
-
+        
 
 main()
