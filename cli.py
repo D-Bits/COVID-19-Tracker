@@ -20,16 +20,21 @@ choices = {
 # Dump summary data to a CSV file
 def csv_dump(location):
 
-    df = pd.DataFrame(summary_json['Countries'])
-    # Drop redundant records obtained from API
-    cleaned_data = df.drop([0, 93, 101, 125, 168, 169, 170, 171, 172, 175, 194, 199, 205, 224])
-    # Order countries in alphabetical order
-    ordered_df = cleaned_data.sort_values('Country', ascending=True)
+    try: 
+        df = pd.DataFrame(summary_json['Countries'])
+        # Drop redundant records obtained from API
+        cleaned_data = df.drop([0, 93, 101, 125, 168, 169, 170, 171, 172, 175, 194, 199, 205, 224])
+        # Order countries in alphabetical order
+        ordered_df = cleaned_data.sort_values('Country', ascending=True)
 
-    # Dump the DataFrame to a CSV file, in a location of the user's choosing
-    ordered_df.to_csv(f"{location}/summary_dump_{date.today()}.csv", sep=",")
+        # Dump the DataFrame to a CSV file, in a location of the user's choosing
+        ordered_df.to_csv(f"{location}/summary_dump_{date.today()}.csv", sep=",")
 
-    print("DataFrame successfully dumped to:", location)
+        print("DataFrame successfully dumped to:", location)
+
+    except FileNotFoundError:
+
+        print("That directory does not exist. Please try again.")
 
 
 def main():
@@ -50,6 +55,6 @@ def main():
     else:
         print("Invalid value entered. Try again, please.")
         main()
-        
+
 
 main()
