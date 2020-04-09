@@ -16,6 +16,8 @@ app.config['SECRET_KEY'] = getenv("SECRET_KEY")
 # Load environment type from environment var
 ENV = getenv("ENV")
 
+# Create a SQL Alchemy engine for the db
+engine = create_engine(getenv("ENGINE_STRING"))
 
 """
 Define API endpoints
