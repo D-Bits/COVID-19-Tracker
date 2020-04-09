@@ -7,6 +7,7 @@ Functionality:
 """
 import pandas as pd
 from datetime import datetime, date 
+from pandas.errors import EmptyDataError
 from config import summary_json
 
 
@@ -34,7 +35,13 @@ def csv_dump(location):
 
     except FileNotFoundError:
 
-        print("That directory does not exist. Please try again.")
+        print("ERROR: That directory does not exist. Please try again.")
+
+    except EmptyDataError:
+
+        print("ERROR: DataFrame is empty.")
+
+
 
 
 def main():
