@@ -2,7 +2,7 @@
 Unit tests for DataFrames
 """
 from unittest import TestCase
-from config import usa_cases, summary
+from config import summary
 
 
 # Test requests to API endpoints
