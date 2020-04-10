@@ -5,7 +5,7 @@ A client for tracking the novel corona virus, and various other tools for it.
 ## Project Goal
 ***
 
-Build a web client to analyze and store global data for the SARS2-CoV-2 (Covid 19) pandemic, using [Postman's APIs](https://documenter.getpostman.com/view/10808728/SzS8rjbc?version=latest). This started out as a simple console program to obtain, and analyze data. It has since eveolved into a Flask application.
+Build a web client to analyze and store global data for the SARS2-CoV-2 (Covid 19) pandemic, using [Postman's APIs](https://documenter.getpostman.com/view/10808728/SzS8rjbc?version=latest). This started out as a simple console program to obtain, and analyze data. It has since evolved into a Flask application.
 
 ## Core Tools
 ***
@@ -33,11 +33,7 @@ Steps:
 - Create a `.env` file in the root of the project directory, and add the following environment variables:
     - `ENV=dev`
     - `SECRET_KEY=(long, random string of characters)`
-    - `DB_NAME=covid19`
-    - `DB_HOST=localhost`
-    - `DB_PORT=postgres_port`
-    - `DB_USER=postgres_user`
-    - `DB_PASS=postgres_password`
+    - `ENGINE_STRING=SQL_Alchemy_Engine_String`
 - Run `python app.py` to start the dev server.
 - Navigate to `localhost:5000` in your web browser to preview the web client and data.
 
