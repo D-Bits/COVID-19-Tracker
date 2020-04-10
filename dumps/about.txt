@@ -1,1 +1,1 @@
-This directory is for storing CSV data dumps from DataFrames.
+This directory is for storing CSV data dumps from DataFrames, using CLI tools.
