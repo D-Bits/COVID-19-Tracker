@@ -63,9 +63,13 @@ body {
 }
 
 /*Styles for all tables and their data*/
-table {
-    position: relative;
-    border-collapse: collapse;
+
+
+.data-table {
+    overflow-x: auto;
+    overflow-y: auto;
+    height: 45em;
+    margin-top: 5%;
 }
 
 thead {
