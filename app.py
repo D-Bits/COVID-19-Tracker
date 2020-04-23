@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 from dotenv import load_dotenv
+from requests import get
 from os import getenv
 from config import summary_json, app, ENV
 import pandas as pd
@@ -104,6 +105,21 @@ def no_data():
     df_dict = ordered_df.to_dict(orient='records')
     
     return render_template('null_countries.html', data=df_dict)
+
+
+# Route to show cases in a specific country
+@app.route('/<string:country>')
+def country_cases(country):
+
+    # Define API endpoint, and fetch data
+    endpoint = get(f'https://api.covid19api.com/country/{country}/status/confirmed/live')
+    data = endpoint.json()
+    df = pd.DataFrame(data)
+    # Remove records with no cases
+    cleaned_data = df.loc[df['Cases'] > 0]
+    df_dict = cleaned_data.to_dict(orient='records')
+
+    return render_template('country.html', data=df_dict, nation=country)
 
 
 # 404 Handler
