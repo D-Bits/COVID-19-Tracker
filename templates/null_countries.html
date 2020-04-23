@@ -10,26 +10,29 @@
             free of COVID-19. It just means there are no <em>reported</em>  results.
         </p>
 
-        <table class="table table-striped">
+        <div class="data-table">
+            <table class="table table-striped">
 
-            <thead>
-                <tr class="header-row">
-                    <th class="header-row">Country</th>
-                    <th class="header-row">Total Cases</th>
-                </tr>
-            </thead>
-            
-        {% for nation in data %}
-            <tbody>
-                <tr>
-                <td>{{nation.Country}}</td>
-                <td>{{nation.TotalConfirmed}}</td>
-
-                </tr>
-            </tbody>
-        {% endfor %}
-            
-        </table>
+                <thead>
+                    <tr class="header-row">
+                        <th class="header-row">Country</th>
+                        <th class="header-row">Total Cases</th>
+                    </tr>
+                </thead>
+                
+            {% for nation in data %}
+                <tbody>
+                    <tr>
+                    <td>{{nation.Country}}</td>
+                    <td>{{nation.TotalConfirmed}}</td>
+    
+                    </tr>
+                </tbody>
+            {% endfor %}
+                
+            </table>
+        </div>
+        
 
 
 {% endblock %}
