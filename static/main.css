@@ -62,14 +62,13 @@ body {
     margin-bottom: 5%;
 }
 
-/*Styles for all tables and their data*/
-
-
+/*Styles for index page*/
 .data-table {
     overflow-x: auto;
-    overflow-y: auto;
     height: 45em;
     margin-top: 5%;
+    border: 5px solid #289292;
+    border-radius: 1.5%;
 }
 
 thead {
