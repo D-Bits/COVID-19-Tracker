@@ -117,11 +117,16 @@ def country_cases(country):
     df = pd.DataFrame(data)
     # Remove records with no cases
     cleaned_data = df.loc[df['Cases'] > 0]
-    df_dict = cleaned_data.to_dict(orient='records')
+    # Sort records from most recent cases to oldest cases
+    sorted_data = cleaned_data.sort_values('Date', ascending=False)
+    df_dict = sorted_data.to_dict(orient='records')
 
     return render_template('country.html', data=df_dict, nation=country)
 
 
+"""
+Error handling routes
+"""
 # 404 Handler
 @app.errorhandler(404)
 def not_found(error):
