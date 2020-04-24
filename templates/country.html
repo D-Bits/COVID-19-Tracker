@@ -11,28 +11,28 @@
 
             <thead>
                 <tr>
+                    <th class="header-row">Date</th>
+                    <th class="header-row">Cases</th>
                     <th class="header-row">Province</th>
+                    <th class="header-row">Status</th>  
                     <th class="header-row">City</th>
                     <th class="header-row">City Code</th>
                     <th class="header-row">Latitude</th>
-                    <th class="header-row">Longitude</th>
-                    <th class="header-row">Cases</th>
-                    <th class="header-row">Status</th>
-                    <th class="header-row">Date</th>
+                    <th class="header-row">Longitude</th>         
                 </tr>
             </thead>
             
         {% for record in data %}
             <tbody>
                 <tr>
+                    <td>{{record.Date}}</td>
+                    <td>{{record.Cases}}</td>
                     <td>{{record.Province}}</td>
+                    <td>{{record.Status}}</td>
                     <td>{{record.City}}</td>
                     <td>{{record.CityCode}}</td>
                     <td>{{record.Lat}}</td>
                     <td>{{record.Lon}}</td>
-                    <td>{{record.Cases}}</td>
-                    <td>{{record.Status}}</td>
-                    <td>{{record.Date}}</td>
                 </tr>
             </tbody>
         {% endfor %}
