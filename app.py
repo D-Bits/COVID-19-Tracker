@@ -1,7 +1,8 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, send_from_directory
 from dotenv import load_dotenv
 from requests import get
-from os import getenv
+from os import getenv, remove
+from datetime import date
 from config import summary_json, app, ENV
 import pandas as pd
 
@@ -123,6 +124,24 @@ def country_cases(country):
 
     return render_template('country.html', data=df_dict, nation=country)
 
+
+# Download data from summary endpoint, and save to CSV
+@app.route(f"/dumps/covid19_summary_{date.today()}.csv")
+def download_summary():
+
+    df = pd.DataFrame(summary_json['Countries'])
+    # Drop redundant records obtained from API
+    cleaned_data = df.drop([0, 93, 101, 125, 168, 169, 170, 171, 172, 175, 194, 199, 205, 224])
+    # Order countries in alphabetical order
+    ordered_df = cleaned_data.sort_values('Country', ascending=True)
+    # Dump the DataFrame to a CSV file, in a location of the user's choosing
+    filename = f"dumps/summary_dump_{date.today()}.csv"
+    csv_dump = ordered_df.to_csv(filename, sep=",")
+
+    # Download the data dump to user's client
+    return send_from_directory('dumps/', f'summary_dump_{date.today()}.csv')
+    remove(f'dumps/summary_dump_{date.today()}.csv')
+    
 
 """
 Error handling routes

@@ -5,13 +5,15 @@
 {% block content %}
 
     <h2>Global Data Summary</h2>
+
+    <a href="{{ url_for('download_summary') }}">Download Data</a>
                  
     <div class="data-table">
         <table class="table table-striped">
 
             <!--Totals for all fields (except Country)-->
-            <thead>
-                <tr>
+            <thead class="table-header">
+                <tr class="table-header">
                     <th></th>
                     <th>Total Global New Confirmed Cases</th>
                     <th>Total Global Confirmed Cases</th>
