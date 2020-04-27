@@ -20,7 +20,7 @@ def index():
 
     df = pd.DataFrame(summary_json['Countries'])
     # Drop redundant records obtained from API
-    cleaned_data = df.drop([0, 93, 101, 125, 168, 169, 170, 171, 172, 175, 194, 199, 205, 224])
+    cleaned_data = df.drop([0, 93, 125, 168, 169, 170, 171, 172, 175, 194, 199, 205, 224])
     # Order countries in alphabetical order
     ordered_df = cleaned_data.sort_values('Country', ascending=True)
     # Show totals for all columns
@@ -136,10 +136,10 @@ def download_summary():
     ordered_df = cleaned_data.sort_values('Country', ascending=True)
     # Dump the DataFrame to a CSV file, in a location of the user's choosing
     filename = f"dumps/summary_dump_{date.today()}.csv"
-    csv_dump = ordered_df.to_csv(filename, sep=",")
+    ordered_df.to_csv(filename, sep=",")
 
     # Download the data dump to user's client
-    return send_from_directory('dumps/', f'summary_dump_{date.today()}.csv')
+    return send_from_directory('dumps/', f'summary_dump_{date.today()}.csv', )
     remove(f'dumps/summary_dump_{date.today()}.csv')
     
 
@@ -155,7 +155,7 @@ def not_found(error):
 
 # 500 Handler
 @app.errorhandler(500)
-def five_hundred_error(error):
+def server_error(error):
 
     return render_template('500.html')
 
@@ -164,10 +164,7 @@ def five_hundred_error(error):
 @app.errorhandler(503)
 def five_oh_three_error(error):
 
-    return render_template('503.html')
-    
-
-# TODO: Add tools for file downloads
+    return render_template('503.html')    
 
 
 if __name__ == "__main__":
