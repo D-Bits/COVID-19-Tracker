@@ -12,8 +12,10 @@
             <thead>
                 <tr>
                     <th class="header-row">Date</th>
-                    <th class="header-row">Cases</th>
-                    <th class="header-row">Status</th>  
+                    <th class="header-row">Confirmed Cases</th>
+                    <th class="header-row">Deaths</th>
+                    <th class="header-row">Recoveries</th>
+                    <th class="header-row">Province/State</th>
                 </tr>
             </thead>
             
@@ -21,8 +23,10 @@
             <tbody>
                 <tr>
                     <td>{{record.Date}}</td>
-                    <td>{{record.Cases}}</td>
-                    <td>{{record.Status}}</td>
+                    <td>{{record.Confirmed}}</td>
+                    <td>{{record.Deaths}}</td>
+                    <td>{{record.Recoveries}}</td>
+                    <td>{{record.Province}}</td>
                 </tr>
             </tbody>
         {% endfor %}

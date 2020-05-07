@@ -17,6 +17,6 @@ class RequestsTests(TestCase):
     # Test response code for an individual country's cases
     def test_country_endpoint(self):
 
-        endpoint = get('https://api.covid19api.com/total/dayone/country/us/status/confirmed')
+        endpoint = get('https://api.covid19api.com/live/country/south-africa/status/confirmed')
 
         self.assertEqual(endpoint.status_code, 200)

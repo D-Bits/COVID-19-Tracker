@@ -108,16 +108,16 @@ def no_data():
     return render_template('null_countries.html', data=df_dict)
 
 
-# Route to show cases in a specific country
+# Route to show data in a specific country, by date
 @app.route('/<string:country>')
 def country_cases(country):
 
     # Define API endpoint, and fetch data
-    endpoint = get(f'https://api.covid19api.com/total/dayone/country/{country}/status/confirmed')
+    endpoint = get(f'https://api.covid19api.com/live/country/{country}/status/confirmed')
     data = endpoint.json()
     df = pd.DataFrame(data)
     # Remove records with no cases
-    cleaned_data = df.loc[df['Cases'] > 0]
+    cleaned_data = df.loc[df['Confirmed'] > 0]
     # Sort records from most recent cases to oldest cases
     sorted_data = cleaned_data.sort_values('Date', ascending=False)
     df_dict = sorted_data.to_dict(orient='records')
