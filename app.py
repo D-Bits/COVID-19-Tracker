@@ -113,7 +113,7 @@ def no_data():
 def country_cases(country):
 
     # Define API endpoint, and fetch data
-    endpoint = get(f'https://api.covid19api.com/country/{country}/status/confirmed/live')
+    endpoint = get(f'https://api.covid19api.com/total/dayone/country/{country}/status/confirmed')
     data = endpoint.json()
     df = pd.DataFrame(data)
     # Remove records with no cases
