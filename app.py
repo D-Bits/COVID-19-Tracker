@@ -90,6 +90,7 @@ def recoveries():
     return render_template('recoveries.html', data=df_dict)
 
 
+# TODO: Format dates to strip out "T00:00:00Z"
 # Route to show data in a specific country, by date
 @app.route('/<string:country>')
 def country_cases(country):
@@ -106,6 +107,7 @@ def country_cases(country):
 
 
 # Route to show how many cases, deaths, and recoveries a country had for each day, since first confirmed cases
+# TODO: Format dates to strip out "T00:00:00Z"
 @app.route('/totals/<string:country>')
 def country_history(country):
 
