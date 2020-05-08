@@ -116,13 +116,26 @@ def country_cases(country):
     endpoint = get(f'https://api.covid19api.com/live/country/{country}')
     data = endpoint.json()
     df = pd.DataFrame(data)
-    # Remove records with no cases
-    cleaned_data = df.loc[df['Confirmed'] > 0]
     # Sort records from most recent cases to oldest cases
-    sorted_data = cleaned_data.sort_values('Date', ascending=False)
+    sorted_data = df.sort_values('Date', ascending=False)
     df_dict = sorted_data.to_dict(orient='records')
 
     return render_template('country.html', data=df_dict, nation=country)
+
+
+# Route to show how many cases, deaths, and recoveries a country had for each day, since first confirmed cases
+@app.route('/totals/<string:country>')
+def country_history(country):
+
+    # Define API endpoint, and fetch data
+    endpoint = get(f'https://api.covid19api.com/total/country/{country}')
+    data = endpoint.json()
+    df = pd.DataFrame(data)
+    # Sort records from most recent cases to oldest cases
+    sorted_data = df.sort_values('Date', ascending=False)
+    df_dict = sorted_data.to_dict(orient='records')
+
+    return render_template('totals.html', data=df_dict, nation=country)
 
 
 # Download data from summary endpoint, and save to CSV
