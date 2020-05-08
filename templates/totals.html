@@ -6,7 +6,8 @@
 
 <h2>{{nation}} Total Cases History</h2>
 
-<h4><a href="{{ url_for('country_cases', country=nation.Country )}}">View Cases per Province/State for This Country</a></h4>
+<!--TODO: Fix this, so it does link to index route!-->
+<!-- <h4><a href="{{ url_for('country_cases', country=nation.Country )}}">View Cases per Province/State for This Country</a></h4> -->
 
 <div class="data-table">
     <table class="table table-striped">
@@ -17,7 +18,6 @@
                 <th class="header-row">Confirmed Cases</th>
                 <th class="header-row">Deaths</th>
                 <th class="header-row">Recoveries</th>
-                <th class="header-row">Province/State</th>
             </tr>
         </thead>
         
@@ -28,7 +28,6 @@
                 <td>{{record.Confirmed}}</td>
                 <td>{{record.Deaths}}</td>
                 <td>{{record.Recovered}}</td>
-                <td>{{record.Province}}</td>
             </tr>
         </tbody>
     {% endfor %}
