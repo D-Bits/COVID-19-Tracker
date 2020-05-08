@@ -1,4 +1,5 @@
 from flask import Flask, render_template, send_from_directory
+from werkzeug.exceptions import HTTPException, NotFound, InternalServerError
 from dotenv import load_dotenv
 from requests import get
 from os import getenv, remove
@@ -144,21 +145,21 @@ Error handling routes
 @app.errorhandler(404)
 def not_found(error):
 
-    return render_template('404.html')
+    return render_template('404.html'), 404
 
 
 # 500 Handler
 @app.errorhandler(500)
 def server_error(error):
 
-    return render_template('500.html')
+    return render_template('500.html'), 500
 
 
 # 503 Handler
 @app.errorhandler(503)
 def five_oh_three_error(error):
 
-    return render_template('503.html')    
+    return render_template('503.html'), 503    
 
 
 if __name__ == "__main__":
