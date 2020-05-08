@@ -89,25 +89,6 @@ def recoveries():
     return render_template('recoveries.html', data=df_dict)
 
 
-# Route for countries with no data/0 cases 
-@app.route('/null')
-def no_data():
-
-    df = pd.DataFrame(summary_json['Countries'])
-    # Show only "TotalConfirmed" and "NewConfirmed", and countries names
-    filtered_data = df.filter(items=['Country', 'TotalConfirmed', 'NewConfirmed'])
-    # Drop redundant records obtained from API
-    cleaned_data = df.drop([0, 93, 101, 125, 168, 169, 170, 171, 172, 175, 194, 199, 205, 224])
-    # Show only countries with 0 reported cases
-    null_countries = cleaned_data.loc[cleaned_data['TotalConfirmed'] == 0]
-    # Order countries in alphabetical order
-    ordered_df = null_countries.sort_values('Country', ascending=True)
-    # Convert the DataFrame to a dictionary
-    df_dict = ordered_df.to_dict(orient='records')
-    
-    return render_template('null_countries.html', data=df_dict)
-
-
 # Route to show data in a specific country, by date
 @app.route('/<string:country>')
 def country_cases(country):
