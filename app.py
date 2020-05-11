@@ -46,10 +46,8 @@ def cases():
     df = pd.DataFrame(summary_json['Countries'])
     # Show only "NewConfirmed" and "TotalConfirmed", and countries names
     filtered_data = df.filter(items=['Country', 'NewConfirmed', 'TotalConfirmed'])
-    # Drop redundant records obtained from API
-    cleaned_data = filtered_data.drop([0, 93, 101, 125, 168, 169, 170, 171, 172, 175, 194, 199, 205, 224])
     # Sort TotalConfirmed in descending order
-    sorted_data = df.sort_values(by='TotalConfirmed', ascending=False)
+    sorted_data = filtered_data.sort_values(by='TotalConfirmed', ascending=False)
     # Convert the DataFrame to a dictionary
     df_dict = sorted_data.to_dict(orient='records')
     
@@ -63,10 +61,8 @@ def deaths():
     df = pd.DataFrame(summary_json['Countries'])
     # Show only "NewConfirmed" and "TotalConfirmed", and countries names
     filtered_data = df.filter(items=['Country', 'NewDeaths', 'TotalDeaths'])
-    # Drop redundant records obtained from API
-    cleaned_data = filtered_data.drop([0, 93, 101, 125, 168, 169, 170, 171, 172, 175, 194, 199, 205, 224])
     # Sort TotalConfirmed in descending order
-    sorted_data = df.sort_values(by='TotalDeaths', ascending=False)
+    sorted_data = filtered_data.sort_values(by='TotalDeaths', ascending=False)
     # Convert the DataFrame to a dictionary
     df_dict = sorted_data.to_dict(orient='records')
     
@@ -80,10 +76,8 @@ def recoveries():
     df = pd.DataFrame(summary_json['Countries'])
     # Show only "NewDeaths" and "TotalDeaths", and countries names
     filtered_data = df.filter(items=['Country', 'NewRecovered', 'TotalRecovered'])
-    # Drop redundant records obtained from API
-    cleaned_data = filtered_data.drop([0, 93, 101, 125, 168, 169, 170, 171, 172, 175, 194, 199, 205, 224])
     # Sort TotalConfirmed in descending order
-    sorted_data = df.sort_values(by='TotalRecovered', ascending=False)
+    sorted_data = filtered_data.sort_values(by='TotalRecovered', ascending=False)
     # Convert the DataFrame to a dictionary
     df_dict = sorted_data.to_dict(orient='records')
     
