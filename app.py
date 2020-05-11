@@ -21,13 +21,13 @@ def index():
 
     df = pd.DataFrame(summary_json['Countries'])
     # Drop redundant records obtained from API
-    cleaned_data = df.drop([0, 93, 125, 168, 169, 170, 171, 172, 175, 194, 199, 205, 224])
+    # cleaned_data = df.drop([0, 93, 125, 168, 169, 170, 171, 172, 175, 194, 199, 205, 224])
     # Order countries in alphabetical order
-    ordered_df = cleaned_data.sort_values('Country', ascending=True)
+    ordered_df = df.sort_values('Country', ascending=True)
     # Show totals for all columns
-    total = cleaned_data.sum(axis=0)
+    total = df.sum(axis=0)
     # Convert the DataFrame to a dictionary
-    df_dict = ordered_df.to_dict(orient='records')
+    df_dict = df.to_dict(orient='records')
 
     return render_template('index.html', data=df_dict, total=total)
 
