@@ -14,7 +14,7 @@ load_dotenv()
 
 """ Routing logic """
 
-# Routing/Controller logic for home page/summary data
+# Route for home page/summary data
 @app.route('/')
 @app.route('/home')
 def index():
