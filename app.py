@@ -6,11 +6,10 @@ from os import getenv, remove
 from datetime import date
 from config import summary_json, app, ENV
 import pandas as pd
-
+import numpy as np
 
 # Load environment variables from local .env file
-load_dotenv() 
-
+load_dotenv()
 
 """ Routing logic """
 
@@ -44,13 +43,16 @@ def about():
 def cases():
 
     df = pd.DataFrame(summary_json['Countries'])
+
     # Show only "NewConfirmed" and "TotalConfirmed", and countries names
-    filtered_data = df.filter(items=['Country', 'NewConfirmed', 'TotalConfirmed'])
+    filtered_data = df.filter(items=['Country', 'NewConfirmed', 'TotalConfirmed', 'Rank'])
     # Sort TotalConfirmed in descending order
     sorted_data = filtered_data.sort_values(by='TotalConfirmed', ascending=False)
+    # Create a column to show a countries rank in no. of cases
+    sorted_data['Rank'] = np.arange(start=1, stop=int(len(df))+1)
     # Convert the DataFrame to a dictionary
     df_dict = sorted_data.to_dict(orient='records')
-    
+
     return render_template('cases.html', data=df_dict)
 
 
@@ -63,9 +65,11 @@ def deaths():
     filtered_data = df.filter(items=['Country', 'NewDeaths', 'TotalDeaths'])
     # Sort TotalConfirmed in descending order
     sorted_data = filtered_data.sort_values(by='TotalDeaths', ascending=False)
+    # Create a column to show a countries rank in no. of deaths
+    sorted_data['Rank'] = np.arange(start=1, stop=int(len(df))+1)
     # Convert the DataFrame to a dictionary
     df_dict = sorted_data.to_dict(orient='records')
-    
+
     return render_template('deaths.html', data=df_dict)
 
 
@@ -78,9 +82,13 @@ def recoveries():
     filtered_data = df.filter(items=['Country', 'NewRecovered', 'TotalRecovered'])
     # Sort TotalConfirmed in descending order
     sorted_data = filtered_data.sort_values(by='TotalRecovered', ascending=False)
+    # Create a column to show a countries rank in no. of recoveries
+    sorted_data['Rank'] = np.arange(start=1, stop=int(len(df))+1)
     # Convert the DataFrame to a dictionary
     df_dict = sorted_data.to_dict(orient='records')
-    
+    # Convert the DataFrame to a dictionary
+    df_dict = sorted_data.to_dict(orient='records')
+
     return render_template('recoveries.html', data=df_dict)
 
 
@@ -88,7 +96,7 @@ def recoveries():
 # Route to show data in a specific country, by date
 @app.route('/<string:country>')
 def country_cases(country):
-
+    
     # Define API endpoint, and fetch data
     endpoint = get(f'https://api.covid19api.com/live/country/{country}')
     data = endpoint.json()
@@ -132,11 +140,13 @@ def download_summary():
     # Download the data dump to user's client
     return send_from_directory('dumps/', f'summary_dump_{date.today()}.csv', )
     remove(f'dumps/summary_dump_{date.today()}.csv')
-    
+
 
 """
 Error handling routes
 """
+
+
 # 404 Handler
 @app.errorhandler(404)
 def not_found(error):
@@ -155,13 +165,13 @@ def server_error(error):
 @app.errorhandler(503)
 def five_oh_three_error(error):
 
-    return render_template('503.html'), 503    
+    return render_template('503.html'), 503
 
 
 if __name__ == "__main__":
-    
+
     # Ensure app.run() is only used in development.
     if ENV == "dev":
         app.run(debug=True)
     else:
-        pass 
+        pass
