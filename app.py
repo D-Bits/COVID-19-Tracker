@@ -94,7 +94,7 @@ def recoveries():
 
 # TODO: Format dates to strip out "T00:00:00Z"
 # Route to show data in a specific country, by date
-@app.route('/<string:country>')
+@app.route('/country/<string:country>')
 def country_cases(country):
     
     # Define API endpoint, and fetch data
@@ -129,10 +129,9 @@ def country_history(country):
 def download_summary():
 
     df = pd.DataFrame(summary_json['Countries'])
-    # Drop redundant records obtained from API
-    cleaned_data = df.drop([0, 93, 101, 125, 168, 169, 170, 171, 172, 175, 194, 199, 205, 224])
+
     # Order countries in alphabetical order
-    ordered_df = cleaned_data.sort_values('Country', ascending=True)
+    ordered_df = df.sort_values('Country', ascending=True)
     # Dump the DataFrame to a CSV file, in a location of the user's choosing
     filename = f"dumps/summary_dump_{date.today()}.csv"
     ordered_df.to_csv(filename, sep=",")
