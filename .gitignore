@@ -132,3 +132,4 @@ dmypy.json
 delete-list.txt
 testing.py
 .vscode
+.idea/
