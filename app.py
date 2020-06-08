@@ -54,7 +54,7 @@ def cases():
     return render_template('cases.html', data=df_dict)
 
 
-# Route for deaths page 
+# Route for deaths page
 @app.route('/deaths')
 def deaths():
 
@@ -92,14 +92,13 @@ def recoveries():
 # Route to show data in a specific country, by date
 @app.route('/country/<string:country>')
 def country_cases(country):
-    
+
     # Define API endpoint, and fetch data
     endpoint = get(f'https://api.covid19api.com/live/country/{country}')
     data = endpoint.json()
-    df = pd.DataFrame(data).astype({"Date":"datetime64[ns]"})
+    df = pd.DataFrame(data).astype({"Date": "datetime64[ns]"})
     # Sort records from most recent cases to oldest cases
     sorted_data = df.sort_values('Date', ascending=False)
-
     df_dict = sorted_data.to_dict(orient='records')
 
     return render_template('country.html', data=df_dict, nation=country)
