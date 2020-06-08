@@ -15,11 +15,8 @@ Build a web client to analyze and store global data for the SARS2-CoV-2 (Covid 1
 - Requests
 - Flask
 
-## Project Setup
-*** 
-
 ## Running the Client Locally:
-
+***
 Required Technologies:
 
 - Python 3
