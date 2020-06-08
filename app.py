@@ -8,6 +8,7 @@ from config import summary_json, app, ENV
 import pandas as pd
 import numpy as np
 
+
 # Load environment variables from local .env file
 load_dotenv()
 
@@ -86,8 +87,6 @@ def recoveries():
     sorted_data['Rank'] = np.arange(start=1, stop=int(len(df))+1)
     # Convert the DataFrame to a dictionary
     df_dict = sorted_data.to_dict(orient='records')
-    # Convert the DataFrame to a dictionary
-    df_dict = sorted_data.to_dict(orient='records')
 
     return render_template('recoveries.html', data=df_dict)
 
@@ -100,9 +99,10 @@ def country_cases(country):
     # Define API endpoint, and fetch data
     endpoint = get(f'https://api.covid19api.com/live/country/{country}')
     data = endpoint.json()
-    df = pd.DataFrame(data)
+    df = pd.DataFrame(data).astype({"Date":"datetime64[ns]"})
     # Sort records from most recent cases to oldest cases
     sorted_data = df.sort_values('Date', ascending=False)
+
     df_dict = sorted_data.to_dict(orient='records')
 
     return render_template('country.html', data=df_dict, nation=country)
@@ -158,13 +158,6 @@ def not_found(error):
 def server_error(error):
 
     return render_template('500.html'), 500
-
-
-# 503 Handler
-@app.errorhandler(503)
-def five_oh_three_error(error):
-
-    return render_template('503.html'), 503
 
 
 if __name__ == "__main__":
