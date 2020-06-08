@@ -14,9 +14,8 @@ load_dotenv()
 
 """ Routing logic """
 
-# Route for home page/summary data
+# Route for home page/summary data 
 @app.route('/')
-@app.route('/home')
 def index():
 
     df = pd.DataFrame(summary_json['Countries'])
