@@ -20,8 +20,6 @@ load_dotenv()
 def index():
 
     df = pd.DataFrame(summary_json['Countries'])
-    # Drop redundant records obtained from API
-    # cleaned_data = df.drop([0, 93, 125, 168, 169, 170, 171, 172, 175, 194, 199, 205, 224])
     # Order countries in alphabetical order
     ordered_df = df.sort_values('Country', ascending=True)
     # Show totals for all columns
@@ -44,7 +42,6 @@ def about():
 def cases():
 
     df = pd.DataFrame(summary_json['Countries'])
-
     # Show only "NewConfirmed" and "TotalConfirmed", and countries names
     filtered_data = df.filter(items=['Country', 'NewConfirmed', 'TotalConfirmed', 'Rank'])
     # Sort TotalConfirmed in descending order
