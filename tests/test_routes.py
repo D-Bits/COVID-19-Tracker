@@ -43,5 +43,11 @@ class RoutesTests(TestCase):
     # Test country specific cases route, with Benin as an example
     def test_country_cases(self):
         with app.test_client() as tc:
-            response = tc.get('/Benin')
+            response = tc.get('/country/Denmark')
+            self.assertEqual(response.status_code, 200)
+
+    # Test country totals history route
+    def test_country_cases(self):
+        with app.test_client() as tc:
+            response = tc.get('/totals/Brazil')
             self.assertEqual(response.status_code, 200)
