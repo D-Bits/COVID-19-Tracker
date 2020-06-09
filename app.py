@@ -94,12 +94,12 @@ def country_cases(country):
 
     # Define API endpoint, and fetch data
     endpoint = get(f'https://api.covid19api.com/live/country/{country}')
+    # TODO: add error handling for 404s here
     data = endpoint.json()
     df = pd.DataFrame(data).astype({"Date": "datetime64[ns]"})
     # Sort records from most recent cases to oldest cases
     sorted_data = df.sort_values('Date', ascending=False)
     df_dict = sorted_data.to_dict(orient='records')
-
     return render_template('country.html', data=df_dict, nation=country)
 
 
