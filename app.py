@@ -119,6 +119,28 @@ def country_history(country):
     return render_template('totals.html', data=df_dict, nation=country)
 
 
+# Route for showing line graph data for individual countries
+@app.route("/graphs/<string:country>")
+def cases_graph(country):
+
+    # Define API endpoint, and fetch data
+    endpoint = get(f'https://api.covid19api.com/total/country/{country}')
+    data = endpoint.json()
+    df = pd.DataFrame(data)
+    # Sort records from most recent cases to oldest cases
+    sorted_data = df.sort_values('Date', ascending=False)
+    cases = sorted_data["Confirmed"]
+    cases_dict = sorted_data.to_dict(orient='dict')
+
+    cases_cds = ColumnDataSource(data=cases)
+    
+
+    cases_fig = figure(xy_range=cases_cds, plot_width=600, plot_height=600, title="Case")
+    chart = cases_fig.line("Time", "Cases")
+
+    return render_template("graphs.html", nation=country, chart=chart)
+
+
 # Download data from summary endpoint, and save to CSV
 @app.route(f"/dumps/covid19_summary_{date.today()}.csv")
 def download_summary():
