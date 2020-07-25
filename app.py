@@ -1,5 +1,7 @@
 from flask import Flask, render_template, send_from_directory
 from werkzeug.exceptions import HTTPException, NotFound, InternalServerError
+from bokeh.plotting import figure
+from bokeh.models import ColumnDataSource
 from dotenv import load_dotenv
 from requests import get
 from os import getenv, remove
@@ -120,7 +122,7 @@ def country_history(country):
 
 
 # Route for showing line graph data for individual countries
-@app.route("/graphs/<string:country>")
+@app.route("/graphs/cases/<string:country>")
 def cases_graph(country):
 
     # Define API endpoint, and fetch data
@@ -135,7 +137,7 @@ def cases_graph(country):
     cases_cds = ColumnDataSource(data=cases)
     
 
-    cases_fig = figure(xy_range=cases_cds, plot_width=600, plot_height=600, title="Case")
+    cases_fig = figure(y_range=str(sorted_data), plot_width=600, plot_height=600, title="Case")
     chart = cases_fig.line("Time", "Cases")
 
     return render_template("graphs.html", nation=country, chart=chart)
