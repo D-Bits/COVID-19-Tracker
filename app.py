@@ -7,12 +7,13 @@ from datetime import date
 from config import summary_json, app, ENV
 import pandas as pd
 import numpy as np
+from bokeh.plotting import figure, output_file
+from bokeh.models import ColumnDataSource
 
 
-# Load environment variables from local .env file
-load_dotenv()
-
-""" Routing logic """
+""" 
+Routing logic 
+"""
 
 # Route for home page/summary data 
 @app.route('/')
@@ -94,7 +95,7 @@ def country_cases(country):
 
     # Define API endpoint, and fetch data
     endpoint = get(f'https://api.covid19api.com/live/country/{country}')
-    # TODO: add error handling for 404s here
+    # TODO: Add error handling for 404s here
     data = endpoint.json()
     df = pd.DataFrame(data).astype({"Date": "datetime64[ns]"})
     # Sort records from most recent cases to oldest cases
@@ -139,8 +140,6 @@ def download_summary():
 """
 Error handling routes
 """
-
-
 # 404 Handler
 @app.errorhandler(404)
 def not_found(error):
@@ -159,6 +158,6 @@ if __name__ == "__main__":
 
     # Ensure app.run() is only used in development.
     if ENV == "dev":
-        app.run(debug=True)
+        app.run(debug=True, load_dotenv=True)
     else:
         pass
