@@ -1,7 +1,8 @@
 from flask import Flask, render_template, send_from_directory
 from werkzeug.exceptions import HTTPException, NotFound, InternalServerError
 from bokeh.plotting import figure
-from bokeh.models import ColumnDataSource
+from bokeh.embed import server_session
+from bokeh.client import pull_session
 from dotenv import load_dotenv
 from requests import get
 from os import getenv, remove
@@ -10,9 +11,6 @@ from config import summary_json, app, ENV
 import pandas as pd
 import numpy as np
 
-
-# Load environment variables from local .env file
-load_dotenv()
 
 """ Routing logic """
 
@@ -129,18 +127,13 @@ def cases_graph(country):
     endpoint = get(f'https://api.covid19api.com/total/country/{country}')
     data = endpoint.json()
     df = pd.DataFrame(data)
-    # Sort records from most recent cases to oldest cases
-    sorted_data = df.sort_values('Date', ascending=False)
-    cases = sorted_data["Confirmed"]
-    cases_dict = sorted_data.to_dict(orient='dict')
 
-    cases_cds = ColumnDataSource(data=cases)
-    
+    fig = figure()
+    x = df["Date"]
+    y = df["Confirmed"]
+    graph = fig.line(x, y, line_width=2)
 
-    cases_fig = figure(y_range=str(sorted_data), plot_width=600, plot_height=600, title="Case")
-    chart = cases_fig.line("Time", "Cases")
-
-    return render_template("graphs.html", nation=country, chart=chart)
+    return render_template("cases_graphs.html", nation=country, chart=graph)
 
 
 # Download data from summary endpoint, and save to CSV
@@ -156,7 +149,7 @@ def download_summary():
     ordered_df.to_csv(filename, sep=",")
 
     # Download the data dump to user's client
-    return send_from_directory('dumps/', f'summary_dump_{date.today()}.csv', )
+    return send_from_directory('dumps/', f'summary_dump_{date.today()}.csv')
     remove(f'dumps/summary_dump_{date.today()}.csv')
 
 
@@ -183,6 +176,6 @@ if __name__ == "__main__":
 
     # Ensure app.run() is only used in development.
     if ENV == "dev":
-        app.run(debug=True)
+        app.run(debug=True, load_dotenv=True)
     else:
         pass
