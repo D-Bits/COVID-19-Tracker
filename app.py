@@ -120,6 +120,27 @@ def country_history(country):
     return render_template('totals.html', data=df_dict, nation=country)
 
 
+# Show percentage of case, deaths, and recoveries that countries constitute
+@app.route('/percentages')
+def percentages():
+
+    countries = pd.DataFrame(summary_json["Countries"])
+
+    names = countries["Country"]
+    cases_percentages = round(countries['TotalConfirmed'].div(summary_json['Global']['TotalConfirmed']), 2)
+    deaths_percentages = round(countries['TotalDeaths'].div(summary_json['Global']['TotalDeaths']), 2)
+    recoveries_percentages = round(countries['TotalRecovered'].div(summary_json['Global']['TotalRecovered']), 2)
+    new_cases = round(countries['NewConfirmed'].div(summary_json['Global']['NewConfirmed']), 2)
+    new_deaths = round(countries['NewDeaths'].div(summary_json['Global']['NewDeaths']), 2)
+    new_recoveries = round(countries['NewRecovered'].div(summary_json['Global']['NewRecovered']), 2)
+
+    df_list = [names, cases_percentages, deaths_percentages, recoveries_percentages, new_cases, new_deaths, new_recoveries]
+    merged_df = pd.concat(df_list, axis=1)
+    merged_df_dict = merged_df.to_dict(orient='records')
+
+    return render_template("percentages.html", data=merged_df_dict)
+
+
 # Download data from summary endpoint, and save to CSV
 @app.route(f"/dumps/covid19_summary_{date.today()}.csv")
 def download_summary():

@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block title %}Proportions {% endblock %}
+
+{% block content %}
+                 
+<h2>Worldwide Proportions</h2>
+
+    <div class="data-table">
+        <table class="table table-striped">
+
+            <thead>
+                    <tr>
+                        <th class="header-row">Country</th>
+                        <th class="header-row">Percentage of New Cases</th>
+                        <th class="header-row">Percentage of Total Cases</th>
+                        <th class="header-row">Percentage of New Deaths</th>
+                        <th class="header-row">Percentage of Total Deaths</th>
+                        <th class="header-row">Percentage of New Recovered</th>
+                        <th class="header-row">Percentage of Total Recovered</th>
+                    </tr>  
+            </thead>
+            {% for nation in data %}
+                <!--Table for summary data-->
+                <tbody>
+                    <tr>
+                        <td><a href="{{ url_for('country_history', country=nation.Country )}}">{{nation.Country}}</a></td>
+                        <td>{{nation.NewConfirmed}}</td>
+                        <td>{{nation.TotalConfirmed}}</td>
+                        <td>{{nation.NewDeaths}}</td>
+                        <td>{{nation.TotalDeaths}}</td>
+                        <td>{{nation.NewRecovered}}</td>
+                        <td>{{nation.TotalRecovered}}</td>
+                    </tr>
+                </tbody>
+            {% endfor %}
+        </table>   
+    </div>
+        
+{% endblock %}
+ 

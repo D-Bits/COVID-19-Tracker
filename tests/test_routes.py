@@ -64,3 +64,11 @@ class RoutesTests(TestCase):
             
             response = tc.get('/totals/Brazil')
             self.assertEqual(response.status_code, 200)
+
+    # Test percentages route
+    def test_percentages_route(self):
+
+        with app.test_client() as tc:
+
+            response = tc.get('/percentages')
+            self.assertEqual(response.status_code, 200)
