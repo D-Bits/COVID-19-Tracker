@@ -1,14 +1,12 @@
 # COVID-19-Tracker
 
-A client for tracking the novel corona virus, and various other tools for it.
+A client for tracking the novel coronavirus, and various other tools for it.
 
 ## Project Goal
-***
 
-Build a web client to analyze and store global data for the SARS2-CoV-2 (Covid 19) pandemic, using [Postman's APIs](https://documenter.getpostman.com/view/10808728/SzS8rjbc?version=latest). This started out as a simple console program to obtain, and analyze data. It has since evolved into a Flask application.
+Build a web client to analyze and store global data for the SARS2-CoV-2 (COVID-19) pandemic, using [Postman's APIs](https://documenter.getpostman.com/view/10808728/SzS8rjbc?version=latest). This started out as a simple console program to obtain, and analyze data. It has since evolved into a Flask application.
 
 ## Core Tools
-***
 
 - Python 3
 - Pandas
@@ -16,7 +14,7 @@ Build a web client to analyze and store global data for the SARS2-CoV-2 (Covid 1
 - Flask
 
 ## Running the Client Locally:
-***
+
 Required Technologies:
 
 - Python 3
@@ -39,7 +37,6 @@ Steps:
 This client now also comes with some basic command line interface (CLI) tools, for users running the client locally. To use the CLI tools, activate your `venv`, run `cli.py` from the root of the project directory, and simply follow the prompts.
 
 ## Future Goals
-***
 
 - More statistics and data
 - Implement data visualization.
