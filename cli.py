@@ -19,7 +19,6 @@ choices = {
     2: "Write the summary data to a Postgres db.",
 }
 
-
 # Dump summary data to a CSV file, in a directory of the user's choosing
 def csv_dump(location):
 
