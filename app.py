@@ -5,10 +5,11 @@ from requests import get
 from os import getenv, remove
 from datetime import date
 from config import summary_json, app, ENV
-import pandas as pd
-import numpy as np
 from bokeh.plotting import figure, output_file
 from bokeh.models import ColumnDataSource
+from bokeh.embed import components
+import pandas as pd
+import numpy as np
 
 
 """ 
@@ -101,6 +102,7 @@ def country_cases(country):
     # Sort records from most recent cases to oldest cases
     sorted_data = df.sort_values('Date', ascending=False)
     df_dict = sorted_data.to_dict(orient='records')
+    
     return render_template('country.html', data=df_dict, nation=country)
 
 
