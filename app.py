@@ -7,11 +7,13 @@ from dotenv import load_dotenv
 from requests import get
 from os import getenv, remove
 from datetime import date
+from bokeh.plotting import figure, output_file
+from io import StringIO
+from base64 import b64encode
 from config import summary_json, app, ENV
 import pandas as pd
 import numpy as np
-from bokeh.plotting import figure, output_file
-from bokeh.models import ColumnDataSource
+import seaborn as sns
 
 
 """ Routing logic """
@@ -129,13 +131,14 @@ def cases_graph(country):
     endpoint = get(f'https://api.covid19api.com/total/country/{country}')
     data = endpoint.json()
     df = pd.DataFrame(data)
+    # Create the graph and export it to a file where it can be rendered in a template
+    graph = sns.lineplot(x=df["Date"], y=df["Confirmed"], data=df)
+    img = StringIO()
+    img.seek(0)
+    graph_url = "static/country_cases.png"
+    graph.figure.savefig(graph_url)
 
-    fig = figure()
-    x = df["Date"]
-    y = df["Confirmed"]
-    graph = fig.line(x, y, line_width=2)
-
-    return render_template("cases_graphs.html", nation=country, chart=graph)
+    return render_template("cases_graphs.html", nation=country, chart=graph_url)
 
 
 # Download data from summary endpoint, and save to CSV

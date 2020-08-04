@@ -4,6 +4,6 @@
 
 {% block content %}
 
-    <img src="{{ graph|safe }}.png" alt="" srcset="">
+    <img src="{{ url_for('static', filename='country_cases.png') }}">
 
 {% endblock %}
