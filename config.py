@@ -25,4 +25,3 @@ Define API endpoints
 # All available data, for all countries 
 summary = get("https://api.covid19api.com/summary")
 summary_json = summary.json()
-

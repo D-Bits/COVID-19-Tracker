@@ -4,6 +4,34 @@
 
 {% block content %}
 
-    <img src="{{ url_for('static', filename='country_cases.png') }}">
+    <!--Load Chart.js from CDNs-->
+    <script src="https://cdnjs.com/libraries/Chart.js"></script>
+
+    <script>
+
+        var chartId = document.getElementById("chart");
+
+        var chartOptions = {
+            legend: {
+                display: true,
+                position: "top",
+                labels: {
+                    boxWidth: 80,
+                    fontColor: 'black'
+                }
+            }
+        };
+
+        var casesChart = new Chart(chartId, {
+            type: "line",
+            data: "{{ data }}",
+            options: chartOptions
+        });
+
+    </script>
+
+    <!--Render chart in this canvas-->
+    <canvas id="chart" width="800" height="450"></canvas>
+
 
 {% endblock %}

@@ -1,19 +1,23 @@
 from flask import Flask, render_template, send_from_directory
 from werkzeug.exceptions import HTTPException, NotFound, InternalServerError
-from bokeh.plotting import figure
-from bokeh.embed import server_session
-from bokeh.client import pull_session
+#from bokeh.embed import server_session
+#from bokeh.client import pull_session
 from dotenv import load_dotenv
 from requests import get
 from os import getenv, remove
 from datetime import date
-from bokeh.plotting import figure, output_file
+#from bokeh.plotting import figure, output_file
+#from bokeh.embed import file_html, server_session
+#from bokeh.resources import CDN
+#from bokeh.io import save, export_png
+from json import dumps
 from io import StringIO
-from base64 import b64encode
+from plotly import express as px
+from plotly.utils import PlotlyJSONEncoder
 from config import summary_json, app, ENV
 import pandas as pd
 import numpy as np
-import seaborn as sns
+import plotly
 
 
 """ Routing logic """
@@ -98,12 +102,12 @@ def country_cases(country):
 
     # Define API endpoint, and fetch data
     endpoint = get(f'https://api.covid19api.com/live/country/{country}')
-    # TODO: Add error handling for 404s here
     data = endpoint.json()
     df = pd.DataFrame(data).astype({"Date": "datetime64[ns]"})
     # Sort records from most recent cases to oldest cases
     sorted_data = df.sort_values('Date', ascending=False)
     df_dict = sorted_data.to_dict(orient='records')
+
     return render_template('country.html', data=df_dict, nation=country)
 
 
@@ -131,14 +135,10 @@ def cases_graph(country):
     endpoint = get(f'https://api.covid19api.com/total/country/{country}')
     data = endpoint.json()
     df = pd.DataFrame(data)
-    # Create the graph and export it to a file where it can be rendered in a template
-    graph = sns.lineplot(x=df["Date"], y=df["Confirmed"], data=df)
-    img = StringIO()
-    img.seek(0)
-    graph_url = "static/country_cases.png"
-    graph.figure.savefig(graph_url)
+    # Cast the DataFrame to a JSON string so it can be loaded into d3.js charts
+    df_json = df.to_json()
 
-    return render_template("cases_graphs.html", nation=country, chart=graph_url)
+    return render_template("cases_graphs.html", nation=country, data=df_json)
 
 
 # Download data from summary endpoint, and save to CSV
