@@ -71,4 +71,10 @@ class RoutesTests(TestCase):
         with app.test_client() as tc:
 
             response = tc.get('/percentages')
+    # Test country case history graph route
+    def test_cases_graph(self):
+
+        with app.test_client() as tc:
+            
+            response = tc.get('/graphs/cases/United States of America')
             self.assertEqual(response.status_code, 200)

@@ -129,7 +129,9 @@ dmypy.json
 .pyre/
 .vscode/settings.json
 
+# Project-specific files
 delete-list.txt
 testing.py
 .vscode
 .idea/
+testing.ipynb

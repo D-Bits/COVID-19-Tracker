@@ -7,7 +7,7 @@
 <h2>{{nation}} Total Cases History</h2>
 
 
-<h4><a href="{{ url_for('country_cases', country=nation )}}">View Cases per Province/State for This Country</a></h4>
+<h4><a href="{{ url_for('cases_graph', country=nation )}}">View Case History Chart for {{nation}}</a></h4>
 
 <div class="data-table">
     <table class="table table-striped">
@@ -16,6 +16,7 @@
             <tr>
                 <th class="header-row">Date</th>
                 <th class="header-row">Total Cases</th>
+                <th class="header-row">Current Active Cases</th>
                 <th class="header-row">Total Deaths</th>
                 <th class="header-row">Total Recoveries</th>
             </tr>
@@ -26,6 +27,7 @@
             <tr>
                 <td>{{record.Date}}</td>
                 <td>{{record.Confirmed}}</td>
+                <td>{{record.Active}}</td>
                 <td>{{record.Deaths}}</td>
                 <td>{{record.Recovered}}</td>
             </tr>

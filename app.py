@@ -4,17 +4,27 @@ from dotenv import load_dotenv
 from requests import get
 from os import getenv, remove
 from datetime import date
+from bokeh.plotting import figure, output_file
+from bokeh.embed import file_html, json_item, components
+from bokeh.models import ColumnDataSource
+from bokeh.io import save, export_png
+from json import dumps
+from plotly.utils import PlotlyJSONEncoder
 from config import summary_json, app, ENV
 from bokeh.plotting import figure, output_file
 from bokeh.models import ColumnDataSource
 from bokeh.embed import components
 import pandas as pd
 import numpy as np
+from mpld3 import fig_to_html
+from matplotlib import pyplot as plt
+import plotly.express as px
+import pandas as pd
+import numpy as np
+import json
 
 
-""" 
-Routing logic 
-"""
+""" Routing logic """
 
 # Route for home page/summary data 
 @app.route('/')
@@ -96,13 +106,13 @@ def country_cases(country):
 
     # Define API endpoint, and fetch data
     endpoint = get(f'https://api.covid19api.com/live/country/{country}')
-    # TODO: Add error handling for 404s here
     data = endpoint.json()
     df = pd.DataFrame(data).astype({"Date": "datetime64[ns]"})
     # Sort records from most recent cases to oldest cases
     sorted_data = df.sort_values('Date', ascending=False)
     df_dict = sorted_data.to_dict(orient='records')
     
+
     return render_template('country.html', data=df_dict, nation=country)
 
 
@@ -141,6 +151,28 @@ def percentages():
     merged_df_dict = merged_df.to_dict(orient='records')
 
     return render_template("percentages.html", data=merged_df_dict)
+# Route for showing line graph data for individual countries
+@app.route("/graphs/cases/<string:country>")
+def cases_graph(country):
+
+    def create_plot():
+
+        # Define API endpoint, and fetch data
+        endpoint = get(f'https://api.covid19api.com/total/country/{country}')
+        data = endpoint.json()
+        df = pd.DataFrame(data)
+        dates = df["Date"]
+        cases = df["Confirmed"]
+        # Merge the "Date" and "Confirmed" fields into one df
+        merged_df = pd.concat([dates, cases], axis=1)
+
+        graph_data = px.line(data_frame=df, x=df["Date"], y=df["Confirmed"])
+
+        graph_JSON = json.dumps(graph_data, cls=PlotlyJSONEncoder)
+
+        return graph_JSON
+
+    return render_template("cases_graphs.html", nation=country, plot=create_plot())
 
 
 # Download data from summary endpoint, and save to CSV
@@ -156,7 +188,7 @@ def download_summary():
     ordered_df.to_csv(filename, sep=",")
 
     # Download the data dump to user's client
-    return send_from_directory('dumps/', f'summary_dump_{date.today()}.csv', )
+    return send_from_directory('dumps/', f'summary_dump_{date.today()}.csv')
     remove(f'dumps/summary_dump_{date.today()}.csv')
 
 
