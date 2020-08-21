@@ -1,23 +1,22 @@
 from flask import Flask, render_template, send_from_directory
 from werkzeug.exceptions import HTTPException, NotFound, InternalServerError
-#from bokeh.embed import server_session
-#from bokeh.client import pull_session
 from dotenv import load_dotenv
 from requests import get
 from os import getenv, remove
 from datetime import date
-#from bokeh.plotting import figure, output_file
-#from bokeh.embed import file_html, server_session
-#from bokeh.resources import CDN
-#from bokeh.io import save, export_png
+from bokeh.plotting import figure, output_file
+from bokeh.embed import file_html, json_item, components
+from bokeh.models import ColumnDataSource
+from bokeh.io import save, export_png
 from json import dumps
-from io import StringIO
-from plotly import express as px
 from plotly.utils import PlotlyJSONEncoder
 from config import summary_json, app, ENV
+from mpld3 import fig_to_html
+from matplotlib import pyplot as plt
+import plotly.express as px
 import pandas as pd
 import numpy as np
-import plotly
+import json
 
 
 """ Routing logic """
@@ -131,14 +130,24 @@ def country_history(country):
 @app.route("/graphs/cases/<string:country>")
 def cases_graph(country):
 
-    # Define API endpoint, and fetch data
-    endpoint = get(f'https://api.covid19api.com/total/country/{country}')
-    data = endpoint.json()
-    df = pd.DataFrame(data)
-    # Cast the DataFrame to a JSON string so it can be loaded into d3.js charts
-    df_json = df.to_json()
+    def create_plot():
 
-    return render_template("cases_graphs.html", nation=country, data=df_json)
+        # Define API endpoint, and fetch data
+        endpoint = get(f'https://api.covid19api.com/total/country/{country}')
+        data = endpoint.json()
+        df = pd.DataFrame(data)
+        dates = df["Date"]
+        cases = df["Confirmed"]
+        # Merge the "Date" and "Confirmed" fields into one df
+        merged_df = pd.concat([dates, cases], axis=1)
+
+        graph_data = px.line(data_frame=df, x=df["Date"], y=df["Confirmed"])
+
+        graph_JSON = json.dumps(graph_data, cls=PlotlyJSONEncoder)
+
+        return graph_JSON
+
+    return render_template("cases_graphs.html", nation=country, plot=create_plot())
 
 
 # Download data from summary endpoint, and save to CSV

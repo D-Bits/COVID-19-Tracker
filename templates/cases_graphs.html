@@ -4,33 +4,15 @@
 
 {% block content %}
 
-    <!--Load Chart.js from CDNs-->
-    <script src="https://cdnjs.com/libraries/Chart.js"></script>
+    <h2>{{nation}} Case History Chart</h2>
 
-    <script>
+    <div class="chart" id="linegraph">
 
-        var chartId = document.getElementById("chart");
+        <script>
+            var graphs = {{ plot | safe }};
+            Plotly.plot('linegraph', graphs, {});
+        </script>
 
-        var chartOptions = {
-            legend: {
-                display: true,
-                position: "top",
-                labels: {
-                    boxWidth: 80,
-                    fontColor: 'black'
-                }
-            }
-        };
-
-        var casesChart = new Chart(chartId, {
-            type: "line",
-            data: "{{ data }}",
-            options: chartOptions
-        });
-
-    </script>
-
-    <!--Render chart in this canvas-->
-    <canvas id="chart" width="800" height="450"></canvas>
+    </div>
 
 {% endblock %}
