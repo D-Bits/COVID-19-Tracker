@@ -4,20 +4,8 @@ from dotenv import load_dotenv
 from requests import get
 from os import getenv, remove
 from datetime import date
-from bokeh.plotting import figure, output_file
-from bokeh.embed import file_html, json_item, components
-from bokeh.models import ColumnDataSource
-from bokeh.io import save, export_png
-from json import dumps
-from plotly.utils import PlotlyJSONEncoder
 from config import summary_json, app, ENV
-from bokeh.plotting import figure, output_file
-from bokeh.models import ColumnDataSource
-from bokeh.embed import components
-import pandas as pd
-import numpy as np
-from mpld3 import fig_to_html
-from matplotlib import pyplot as plt
+from plotly.utils import PlotlyJSONEncoder
 import plotly.express as px
 import pandas as pd
 import numpy as np
@@ -151,28 +139,37 @@ def percentages():
     merged_df_dict = merged_df.to_dict(orient='records')
 
     return render_template("percentages.html", data=merged_df_dict)
-# Route for showing line graph data for individual countries
-@app.route("/graphs/cases/<string:country>")
-def cases_graph(country):
 
-    def create_plot():
+
+# Route for showing line graph data for individual countries
+@app.route("/graphs/<string:country>")
+def country_graphs(country):
+
+    # Method to generate plots
+    # "field" param can be equal to: "Confirmed", "Recovered", or "Deaths"
+    def gen_plot(country, field):
 
         # Define API endpoint, and fetch data
         endpoint = get(f'https://api.covid19api.com/total/country/{country}')
         data = endpoint.json()
         df = pd.DataFrame(data)
         dates = df["Date"]
-        cases = df["Confirmed"]
+        case_type = df[field]
         # Merge the "Date" and "Confirmed" fields into one df
-        merged_df = pd.concat([dates, cases], axis=1)
+        merged_df = pd.concat([dates, case_type], axis=1)
 
-        graph_data = px.line(data_frame=df, x=df["Date"], y=df["Confirmed"])
-
+        graph_data = px.line(data_frame=df, x=df["Date"], y=df[field])
         graph_JSON = json.dumps(graph_data, cls=PlotlyJSONEncoder)
 
         return graph_JSON
 
-    return render_template("cases_graphs.html", nation=country, plot=create_plot())
+    return render_template(
+        "country_graphs.html", 
+        nation=country, 
+        cases=gen_plot(country, "Confirmed"),
+        deaths=gen_plot(country, "Deaths"),
+        recoveries=gen_plot(country, "Recovered")
+    )
 
 
 # Download data from summary endpoint, and save to CSV
