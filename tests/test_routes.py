@@ -64,3 +64,11 @@ class RoutesTests(TestCase):
             
             response = tc.get('/totals/Brazil')
             self.assertEqual(response.status_code, 200)
+
+    # Test country case history graph route
+    def test_cases_graph(self):
+
+        with app.test_client() as tc:
+            
+            response = tc.get('/graphs/cases/United States of America')
+            self.assertEqual(response.status_code, 200)
