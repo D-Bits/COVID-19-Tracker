@@ -87,26 +87,9 @@ def recoveries():
     return render_template('recoveries.html', data=df_dict)
 
 
-# TODO: Format dates to strip out "T00:00:00Z"
-# Route to show data in a specific country, by date
-@app.route('/country/<string:country>')
-def country_cases(country):
-
-    # Define API endpoint, and fetch data
-    endpoint = get(f'https://api.covid19api.com/live/country/{country}')
-    data = endpoint.json()
-    df = pd.DataFrame(data).astype({"Date": "datetime64[ns]"})
-    # Sort records from most recent cases to oldest cases
-    sorted_data = df.sort_values('Date', ascending=False)
-    df_dict = sorted_data.to_dict(orient='records')
-    
-
-    return render_template('country.html', data=df_dict, nation=country)
-
-
 # Route to show how many cases, deaths, and recoveries a country had for each day, since first confirmed cases
 # TODO: Format dates to strip out "T00:00:00Z"
-@app.route('/totals/<string:country>')
+@app.route('/country/<string:country>')
 def country_history(country):
 
     # Define API endpoint, and fetch data

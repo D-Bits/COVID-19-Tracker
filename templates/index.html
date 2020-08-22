@@ -51,7 +51,7 @@
                 <!--Table for summary data-->
                 <tbody>
                     <tr>
-                        <td class="country_name"><a href="{{ url_for('country_history', country=nation.Slug )}}">{{nation.Slug}}</a></td>
+                        <td class="country_name"><a href="{{ url_for('country_history', country=nation.Slug )}}">{{nation.Country}}</a></td>
                         <td>{{nation.NewConfirmed}}</td>
                         <td>{{nation.TotalConfirmed}}</td>
                         <td>{{nation.NewDeaths}}</td>
