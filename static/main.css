@@ -16,6 +16,9 @@ body {
     color: azure;
 }
 
+.country_name {
+    text-transform: capitalize;
+}
 
 
 .nav-link {
