@@ -176,6 +176,22 @@ def download_summary():
 
 
 """
+Routes for US COVID-19 data
+"""
+
+# Summary of current COVID data for each state
+@app.route("/us/summary")
+def usa_summary():
+
+    data = get("https://covidtracking.com/api/states").json()
+    df = pd.DataFrame(data)
+    # Convert the DataFrame to a dictionary
+    df_dict = df.to_dict(orient='records')
+
+    return render_template("us_summary.html", data=df_dict)
+
+
+"""
 Error handling routes
 """
 # 404 Handler

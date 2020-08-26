@@ -1,4 +1,4 @@
-from world import app, ENV
+from config import app, ENV
 
 
 if __name__ == "__main__":
