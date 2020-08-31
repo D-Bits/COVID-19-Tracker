@@ -151,7 +151,8 @@ def country_graphs(country):
         nation=country, 
         cases=gen_plot(country, "Confirmed"),
         deaths=gen_plot(country, "Deaths"),
-        recoveries=gen_plot(country, "Recovered")
+        recoveries=gen_plot(country, "Recovered"),
+        active=gen_plot(country, "Active")
     )
 
 
