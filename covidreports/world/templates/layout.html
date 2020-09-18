@@ -25,30 +25,27 @@
     </div>
 
     <nav id="navbar" class="navbar navbar-expand-sm bg-dark navbar-dark">
-      <a class="navbar-brand" href="{{ url_for('index')}}">Home</a>
+      <a class="navbar-brand" href="{{ url_for('world.index')}}">Home</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('about')}}">About</a>
+            <a class="nav-link" href="{{ url_for('world.about') }}">About</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('cases')}}">Cases</a>
+            <a class="nav-link" href="{{ url_for('world.cases') }}">Cases</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('deaths')}}">Deaths</a>
+            <a class="nav-link" href="{{ url_for('world.deaths') }}">Deaths</a>
           </li> 
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('recoveries')}}">Recoveries</a>
+            <a class="nav-link" href="{{ url_for('world.recoveries') }}">Recoveries</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('percentages')}}">Percentages</a>
-          </li> 
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('usa_summary')}}">U.S Data</a>
-          </li>         
+            <a class="nav-link" href="{{ url_for('world.percentages') }}">Percentages</a>
+          </li>        
         </ul>
       </div>  
     </nav>

@@ -4,8 +4,6 @@ from dotenv import load_dotenv
 from requests import get
 from os import getenv, remove
 from datetime import date
-from world import summary_json, app
-from app import app
 from plotly.utils import PlotlyJSONEncoder
 import plotly.express as px
 import pandas as pd
@@ -13,7 +11,7 @@ import numpy as np
 import json
 
 
-# Define Blueprints for packages
+# Define Blueprint for world data
 world_bp = Blueprint(
     'world', 
     __name__, 
@@ -21,6 +19,9 @@ world_bp = Blueprint(
     static_folder='static'
 )
 
+# All available data, for all countries 
+summary = get("https://api.covid19api.com/summary")
+summary_json = summary.json()
 
 """ Routing logic """
 
@@ -47,7 +48,7 @@ def about():
 
 
 # Route for cases page
-@world.route('/cases')
+@world_bp.route('/cases')
 def cases():
 
     df = pd.DataFrame(summary_json['Countries'])
@@ -66,7 +67,7 @@ def cases():
 
 
 # Route for deaths page
-@world.route('/deaths')
+@world_bp.route('/deaths')
 def deaths():
 
     df = pd.DataFrame(summary_json['Countries'])
@@ -83,7 +84,7 @@ def deaths():
 
 
 # Routing logic for recoveries
-@world.route('/recoveries')
+@world_bp.route('/recoveries')
 def recoveries():
 
     df = pd.DataFrame(summary_json['Countries'])
@@ -103,7 +104,7 @@ def recoveries():
 
 # Route to show how many cases, deaths, and recoveries a country had for each day, since first confirmed cases
 # TODO: Format dates to strip out "T00:00:00Z"
-@world.route('/country/<string:country>')
+@world_bp.route('/country/<string:country>')
 def country_history(country):
 
     # Define API endpoint, and fetch data
@@ -118,7 +119,7 @@ def country_history(country):
 
 
 # Show percentage of case, deaths, and recoveries that countries constitute
-@world.route('/percentages')
+@world_bp.route('/percentages')
 def percentages():
 
     df = pd.DataFrame(summary_json["Countries"])
@@ -146,7 +147,7 @@ def percentages():
 
 
 # Route for showing line graph data for individual countries
-@world.route("/graphs/<string:country>")
+@world_bp.route("/graphs/<string:country>")
 def country_graphs(country):
 
     # Method to generate plots
@@ -178,7 +179,7 @@ def country_graphs(country):
 
 
 # Download data from summary endpoint, and save to CSV
-@world.route(f"/dumps/covid19_summary_{date.today()}.csv")
+@world_bp.route(f"/dumps/covid19_summary_{date.today()}.csv")
 def download_summary():
 
     df = pd.DataFrame(summary_json['Countries'])
@@ -200,14 +201,14 @@ Error handling routes
 # 404 Handler
 
 
-@world.errorhandler(404)
+@world_bp.errorhandler(404)
 def not_found(error):
 
     return render_template('404.html'), 404
 
 
 # 500 Handler
-@world.errorhandler(500)
+@world_bp.errorhandler(500)
 def server_error(error):
 
     return render_template('500.html'), 500

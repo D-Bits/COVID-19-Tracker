@@ -10,9 +10,3 @@ load_dotenv()
 # Create a SQL Alchemy engine for the db
 engine = create_engine(getenv("ENGINE_STRING"))
 
-"""
-Define API endpoints
-"""
-# All available data, for all countries 
-summary = get("https://api.covid19api.com/summary")
-summary_json = summary.json()
