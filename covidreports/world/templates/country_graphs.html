@@ -10,6 +10,17 @@
     
     <br>
 
+    <h2>Active Cases History Chart</h2>
+
+    <div class="chart" id="active">
+
+        <script>
+            var graphs = {{ active | safe }};
+            Plotly.plot('active', graphs, {});
+        </script>
+
+    </div>
+
     <h2>Cases History Chart</h2>
 
     <div class="chart" id="cases">

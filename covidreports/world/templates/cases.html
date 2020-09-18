@@ -22,7 +22,7 @@
             <tbody>
                 <tr>
                     <td>{{nation.Rank}}</td>
-                    <td class="country_name"><a href="{{ url_for('country_history', country=nation.Country)}}">{{nation.Country}}</a></td>
+                    <td class="country_name"><a href="{{ url_for('world.country_history', country=nation.Country)}}">{{nation.Country}}</a></td>
                     <td>{{nation.TotalConfirmed}}</td>
                     <td>{{nation.NewConfirmed}}</td>
                 </tr>
