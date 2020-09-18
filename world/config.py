@@ -10,7 +10,7 @@ from flask import Flask, Blueprint
 load_dotenv()
 
 # Define Blueprints for packages
-world = Blueprint('world', __name__, template_folder="templates")
+world_blueprint = Blueprint('world', __name__, template_folder="templates")
 
 # Create a SQL Alchemy engine for the db
 engine = create_engine(getenv("ENGINE_STRING"))
