@@ -38,5 +38,6 @@ This client now also comes with some basic command line interface (CLI) tools, f
 
 ## Future Goals
 
+- Reorganize code base for better maintainability.
 - More statistics and data
 - Implement data visualization.
