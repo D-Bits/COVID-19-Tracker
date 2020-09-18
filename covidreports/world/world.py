@@ -4,7 +4,8 @@ from dotenv import load_dotenv
 from requests import get
 from os import getenv, remove
 from datetime import date
-from .config import summary_json, world
+from world import summary_json, app
+from app import app
 from plotly.utils import PlotlyJSONEncoder
 import plotly.express as px
 import pandas as pd
@@ -12,10 +13,19 @@ import numpy as np
 import json
 
 
+# Define Blueprints for packages
+world_bp = Blueprint(
+    'world', 
+    __name__, 
+    template_folder="templates",
+    static_folder='static'
+)
+
+
 """ Routing logic """
 
-# Route for home page/summary data 
-@world.route('/')
+# Route for home page/summary data
+@world_bp.route('/')
 def index():
 
     df = pd.DataFrame(summary_json['Countries'])
@@ -30,7 +40,7 @@ def index():
 
 
 # Route for about page
-@world.route('/about')
+@world_bp.route('/about')
 def about():
 
     return render_template('about.html')
@@ -42,9 +52,11 @@ def cases():
 
     df = pd.DataFrame(summary_json['Countries'])
     # Show only "NewConfirmed" and "TotalConfirmed", and countries names
-    filtered_data = df.filter(items=['Country', 'NewConfirmed', 'TotalConfirmed', 'Rank'])
+    filtered_data = df.filter(
+        items=['Country', 'NewConfirmed', 'TotalConfirmed', 'Rank'])
     # Sort TotalConfirmed in descending order
-    sorted_data = filtered_data.sort_values(by='TotalConfirmed', ascending=False)
+    sorted_data = filtered_data.sort_values(
+        by='TotalConfirmed', ascending=False)
     # Create a column to show a countries rank in no. of cases
     sorted_data['Rank'] = np.arange(start=1, stop=int(len(df))+1)
     # Convert the DataFrame to a dictionary
@@ -76,9 +88,11 @@ def recoveries():
 
     df = pd.DataFrame(summary_json['Countries'])
     # Show only "NewDeaths" and "TotalDeaths", and countries names
-    filtered_data = df.filter(items=['Country', 'NewRecovered', 'TotalRecovered'])
+    filtered_data = df.filter(
+        items=['Country', 'NewRecovered', 'TotalRecovered'])
     # Sort TotalConfirmed in descending order
-    sorted_data = filtered_data.sort_values(by='TotalRecovered', ascending=False)
+    sorted_data = filtered_data.sort_values(
+        by='TotalRecovered', ascending=False)
     # Create a column to show a countries rank in no. of recoveries
     sorted_data['Rank'] = np.arange(start=1, stop=int(len(df))+1)
     # Convert the DataFrame to a dictionary
@@ -110,14 +124,21 @@ def percentages():
     df = pd.DataFrame(summary_json["Countries"])
 
     names = df["Country"]
-    cases_percentages = round(df['TotalConfirmed'].div(summary_json['Global']['TotalConfirmed']), 2)
-    deaths_percentages = round(df['TotalDeaths'].div(summary_json['Global']['TotalDeaths']), 2)
-    recoveries_percentages = round(df['TotalRecovered'].div(summary_json['Global']['TotalRecovered']), 2)
-    new_cases = round(df['NewConfirmed'].div(summary_json['Global']['NewConfirmed']), 2)
-    new_deaths = round(df['NewDeaths'].div(summary_json['Global']['NewDeaths']), 2)
-    new_recoveries = round(df['NewRecovered'].div(summary_json['Global']['NewRecovered']), 2)
+    cases_percentages = round(df['TotalConfirmed'].div(
+        summary_json['Global']['TotalConfirmed']), 2)
+    deaths_percentages = round(df['TotalDeaths'].div(
+        summary_json['Global']['TotalDeaths']), 2)
+    recoveries_percentages = round(df['TotalRecovered'].div(
+        summary_json['Global']['TotalRecovered']), 2)
+    new_cases = round(df['NewConfirmed'].div(
+        summary_json['Global']['NewConfirmed']), 2)
+    new_deaths = round(df['NewDeaths'].div(
+        summary_json['Global']['NewDeaths']), 2)
+    new_recoveries = round(df['NewRecovered'].div(
+        summary_json['Global']['NewRecovered']), 2)
 
-    df_list = [names, cases_percentages, deaths_percentages, recoveries_percentages, new_cases, new_deaths, new_recoveries]
+    df_list = [names, cases_percentages, deaths_percentages,
+               recoveries_percentages, new_cases, new_deaths, new_recoveries]
     merged_df = pd.concat(df_list, axis=1)
     merged_df_dict = merged_df.to_dict(orient='records')
 
@@ -147,8 +168,8 @@ def country_graphs(country):
         return graph_JSON
 
     return render_template(
-        "country_graphs.html", 
-        nation=country, 
+        "country_graphs.html",
+        nation=country,
         cases=gen_plot(country, "Confirmed"),
         deaths=gen_plot(country, "Deaths"),
         recoveries=gen_plot(country, "Recovered"),
@@ -177,6 +198,8 @@ def download_summary():
 Error handling routes
 """
 # 404 Handler
+
+
 @world.errorhandler(404)
 def not_found(error):
 
