@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 from requests import get
 from os import getenv, remove
 from datetime import date
-from config import summary_json, world
+from .config import summary_json, world
 from plotly.utils import PlotlyJSONEncoder
 import plotly.express as px
 import pandas as pd

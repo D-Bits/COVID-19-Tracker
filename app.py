@@ -1,7 +1,7 @@
 from flask import Flask
 from os import getenv
 from dotenv import load_dotenv
-from world.config import world_blueprint
+from world import world_blueprint
 
 
 # Load environment type from environment var
