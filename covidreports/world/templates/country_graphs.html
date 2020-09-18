@@ -8,6 +8,17 @@
         <h1 class="country_name">{{nation}} Data Visualizations</h1>
     </div>
     
+    <h2>Active Cases History Chart</h2>
+
+    <div class="chart" id="active">
+
+        <script>
+            var graphs = {{ active | safe }};
+            Plotly.plot('active', graphs, {});
+        </script>
+
+    </div>
+
     <br>
 
     <h2>Total Cases History Chart</h2>
@@ -17,17 +28,6 @@
         <script>
             var graphs = {{ cases | safe }};
             Plotly.plot('cases', graphs, {});
-        </script>
-
-    </div>
-
-    <h2>Active Cases History Chart</h2>
-
-    <div class="chart" id="active">
-
-        <script>
-            var graphs = {{ active | safe }};
-            Plotly.plot('active', graphs, {});
         </script>
 
     </div>

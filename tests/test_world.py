@@ -2,11 +2,11 @@ from unittest import TestCase
 from app import app
 
 """
-Unit testing for routes
+Unit testing for routes in World blueprint
 """
 
 
-class RoutesTests(TestCase):
+class WorldRoutesTests(TestCase):
 
     # Test index route(s) returns a 200 response
     def test_index_route(self):
@@ -15,7 +15,6 @@ class RoutesTests(TestCase):
 
             response = tc.get('/')
             self.assertEqual(response.status_code, 200)
-
 
     # Test about page route
     def test_about_route(self):

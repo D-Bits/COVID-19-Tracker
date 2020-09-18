@@ -1,10 +1,10 @@
 {% extends "layout.html" %}
 
-{% block title %}Cases {% endblock %}
+{% block title %}Recoveries {% endblock %}
 
 {% block content %}
 
-<h2>Cases by Country</h2>
+<h2>Recoveries by Country</h2>
 
     <div class="data-table">
         <table class="table table-striped">
@@ -13,8 +13,8 @@
                 <tr>
                     <th class="header-row">Rank</th>
                     <th class="header-row">Country</th>
-                    <th class="header-row">Total Confirmed</th>
-                    <th class="header-row">New Confirmed</th>
+                    <th class="header-row">Total Recoveries</th>
+                    <th class="header-row">New Recoveries</th>
                 </tr>
             </thead>
             
@@ -22,14 +22,15 @@
             <tbody>
                 <tr>
                     <td>{{nation.Rank}}</td>
-                    <td class="country_name"><a href="{{ url_for('country_history', country=nation.Country)}}">{{nation.Country}}</a></td>
-                    <td>{{nation.TotalConfirmed}}</td>
-                    <td>{{nation.NewConfirmed}}</td>
+                    <td><a href="{{ url_for('world.country_history', country=nation.Country)}}">{{nation.Country}}</a></td>
+                    <td>{{nation.TotalRecovered}}</td>
+                    <td>{{nation.NewRecovered}}</td>
                 </tr>
             </tbody>
         {% endfor %}
         
         </table>
     </div>
+        
 
 {% endblock %}
