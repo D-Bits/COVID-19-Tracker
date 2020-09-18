@@ -16,7 +16,8 @@ world_bp = Blueprint(
     'world', 
     __name__, 
     template_folder="templates",
-    static_folder='static'
+    static_folder="static",
+    static_url_path="/static/"
 )
 
 # All available data, for all countries 

@@ -1,5 +1,6 @@
 """ Application initialization """
-from flask import Flask
+from flask import Flask, current_app
+from flask_assets import Environment, Bundle
 from requests import get
 from .world import world
 
@@ -8,6 +9,8 @@ from .world import world
 def create_app():
 
     app = Flask(__name__)
+    assets = Environment()
+    assets.init_app(app)
 
     with app.app_context():
 
@@ -15,3 +18,8 @@ def create_app():
         app.register_blueprint(world.world_bp)
 
         return app
+
+
+def compile_static_asses(assets):
+
+    assets.auto_build = True
