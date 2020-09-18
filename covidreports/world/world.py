@@ -17,7 +17,6 @@ world_bp = Blueprint(
     __name__, 
     template_folder="templates",
     static_folder="static",
-    static_url_path="/static/"
 )
 
 # All available data, for all countries 
@@ -188,12 +187,12 @@ def download_summary():
     # Order countries in alphabetical order
     ordered_df = df.sort_values('Country', ascending=True)
     # Dump the DataFrame to a CSV file, in a location of the user's choosing
-    filename = f"dumps/summary_dump_{date.today()}.csv"
+    filename = f"/dumps/summary_dump_{date.today()}.csv"
     ordered_df.to_csv(filename, sep=",")
 
     # Download the data dump to user's client
     return send_from_directory('dumps/', f'summary_dump_{date.today()}.csv')
-    remove(f'dumps/summary_dump_{date.today()}.csv')
+    remove(f"/dumps/summary_dump_{date.today()}.csv")
 
 
 """
