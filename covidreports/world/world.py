@@ -162,7 +162,7 @@ def country_graphs(country):
         case_type = df[field]
         # Merge the "Date" and "Confirmed" fields into one df
         merged_df = pd.concat([dates, case_type], axis=1)
-
+        # Create the plot, and convert it to a JSON object to iterate over in HTML
         graph_data = px.line(data_frame=df, x=df["Date"], y=df[field])
         graph_JSON = json.dumps(graph_data, cls=PlotlyJSONEncoder)
 
