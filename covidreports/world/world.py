@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, render_template, send_from_directory
+from flask import Blueprint, render_template, send_from_directory
 from werkzeug.exceptions import HTTPException, NotFound, InternalServerError
 from dotenv import load_dotenv
 from requests import get

@@ -9,7 +9,7 @@ body {
     margin-top: 2.5%;
 }
 
-.navbar {
+#navbar {
     border-bottom: 5px solid #1b83ac;
     background-color: #2d2d2d;
     text-align: center;
@@ -22,6 +22,10 @@ body {
 
 
 .nav-link {
+    color: #eff4f5;
+}
+
+.nav-item {
     color: azure;
 }
 
@@ -53,6 +57,12 @@ body {
 
 .btn {
     text-align: center;
+    background-color: #343a40;
+    border-color: #343a40;
+}
+
+btn:hover {
+    background-color: #343a40;
 }
 
 /*For <p> tags on about page */
@@ -103,4 +113,30 @@ th.header-row {
 .five-hundred {
     margin-top: 15%;
     margin-bottom: 15%;
+}
+
+/****
+Drop menu styles
+****/
+
+.dropdown-menu {
+    background-color: #343a40;
+    border: #2d2d2d;
+    color: azure;
+}
+
+#dropdown-menu {
+    color: azure;
+    background-color: #343a40;
+    text-align: center;
+}
+
+#dropdown-menu:hover {
+    background-color: #343a40;
+}
+
+.dropdown-item {
+    color: azure;
+    background-color: #343a40;
+    text-align: center;
 }

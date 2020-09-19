@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block title %}U.S.-{{state}} History {% endblock %}
+
+{% block content %}
+
+    <h2 class="country_name">{{state}} COVID-19 History</h2>
+                
+    <div class="data-table">
+
+        <table class="table table-striped">
+
+            <thead>
+                    <tr>
+                        <th class="header-row">Date</th>
+                        <th class="header-row">Total Cases</th>
+                        <th class="header-row">Total Currently Hospitalized</th>
+                        <th class="header-row">Hospitalization Increase</th>
+                        <th class="header-row">Death Increase</th>
+                        <th class="header-row">Total Deaths</th>
+                    </tr>  
+            </thead>
+
+            {% for day in data %}
+                <!--Table for summary data-->
+                <tbody>
+                    <tr>
+                        <td>{{day.date}}</td>
+                        <td>{{day.positive}}</td>
+                        <td>{{day.hospitalizedCurrently}}</td>
+                        <td>{{day.hospitalizedIncrease}}</td>
+                        <td>{{day.death}}</td>
+                        <td>{{day.deathIncrease}}</td>
+                    </tr>
+                </tbody>
+            {% endfor %}
+
+        </table>
+           
+    </div>
+
+{% endblock %}

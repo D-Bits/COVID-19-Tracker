@@ -3,6 +3,7 @@ from flask import Flask, current_app
 from flask_assets import Environment, Bundle
 from requests import get
 from .world import world
+from .usa import usa
 
 
 # Initialize the app
@@ -16,6 +17,7 @@ def create_app():
 
         # Register blueprints
         app.register_blueprint(world.world_bp)
+        app.register_blueprint(usa.usa_bp)
 
         return app
 
