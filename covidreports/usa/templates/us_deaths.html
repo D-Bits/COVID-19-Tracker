@@ -12,6 +12,7 @@
 
             <thead>
                 <tr>
+                    <th class="header-row">Rank</th>
                     <th class="header-row">State</th>
                     <th class="header-row">Total Deaths</th>
                     <th class="header-row">Death Increase</th>
@@ -25,6 +26,7 @@
                 <!--Table for summary data-->
                 <tbody>
                     <tr>
+                        <td>{{day.Rank}}</td>
                         <td class="country_name"><a href="{{ url_for('usa.state_history', state=day.state )}}">{{day.state}}</a></td>
                         <td>{{day.death}}</td>
                         <td>{{day.deathIncrease}}</td>

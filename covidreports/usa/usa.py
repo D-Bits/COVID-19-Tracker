@@ -1,6 +1,10 @@
 from flask import Blueprint, render_template
 from requests import get
+from plotly.utils import PlotlyJSONEncoder
+import plotly.express as px
 import pandas as pd 
+import numpy as np
+import json
 
 
 # Define Blueprint for U.S. specific data
@@ -32,6 +36,8 @@ def us_cases():
     df = pd.DataFrame(data)
     # Order by positive cases ascending
     sorted_df = df.sort_values(by='positive', ascending=False)
+    # Create a column to show a countries rank in no. of cases
+    sorted_df['Rank'] = np.arange(start=1, stop=int(len(df))+1)
     df_dict = sorted_df.to_dict(orient='records')
 
     return render_template("us_cases.html", data=df_dict)
@@ -45,6 +51,8 @@ def us_deaths():
     df = pd.DataFrame(data)
     # Order by positive cases ascending
     sorted_df = df.sort_values(by='death', ascending=False)
+    # Create a column to show a countries rank in no. of cases
+    sorted_df['Rank'] = np.arange(start=1, stop=int(len(df))+1)
     df_dict = sorted_df.to_dict(orient='records')
 
     return render_template("us_deaths.html", data=df_dict)
