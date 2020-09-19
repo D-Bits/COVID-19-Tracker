@@ -5,6 +5,8 @@
 {% block content %}
 
     <h2 class="country_name">{{state}} COVID-19 History</h2>
+
+    <h4><a href="{{ url_for('usa.state_visualizations', state=state )}}">View Data Visualizations</a></h4>
                 
     <div class="data-table">
 

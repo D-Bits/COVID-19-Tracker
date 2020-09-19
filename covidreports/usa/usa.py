@@ -67,3 +67,30 @@ def state_history(state):
     df_dict = df.to_dict(orient='records')
 
     return render_template("state_history.html", data=df_dict, state=state)
+
+
+# Route for data visualizations for U.S. states
+@usa_bp.route('/us/graphs/<string:state>')
+def state_visualizations(state):
+
+    # Method to generate plots
+    # "field" param can be equal to: "Confirmed", "Recovered", or "Deaths"
+    def gen_plot(state, field):
+
+        data = get(f"https://api.covidtracking.com/v1/states/{state}/daily.json").json()
+        df = pd.DataFrame(data)
+        dates = df["date"]
+        case_type = df[field]
+        # Merge the "Date" and "Confirmed" fields into one df
+        merged_df = pd.concat([dates, case_type], axis=1)
+        graph_data = px.line(data_frame=df, x=df["date"], y=df[field])
+        graph_JSON = json.dumps(graph_data, cls=PlotlyJSONEncoder)
+
+        return graph_JSON
+
+    return render_template(
+        "state_graphs.html",
+        state=state,
+        cases=gen_plot(state, "positive"),
+        deaths=gen_plot(state, "death"),
+    )

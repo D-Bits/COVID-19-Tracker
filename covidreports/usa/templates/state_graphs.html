@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block title %}{{state}} Visualizations {% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <h1 class="country_name">{{state}} Data Visualizations</h1>
+    </div>
+
+    <br>
+
+    <h2>Total Cases History Chart</h2>
+
+    <div class="chart" id="cases">
+
+        <script>
+            var graphs = {{ cases | safe }};
+            Plotly.plot('cases', graphs, {});
+        </script>
+
+    </div>
+
+    <h2>Deaths History Chart</h2>
+
+    <div class="chart" id="deaths">
+
+        <script>
+            var graphs = {{ deaths | safe }};
+            Plotly.plot('deaths', graphs, {});
+        </script>
+
+    </div>
+
+    <br>
+
+{% endblock %}
