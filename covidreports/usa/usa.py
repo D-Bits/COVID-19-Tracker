@@ -37,6 +37,19 @@ def us_cases():
     return render_template("us_cases.html", data=df_dict)
 
 
+# Summary data, sorted by deaths per state ascending
+@usa_bp.route('/us/deaths')
+def us_deaths():
+
+    data = get("https://api.covidtracking.com/v1/states/current.json").json()
+    df = pd.DataFrame(data)
+    # Order by positive cases ascending
+    sorted_df = df.sort_values(by='death', ascending=False)
+    df_dict = sorted_df.to_dict(orient='records')
+
+    return render_template("us_deaths.html", data=df_dict)
+
+
 # Show historical data for a specific state
 @usa_bp.route('/us/<string:state>')
 def state_history(state):
