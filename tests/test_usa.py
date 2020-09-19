@@ -24,3 +24,9 @@ class USRoutesTests(TestCase):
         with app.test_client() as tc:
 
             response = tc.get('/us/deaths')
+
+    def test_us_visualizations(self):
+
+        with app.test_client() as tc:
+
+            response = tc.get('/us/graphs/wa')
