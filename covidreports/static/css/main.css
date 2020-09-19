@@ -22,11 +22,12 @@ body {
 
 
 .nav-link {
-    color: #eff4f5;
+    color: azure;
 }
 
 .nav-item {
     color: azure;
+    background-color: #343a40;
 }
 
 /*For current date*/
