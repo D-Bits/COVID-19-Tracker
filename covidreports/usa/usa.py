@@ -94,3 +94,4 @@ def state_visualizations(state):
         cases=gen_plot(state, "positive"),
         deaths=gen_plot(state, "death"),
     )
+    

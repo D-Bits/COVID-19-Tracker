@@ -16,9 +16,6 @@
                     <th class="header-row">State</th>
                     <th class="header-row">Total Deaths</th>
                     <th class="header-row">Death Increase</th>
-                    <th class="header-row">Total Cases</th>
-                    <th class="header-row">Total Currently Hospitalized</th>
-                    <th class="header-row">Hospitalization Increase</th>
                 </tr>  
             </thead>
 
@@ -30,9 +27,6 @@
                         <td class="country_name"><a href="{{ url_for('usa.state_history', state=day.state )}}">{{day.state}}</a></td>
                         <td>{{day.death}}</td>
                         <td>{{day.deathIncrease}}</td>
-                        <td>{{day.positive}}</td>
-                        <td>{{day.hospitalizedCurrently}}</td>
-                        <td>{{day.hospitalizedIncrease}}</td>
                     </tr>
                 </tbody>
             {% endfor %}
