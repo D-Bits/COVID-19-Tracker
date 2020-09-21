@@ -199,7 +199,7 @@ def download_summary():
 Error handling routes
 """
 # 404 Handler
-@world_bp.errorhandler(404)
+@world_bp.errorhandler(NotFound)
 def not_found(e):
 
     return render_template('404.html', e=e), 404
