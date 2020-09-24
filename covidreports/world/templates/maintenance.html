@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block title %}Maintenance Error {% endblock %}
+
+{% block content %}
+
+    <h3 class="error-message">Maintenance Error: API under maintenance.</h3>
+
+    <img class="four-oh-four-img" src="{{ url_for('static', filename='img/500.jpg') }}" alt="" srcset="">
+
+    <p class="maintenance">
+        Sorry, but the APIs this page uses seems to be under maintenance. We 
+        apologize for the inconvience.
+    </p>
+
+{% endblock %}

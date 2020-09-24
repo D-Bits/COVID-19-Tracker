@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, send_from_directory
+from flask import Blueprint, render_template, send_from_directory, jsonify
 from werkzeug.exceptions import HTTPException, NotFound, InternalServerError
 from dotenv import load_dotenv
 from requests import get
@@ -20,14 +20,17 @@ world_bp = Blueprint(
 )
 
 # All available data, for all countries 
-summary = get("https://api.covid19api.com/summary")
-summary_json = summary.json()
+summary_json = get("https://api.covid19api.com/summary").json()
 
 """ Routing logic """
 
 # Route for home page/summary data
 @world_bp.route('/')
 def index():
+
+    if summary_json['Message'] == "Caching in progress":
+
+        return render_template("maintenance.html")
 
     df = pd.DataFrame(summary_json['Countries'])
     # Order countries in alphabetical order
@@ -38,6 +41,38 @@ def index():
     df_dict = df.to_dict(orient='records')
 
     return render_template('index.html', data=df_dict, total=total)
+
+
+@world_bp.route('/master')
+def master():
+
+    df = pd.DataFrame(summary_json['Countries'])
+    # Show totals for all columns
+    total = df.sum(axis=0)
+
+    # Function to be called in template on button click(s)
+    # Param sorting can be: "Country", "TotalConfirmed", "TotalDeaths", or "TotalRecovered"
+    def sort_data(sorting):
+        
+        # Order countries in alphabetical order
+        ordered_df = df.sort_values(sorting, ascending=True)
+        # Sort TotalConfirmed in descending order
+        sorted_data = ordered_df.sort_values(by=sorting, ascending=False)
+        # Create a column to show a countries rank in no. of cases
+        sorted_data['Rank'] = np.arange(start=1, stop=int(len(df))+1)
+        # Convert the DataFrame to a dictionary
+        df_dict = sorted_data.to_dict(orient='records')
+
+        return df_dict
+
+    return render_template(
+        'master.html', 
+        countries=sort_data("Country"),
+        cases=sort_data("TotalConfirmed"),
+        deaths=sort_data("TotalDeaths"),
+        recoveries=sort_data("TotalDeaths"),
+        total=total
+    )
 
 
 # Route for about page
@@ -53,11 +88,9 @@ def cases():
 
     df = pd.DataFrame(summary_json['Countries'])
     # Show only "NewConfirmed" and "TotalConfirmed", and countries names
-    filtered_data = df.filter(
-        items=['Country', 'NewConfirmed', 'TotalConfirmed', 'Rank'])
+    filtered_data = df.filter(items=['Country', 'NewConfirmed', 'TotalConfirmed', 'Rank'])
     # Sort TotalConfirmed in descending order
-    sorted_data = filtered_data.sort_values(
-        by='TotalConfirmed', ascending=False)
+    sorted_data = filtered_data.sort_values(by='TotalConfirmed', ascending=False)
     # Create a column to show a countries rank in no. of cases
     sorted_data['Rank'] = np.arange(start=1, stop=int(len(df))+1)
     # Convert the DataFrame to a dictionary
