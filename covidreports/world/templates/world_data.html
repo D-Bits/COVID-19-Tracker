@@ -5,10 +5,10 @@
 
 {% block content %}
 
-    
-                 
-    <div>
-        <table class="table table-striped">
+    <h2>{{title}} by Country</h2>
+
+    <div class="data-table">
+        <table class="table data-table table-striped">
             <thead>
                 <tr>
                     <th class="header-row">Country</th>
@@ -21,7 +21,7 @@
                 </tr>  
             </thead>
             {% if url_for('world.index', url="/cases") %}
-                <h2>Cases by Country</h2>
+                
                 {% for nation in data|sort(reverse=true, attribute="TotalConfirmed") %}
                     <!--Table for summary data-->
                     <tbody>
@@ -37,7 +37,6 @@
                     </tbody>
                 {% endfor %}
             {% elif url_for('world.index', url="/deaths") %}
-                <h2>Deaths by Country</h2>
                 {% for nation in data|sort(reverse=true, attribute="TotalDeaths") %}
                     <!--Table for summary data-->
                     <tbody>
@@ -53,7 +52,6 @@
                     </tbody>
                 {% endfor %}
             {% elif url_for('world.index', url="/recoveries") %}
-                <h2>Recoveries by Country</h2>
                 {% for nation in data|sort(reverse=true, attribute="TotalRecovered") %}
                     <!--Table for summary data-->
                     <tbody>
