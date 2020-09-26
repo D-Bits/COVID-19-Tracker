@@ -14,7 +14,7 @@
   <!-- <script src="{{ url_for('static', filename='js/main.js') }}"></script> -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <!--For searching tables-->
-  <script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </head>
@@ -51,7 +51,7 @@
             <a class="nav-link" href="{{ url_for('world.percentages') }}">Percentages</a>
           </li>
           <li class="dropdown">
-            <span type="button" class="nav-item btn btn-primary dropdown-toggle" data-toggle="dropdown">U.S. Data</span>
+            <span class="nav-item btn btn-primary dropdown-toggle" data-toggle="dropdown">U.S. Data</span>
             <div id="dropdown-menu" class="dropdown-menu">
               <a class="dropdown-item nav-item" href="{{ url_for('usa.us_summary') }}">States/Territories Summary</a>
               <a class="dropdown-item nav-item" href="{{ url_for('usa.us_cases') }}">Cases</a>
