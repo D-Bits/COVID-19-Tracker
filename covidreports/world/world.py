@@ -25,7 +25,7 @@ summary_json = get("https://api.covid19api.com/summary").json()
 """ Routing logic """
 
 # Route for home page/summary data
-@world_bp.route('/')
+@world_bp.route("/")
 def index():
 
     # Reroute to maintenance page if API is down.
@@ -51,30 +51,9 @@ def about():
     return render_template('about.html')
 
 
-# Route for cases page
-@world_bp.route('/cases')
-def cases():
-
-    if summary_json['Message'] == "Caching in progress":
-
-        return render_template("maintenance.html")
-
-    df = pd.DataFrame(summary_json['Countries'])
-    # Show only "NewConfirmed" and "TotalConfirmed", and countries names
-    filtered_data = df.filter(items=['Country', 'NewConfirmed', 'TotalConfirmed', 'Rank'])
-    # Sort TotalConfirmed in descending order
-    sorted_data = filtered_data.sort_values(by='TotalConfirmed', ascending=False)
-    # Create a column to show a countries rank in no. of cases
-    sorted_data['Rank'] = np.arange(start=1, stop=int(len(df))+1)
-    # Convert the DataFrame to a dictionary
-    df_dict = sorted_data.to_dict(orient='records')
-
-    return render_template('cases.html', data=df_dict)
-
-
-# Route for deaths page
-@world_bp.route('/deaths')
-def deaths():
+# Organize world summary data by something other than country name
+@world_bp.route("/<string:url>")
+def world_data(url):
 
     # Reroute to maintenance page if API is down.
     if summary_json['Message'] == "Caching in progress":
@@ -82,40 +61,10 @@ def deaths():
         return render_template("maintenance.html")
 
     df = pd.DataFrame(summary_json['Countries'])
-    # Show only "NewConfirmed" and "TotalConfirmed", and countries names
-    filtered_data = df.filter(items=['Country', 'NewDeaths', 'TotalDeaths'])
-    # Sort TotalConfirmed in descending order
-    sorted_data = filtered_data.sort_values(by='TotalDeaths', ascending=False)
-    # Create a column to show a countries rank in no. of deaths
-    sorted_data['Rank'] = np.arange(start=1, stop=int(len(df))+1)
     # Convert the DataFrame to a dictionary
-    df_dict = sorted_data.to_dict(orient='records')
+    df_dict = df.to_dict(orient='records')
 
-    return render_template('deaths.html', data=df_dict)
-
-
-# Routing logic for recoveries
-@world_bp.route('/recoveries')
-def recoveries():
-
-    # Reroute to maintenance page if API is down.
-    if summary_json['Message'] == "Caching in progress":
-
-        return render_template("maintenance.html")
-
-    df = pd.DataFrame(summary_json['Countries'])
-    # Show only "NewDeaths" and "TotalDeaths", and countries names
-    filtered_data = df.filter(
-        items=['Country', 'NewRecovered', 'TotalRecovered'])
-    # Sort TotalConfirmed in descending order
-    sorted_data = filtered_data.sort_values(
-        by='TotalRecovered', ascending=False)
-    # Create a column to show a countries rank in no. of recoveries
-    sorted_data['Rank'] = np.arange(start=1, stop=int(len(df))+1)
-    # Convert the DataFrame to a dictionary
-    df_dict = sorted_data.to_dict(orient='records')
-
-    return render_template('recoveries.html', data=df_dict)
+    return render_template('world_data.html', data=df_dict, title=url.title())
 
 
 # Route to show how many cases, deaths, and recoveries a country had for each day, since first confirmed cases
@@ -126,18 +75,11 @@ def country_history(country):
     # Define API endpoint, and fetch data
     endpoint = get(f'https://api.covid19api.com/total/country/{country}')
     data = endpoint.json()
-
-    # If country does not exist
-    if data["message"] == "Not Found":
-
-        return render_template("404.html")
-
     df = pd.DataFrame(data)
     # Sort records from most recent cases to oldest cases
-    sorted_data = df.sort_values('Date', ascending=False)
-    df_dict = sorted_data.to_dict(orient='records')
+    df_dict = df.to_dict(orient='records')
 
-    return render_template('totals.html', data=df_dict, nation=country)
+    return render_template('totals.html', data=df_dict, nation=country.title())
 
 
 # Show percentage of case, deaths, and recoveries that countries constitute
