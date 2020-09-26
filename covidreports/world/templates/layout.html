@@ -6,11 +6,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
   <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+  <!--Load custom JS-->
+  <!-- <script src="{{ url_for('static', filename='js/main.js') }}"></script> -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <!--For searching tables-->
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </head>
@@ -61,7 +65,7 @@
     <div class="container">
 
         <h4>Current Date:</h4>
-        <h5 id="now"></h5>
+        <h4 id="now">Current Date:</h4>
 
         <!--Client-side JS for displaying current date-->
         <script>
@@ -77,6 +81,10 @@
 
         </script>
 
+        <!--Search box for data sets-->
+        <!-- <input type="text" id="searchBox", onkeyup="find()" placeholder="Search a country.">  -->
+
+        <!--Block for dynamically rendering data-->
         {% block content %}
       
         {% endblock %}      
