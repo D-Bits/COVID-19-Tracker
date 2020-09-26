@@ -21,6 +21,17 @@
 
     </div>
 
+    <h2>Total Hospitalizations History Chart</h2>
+
+    <div class="chart" id="hospitalizations">
+
+        <script>
+            var graphs = {{ hospitalizations | safe }};
+            Plotly.plot('hospitalizations', graphs, {});
+        </script>
+
+    </div>
+
     <h2>Deaths History Chart</h2>
 
     <div class="chart" id="deaths">
