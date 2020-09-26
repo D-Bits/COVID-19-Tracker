@@ -28,6 +28,7 @@ summary_json = get("https://api.covid19api.com/summary").json()
 @world_bp.route('/')
 def index():
 
+    # Reroute to maintenance page if API is down.
     if summary_json['Message'] == "Caching in progress":
 
         return render_template("maintenance.html")
@@ -43,38 +44,6 @@ def index():
     return render_template('index.html', data=df_dict, total=total)
 
 
-@world_bp.route('/master')
-def master():
-
-    df = pd.DataFrame(summary_json['Countries'])
-    # Show totals for all columns
-    total = df.sum(axis=0)
-
-    # Function to be called in template on button click(s)
-    # Param sorting can be: "Country", "TotalConfirmed", "TotalDeaths", or "TotalRecovered"
-    def sort_data(sorting):
-        
-        # Order countries in alphabetical order
-        ordered_df = df.sort_values(sorting, ascending=True)
-        # Sort TotalConfirmed in descending order
-        sorted_data = ordered_df.sort_values(by=sorting, ascending=False)
-        # Create a column to show a countries rank in no. of cases
-        sorted_data['Rank'] = np.arange(start=1, stop=int(len(df))+1)
-        # Convert the DataFrame to a dictionary
-        df_dict = sorted_data.to_dict(orient='records')
-
-        return df_dict
-
-    return render_template(
-        'master.html', 
-        countries=sort_data("Country"),
-        cases=sort_data("TotalConfirmed"),
-        deaths=sort_data("TotalDeaths"),
-        recoveries=sort_data("TotalDeaths"),
-        total=total
-    )
-
-
 # Route for about page
 @world_bp.route('/about')
 def about():
@@ -85,6 +54,10 @@ def about():
 # Route for cases page
 @world_bp.route('/cases')
 def cases():
+
+    if summary_json['Message'] == "Caching in progress":
+
+        return render_template("maintenance.html")
 
     df = pd.DataFrame(summary_json['Countries'])
     # Show only "NewConfirmed" and "TotalConfirmed", and countries names
@@ -103,6 +76,11 @@ def cases():
 @world_bp.route('/deaths')
 def deaths():
 
+    # Reroute to maintenance page if API is down.
+    if summary_json['Message'] == "Caching in progress":
+
+        return render_template("maintenance.html")
+
     df = pd.DataFrame(summary_json['Countries'])
     # Show only "NewConfirmed" and "TotalConfirmed", and countries names
     filtered_data = df.filter(items=['Country', 'NewDeaths', 'TotalDeaths'])
@@ -119,6 +97,11 @@ def deaths():
 # Routing logic for recoveries
 @world_bp.route('/recoveries')
 def recoveries():
+
+    # Reroute to maintenance page if API is down.
+    if summary_json['Message'] == "Caching in progress":
+
+        return render_template("maintenance.html")
 
     df = pd.DataFrame(summary_json['Countries'])
     # Show only "NewDeaths" and "TotalDeaths", and countries names
@@ -143,6 +126,12 @@ def country_history(country):
     # Define API endpoint, and fetch data
     endpoint = get(f'https://api.covid19api.com/total/country/{country}')
     data = endpoint.json()
+
+    # If country does not exist
+    if data["message"] == "Not Found":
+
+        return render_template("404.html")
+
     df = pd.DataFrame(data)
     # Sort records from most recent cases to oldest cases
     sorted_data = df.sort_values('Date', ascending=False)
@@ -154,6 +143,11 @@ def country_history(country):
 # Show percentage of case, deaths, and recoveries that countries constitute
 @world_bp.route('/percentages')
 def percentages():
+
+    # Reroute to maintenance page if API is down.
+    if summary_json['Message'] == "Caching in progress":
+
+        return render_template("maintenance.html")
 
     df = pd.DataFrame(summary_json["Countries"])
 

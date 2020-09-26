@@ -17,12 +17,14 @@ usa_bp = Blueprint(
 
 """ Routing logic """
 
+# Summary of current data for all states
+states_summary = get("https://api.covidtracking.com/v1/states/current.json").json()
+
 # Summarize current U.S. data for COVID-19, per state/territory
 @usa_bp.route('/us/summary')
 def us_summary():
 
-    data = get("https://api.covidtracking.com/v1/states/current.json").json()
-    df = pd.DataFrame(data)
+    df = pd.DataFrame(states_summary)
     df_dict = df.to_dict(orient='records')
 
     return render_template("us_summary.html", data=df_dict)
@@ -32,8 +34,7 @@ def us_summary():
 @usa_bp.route('/us/cases')
 def us_cases():
 
-    data = get("https://api.covidtracking.com/v1/states/current.json").json()
-    df = pd.DataFrame(data)
+    df = pd.DataFrame(states_summary)
     # Order by positive cases ascending
     sorted_df = df.sort_values(by='positive', ascending=False)
     # Create a column to show a countries rank in no. of cases
@@ -47,8 +48,7 @@ def us_cases():
 @usa_bp.route('/us/deaths')
 def us_deaths():
 
-    data = get("https://api.covidtracking.com/v1/states/current.json").json()
-    df = pd.DataFrame(data)
+    df = pd.DataFrame(states_summary)
     # Order by positive cases ascending
     sorted_df = df.sort_values(by='death', ascending=False)
     # Create a column to show a countries rank in no. of cases
@@ -93,5 +93,6 @@ def state_visualizations(state):
         state=state,
         cases=gen_plot(state, "positive"),
         deaths=gen_plot(state, "death"),
+        hospitalizations=gen_plot(state, "hospitalizedCurrently"),
     )
     
