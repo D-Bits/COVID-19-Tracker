@@ -113,7 +113,7 @@ th.header-row {
 /*For 500 errors template*/
 .error-message {
     margin-top: 2.5%;
-    margin-bottom: 10%;
+    margin-bottom: 2.5%;
 }
 
 /****
@@ -147,4 +147,10 @@ Drop menu styles
     margin-top: 5%;
     margin-bottom: 50%;
     font-size: 16pt;
+}
+
+/*Styles for an empty div to add space to the DOM*/
+.space {
+    margin-bottom: 25%;
+    margin-top: 25%;
 }

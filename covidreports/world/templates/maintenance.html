@@ -4,13 +4,20 @@
 
 {% block content %}
 
-    <h3 class="error-message">Maintenance Error: API under maintenance.</h3>
+    <h3>Maintenance Error: API under maintenance.</h3>
+
+    <p>
+        Sorry, but the API this page uses seems to be under maintenance. We 
+        apologize for the inconvience.
+    </p>
+
+    <br>
 
     <img class="four-oh-four-img" src="{{ url_for('static', filename='img/500.jpg') }}" alt="" srcset="">
 
-    <p class="maintenance">
-        Sorry, but the APIs this page uses seems to be under maintenance. We 
-        apologize for the inconvience.
-    </p>
+    <div class="space">
+
+    </div>
+
 
 {% endblock %}
