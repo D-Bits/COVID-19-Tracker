@@ -4,12 +4,13 @@
 
 {% block content %}
 
-    <h3 class="error-message">Error 404: Page not Found</h3>
+    <h3 style="margin-bottom: 2.5%;">Error 404: Not Found</h3>
 
     <img class="four-oh-four-img" src="{{ url_for('static', filename='img/404.jpg') }}" alt="">
 
     <br>
 
-    <h4 class="error-message"><a href="{{ url_for('world.index')}}">Back to Home</a></h4>
+    <h4 style="margin-bottom: 25.5%;"><a href="{{ url_for('world.index')}}">Back to Home</a></h4>
+
 
 {% endblock %}
