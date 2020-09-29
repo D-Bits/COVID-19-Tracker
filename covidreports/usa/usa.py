@@ -27,7 +27,7 @@ def us_summary():
     df = pd.DataFrame(states_summary)
     df_dict = df.to_dict(orient='records')
 
-    return render_template("us_summary.html", data=df_dict)
+    return render_template("us_summary.html", data=df_dict, title="U.S. Summary")
 
 
 # Summary data, sorted by cases per state ascending 
@@ -41,7 +41,7 @@ def us_cases():
     sorted_df['Rank'] = np.arange(start=1, stop=int(len(df))+1)
     df_dict = sorted_df.to_dict(orient='records')
 
-    return render_template("us_cases.html", data=df_dict)
+    return render_template("us_cases.html", data=df_dict, title="U.S. Cases")
 
 
 # Summary data, sorted by deaths per state ascending
@@ -55,7 +55,7 @@ def us_deaths():
     sorted_df['Rank'] = np.arange(start=1, stop=int(len(df))+1)
     df_dict = sorted_df.to_dict(orient='records')
 
-    return render_template("us_deaths.html", data=df_dict)
+    return render_template("us_deaths.html", data=df_dict, title="U.S. Deaths")
 
 
 # Show historical data for a specific state
@@ -66,7 +66,7 @@ def state_history(state):
     df = pd.DataFrame(data)
     df_dict = df.to_dict(orient='records')
 
-    return render_template("state_history.html", data=df_dict, state=state)
+    return render_template("state_history.html", data=df_dict, state=state, title=f"U.S.-{state} COVID History")
 
 
 # Route for data visualizations for U.S. states
@@ -94,5 +94,6 @@ def state_visualizations(state):
         cases=gen_plot(state, "positive"),
         deaths=gen_plot(state, "death"),
         hospitalizations=gen_plot(state, "hospitalizedCurrently"),
+        title=f"{state} Visualizations"
     )
     
