@@ -7,17 +7,36 @@
     <h2>Global Data Summary</h2>
                  
     <script>
-        $(document).ready(function() {
-            $('#DataTable').DataTable({
-                columnDefs: [{
-                    targets: 0,
-                    orderData: 0
-                }]
-            });
-        } );
+        // Function for search box
+        function find() {
+            // Declare variables
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("userInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("DataTable");
+            tr = table.getElementsByTagName("tr");
+          
+            // Loop through all table rows, and hide those who don't match the search query
+            for (i = 0; i < tr.length; i++) {
+              td = tr[i].getElementsByTagName("td")[0];
+              if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                  tr[i].style.display = "";
+                } else {
+                  tr[i].style.display = "none";
+                }
+              }
+            }
+        }
     </script>
-    
+
     <div class="data-table">
+
+        <input type="text" id="userInput" onkeyup="find()" placeholder="Search for country.">
+
+        <br>
+
         <table class="table table-striped">
 
             <!--Totals for all fields (except Country)-->
@@ -46,7 +65,7 @@
             </tbody>
         </table>
 
-        <table id="DataTable">
+        <table id="DataTable" class="table table-striped">
             <thead>
                     <tr>
                         <th class="header-row">Country</th>
