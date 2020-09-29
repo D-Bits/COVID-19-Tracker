@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h2>Cases by Country</h2>
+
+    <div class="data-table">
+        <table class="table table-striped">
+
+            <thead>
+                <tr>
+                    <th class="header-row">Rank</th>
+                    <th class="header-row">Country</th>
+                    <th class="header-row">Total Confirmed</th>
+                    <th class="header-row">New Confirmed</th>
+                </tr>
+            </thead>
+            
+        {% for nation in data %}
+            <tbody>
+                <tr>
+                    <td>{{nation.Rank}}</td>
+                    <td class="country_name"><a href="{{ url_for('world.country_history', country=nation.Country)}}">{{nation.Country}}</a></td>
+                    <td>{{nation.TotalConfirmed}}</td>
+                    <td>{{nation.NewConfirmed}}</td>
+                </tr>
+            </tbody>
+        {% endfor %}
+        
+        </table>
+    </div>
+
+{% endblock %}

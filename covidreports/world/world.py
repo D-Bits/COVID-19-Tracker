@@ -25,10 +25,9 @@ summary_json = get("https://api.covid19api.com/summary").json()
 """ Routing logic """
 
 # Route for home page/summary data
-@world_bp.route("/")
+@world_bp.route('/')
 def index():
 
-    # Reroute to maintenance page if API is down.
     if summary_json['Message'] == "Caching in progress":
 
         return render_template("maintenance.html")
@@ -41,7 +40,7 @@ def index():
     # Convert the DataFrame to a dictionary
     df_dict = df.to_dict(orient='records')
 
-    return render_template('index.html', data=df_dict, total=total)
+    return render_template('index.html', data=df_dict, total=total, title="Home")
 
 
 # Route for about page
@@ -51,20 +50,69 @@ def about():
     return render_template('about.html')
 
 
-# Organize world summary data by something other than country name
-@world_bp.route("/<string:url>")
-def world_data(url):
+# Route for cases page
+@world_bp.route('/cases')
+def cases():
 
-    # Reroute to maintenance page if API is down.
     if summary_json['Message'] == "Caching in progress":
 
         return render_template("maintenance.html")
 
     df = pd.DataFrame(summary_json['Countries'])
+    # Show only "NewConfirmed" and "TotalConfirmed", and countries names
+    filtered_data = df.filter(items=['Country', 'NewConfirmed', 'TotalConfirmed', 'Rank'])
+    # Sort TotalConfirmed in descending order
+    sorted_data = filtered_data.sort_values(by='TotalConfirmed', ascending=False)
+    # Create a column to show a countries rank in no. of cases
+    sorted_data['Rank'] = np.arange(start=1, stop=int(len(df))+1)
     # Convert the DataFrame to a dictionary
-    df_dict = df.to_dict(orient='records')
+    df_dict = sorted_data.to_dict(orient='records')
 
-    return render_template('world_data.html', data=df_dict, title=url.title())
+    return render_template('cases.html', data=df_dict, title="Global Cases")
+
+
+# Route for deaths page
+@world_bp.route('/deaths')
+def deaths():
+
+    if summary_json['Message'] == "Caching in progress":
+
+        return render_template("maintenance.html")
+
+    df = pd.DataFrame(summary_json['Countries'])
+    # Show only "NewConfirmed" and "TotalConfirmed", and countries names
+    filtered_data = df.filter(items=['Country', 'NewDeaths', 'TotalDeaths'])
+    # Sort TotalConfirmed in descending order
+    sorted_data = filtered_data.sort_values(by='TotalDeaths', ascending=False)
+    # Create a column to show a countries rank in no. of deaths
+    sorted_data['Rank'] = np.arange(start=1, stop=int(len(df))+1)
+    # Convert the DataFrame to a dictionary
+    df_dict = sorted_data.to_dict(orient='records')
+
+    return render_template('deaths.html', data=df_dict, title="Global Deaths")
+
+
+# Routing logic for recoveries
+@world_bp.route('/recoveries')
+def recoveries():
+
+    if summary_json['Message'] == "Caching in progress":
+
+        return render_template("maintenance.html")
+
+    df = pd.DataFrame(summary_json['Countries'])
+    # Show only "NewDeaths" and "TotalDeaths", and countries names
+    filtered_data = df.filter(
+        items=['Country', 'NewRecovered', 'TotalRecovered'])
+    # Sort TotalConfirmed in descending order
+    sorted_data = filtered_data.sort_values(
+        by='TotalRecovered', ascending=False)
+    # Create a column to show a countries rank in no. of recoveries
+    sorted_data['Rank'] = np.arange(start=1, stop=int(len(df))+1)
+    # Convert the DataFrame to a dictionary
+    df_dict = sorted_data.to_dict(orient='records')
+
+    return render_template('recoveries.html', data=df_dict, title="Global Reocveries")
 
 
 # Route to show how many cases, deaths, and recoveries a country had for each day, since first confirmed cases
@@ -77,19 +125,15 @@ def country_history(country):
     data = endpoint.json()
     df = pd.DataFrame(data)
     # Sort records from most recent cases to oldest cases
-    df_dict = df.to_dict(orient='records')
+    sorted_data = df.sort_values('Date', ascending=False)
+    df_dict = sorted_data.to_dict(orient='records')
 
-    return render_template('totals.html', data=df_dict, nation=country.title())
+    return render_template('totals.html', data=df_dict, nation=country, title=f"{country} COVID History")
 
 
 # Show percentage of case, deaths, and recoveries that countries constitute
 @world_bp.route('/percentages')
 def percentages():
-
-    # Reroute to maintenance page if API is down.
-    if summary_json['Message'] == "Caching in progress":
-
-        return render_template("maintenance.html")
 
     df = pd.DataFrame(summary_json["Countries"])
 
@@ -112,7 +156,7 @@ def percentages():
     merged_df = pd.concat(df_list, axis=1)
     merged_df_dict = merged_df.to_dict(orient='records')
 
-    return render_template("percentages.html", data=merged_df_dict)
+    return render_template("percentages.html", data=merged_df_dict, title="Global Proportions")
 
 
 # Route for showing line graph data for individual countries
@@ -143,7 +187,8 @@ def country_graphs(country):
         cases=gen_plot(country, "Confirmed"),
         deaths=gen_plot(country, "Deaths"),
         recoveries=gen_plot(country, "Recovered"),
-        active=gen_plot(country, "Active")
+        active=gen_plot(country, "Active"),
+        title=f"{country.title()} Visualizations"
     )
 
 
@@ -171,11 +216,11 @@ Error handling routes
 @world_bp.errorhandler(NotFound)
 def not_found(e):
 
-    return render_template('404.html', e=e), 404
+    return render_template('404.html', e=e, title="404"), 404
 
 
 # 500 Handler
 @world_bp.errorhandler(InternalServerError)
 def server_error(e):
 
-    return render_template('500.html', e=e), 500
+    return render_template('500.html', e=e, title="500"), 500

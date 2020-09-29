@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title class="country_name">{% block title %} {% endblock %}| COVID-19 Reports</title>
+  <title class="country_name">{{title}} | COVID-19 Reports</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -29,7 +29,7 @@
     </div>
 
     <nav id="navbar" class="navbar navbar-expand-sm bg-dark navbar-dark">
-      <a class="navbar-brand" href="{{ url_for('world.index', url='/')}}">Home</a>
+      <a class="navbar-brand" href="{{ url_for('world.index')}}">Home</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -39,19 +39,19 @@
             <a class="nav-link" href="{{ url_for('world.about') }}">About</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('world.world_data', url='cases') }}">Cases</a>
+            <a class="nav-link" href="{{ url_for('world.cases') }}">Cases</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('world.world_data', url='deaths') }}">Deaths</a>
+            <a class="nav-link" href="{{ url_for('world.deaths') }}">Deaths</a>
           </li> 
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('world.world_data', url='recoveries') }}">Recoveries</a>
+            <a class="nav-link" href="{{ url_for('world.recoveries') }}">Recoveries</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('world.percentages') }}">Percentages</a>
           </li>
           <li class="dropdown">
-            <span class="nav-item btn btn-primary dropdown-toggle" data-toggle="dropdown">U.S. Data</span>
+            <span type="button" class="nav-item btn btn-primary dropdown-toggle" data-toggle="dropdown">U.S. Data</span>
             <div id="dropdown-menu" class="dropdown-menu">
               <a class="dropdown-item nav-item" href="{{ url_for('usa.us_summary') }}">States/Territories Summary</a>
               <a class="dropdown-item nav-item" href="{{ url_for('usa.us_cases') }}">Cases</a>
