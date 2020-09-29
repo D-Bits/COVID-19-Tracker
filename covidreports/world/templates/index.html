@@ -6,6 +6,17 @@
 
     <h2>Global Data Summary</h2>
                  
+    <script>
+        $(document).ready(function() {
+            $('#DataTable').DataTable({
+                columnDefs: [{
+                    targets: 0,
+                    orderData: 0
+                }]
+            });
+        } );
+    </script>
+    
     <div class="data-table">
         <table class="table table-striped">
 
@@ -33,7 +44,9 @@
                     <td>{{total.TotalRecovered}}</td>
                 </tr>
             </tbody>
+        </table>
 
+        <table id="DataTable">
             <thead>
                     <tr>
                         <th class="header-row">Country</th>
