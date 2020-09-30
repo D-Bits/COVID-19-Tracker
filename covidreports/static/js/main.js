@@ -4,7 +4,7 @@
 
 
 // Function for search box on index page
-function find() {
+function findCountry() {
     // Declare variables
     var input, filter, table, tr, td, i, txtValue;
     input = document.getElementById("userInput");
