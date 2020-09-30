@@ -5,8 +5,12 @@
 {% block content %}
 
     <h2>Global Data Summary</h2>
-                 
+
     <div class="data-table">
+
+        <!--Search box-->
+        <input type="text" class="form-control" id="userInput" onkeyup="find()" placeholder="Search for a country.">
+
         <table class="table table-striped">
 
             <!--Totals for all fields (except Country)-->
@@ -33,9 +37,11 @@
                     <td>{{total.TotalRecovered}}</td>
                 </tr>
             </tbody>
+        </table>
 
+        <table id="DataTable" class="table table-striped">
             <thead>
-                    <tr>
+                    <tr class="field-names">
                         <th class="header-row">Country</th>
                         <th class="header-row">New Confirmed</th>
                         <th class="header-row">Total Confirmed</th>
