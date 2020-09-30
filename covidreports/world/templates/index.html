@@ -11,10 +11,6 @@
         <!--Search box-->
         <input type="text" class="form-control" id="userInput" onkeyup="find()" placeholder="Search for a country.">
 
-        <div>
-            <p><strong><em>Click on the column names to sort data.</em></strong></p>
-        </div>
-
         <table class="table table-striped">
 
             <!--Totals for all fields (except Country)-->
@@ -45,10 +41,10 @@
 
         <table id="DataTable" class="table table-striped">
             <thead>
-                    <tr>
+                    <tr class="field-names">
                         <th class="header-row">Country</th>
-                        <th onclick="sortTable(1)" class="header-row">New Confirmed</th>
-                        <th onclick="sortTable(2)" class="header-row">Total Confirmed</th>
+                        <th class="header-row">New Confirmed</th>
+                        <th class="header-row">Total Confirmed</th>
                         <th class="header-row">New Deaths</th>
                         <th class="header-row">Total Deaths</th>
                         <th class="header-row">New Recovered</th>

@@ -157,3 +157,8 @@ Drop menu styles
     margin-bottom: 5%;
     margin-top: 2.5%;
 }
+
+/*For table column names*/
+.field-names {
+    color: azure;
+}
