@@ -79,11 +79,11 @@ def state_visualizations(state):
 
         data = get(f"https://api.covidtracking.com/v1/states/{state}/daily.json").json()
         df = pd.DataFrame(data)
-        dates = df["date"]
+        dates = df["dateChecked"]
         case_type = df[field]
         # Merge the "Date" and "Confirmed" fields into one df
         merged_df = pd.concat([dates, case_type], axis=1)
-        graph_data = px.line(data_frame=df, x=df["date"], y=df[field])
+        graph_data = px.line(data_frame=df, x=df["dateChecked"], y=df[field])
         graph_JSON = json.dumps(graph_data, cls=PlotlyJSONEncoder)
 
         return graph_JSON
