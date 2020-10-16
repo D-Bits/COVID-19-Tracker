@@ -4,12 +4,12 @@
 
 
 // Function for search box on index page
-function findCountry() {
+function findCountry(tableId, inputId) {
     // Declare variables
     var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("userInput");
+    input = document.getElementById(inputId);
     filter = input.value.toUpperCase();
-    table = document.getElementById("DataTable");
+    table = document.getElementById(tableId);
     tr = table.getElementsByTagName("tr");
   
     // Loop through all table rows, and hide those who don't match the search query
