@@ -4,7 +4,11 @@
 
 
 // Function for search box on index page
-function findCountry(tableId, inputId) {
+/* Param "tableId": the HTML ID of the table
+* Param "inputId": the HTML ID of the input element
+* Param "index": The column to be searched (0 for the left-most column)
+*/
+function findData(tableId, inputId, index) {
     // Declare variables
     var input, filter, table, tr, td, i, txtValue;
     input = document.getElementById(inputId);
@@ -14,7 +18,7 @@ function findCountry(tableId, inputId) {
   
     // Loop through all table rows, and hide those who don't match the search query
     for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[0];
+      td = tr[i].getElementsByTagName("td")[index];
       if (td) {
         txtValue = td.textContent || td.innerText;
         if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -26,7 +30,9 @@ function findCountry(tableId, inputId) {
     }
 }
 
+
 // Function for sorting column values
+// NOT YET WORKING
 function sortTable(n) {
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
     table = document.getElementById("myTable");
