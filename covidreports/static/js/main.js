@@ -3,7 +3,7 @@
 */ 
 
 
-// Function for search box on index page
+// Function for search box(es)
 /* Param "tableId": the HTML ID of the table
 * Param "inputId": the HTML ID of the input element
 * Param "index": The column to be searched (0 for the left-most column)

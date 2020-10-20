@@ -7,7 +7,7 @@
     <div class="data-table">
 
         <!--Search box-->
-        <input type="text" class="form-control" id="USInput" onkeyup='findCountry("USSummaryTable", "USInput");' placeholder="Search for a state/territory.">
+        <input type="text" class="form-control" id="USInput" onkeyup='findData("USSummaryTable", "USInput", 0);' placeholder="Search for a state/territory.">
 
         <table id="USSummaryTable" class="table table-striped">
 
@@ -26,7 +26,7 @@
                 <!--Table for summary data-->
                 <tbody>
                     <tr>
-                        <td class="country_name"><a href="{{ url_for('usa.state_history', state=day.state )}}">{{day.state}}</a></td>
+                        <td class="country_name"><a href="{{ url_for('usa.state_history', state=day.state) }}">{{day.state}}</a></td>
                         <td>{{day.positive}}</td>
                         <td>{{day.hospitalizedCurrently}}</td>
                         <td>{{day.hospitalizedIncrease}}</td>

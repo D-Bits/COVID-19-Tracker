@@ -6,7 +6,11 @@
                 
     <div class="data-table">
 
-        <table class="table table-striped">
+        <!--Search box-->
+        <input type="text" class="form-control" id="USCasesInput" onkeyup='findData("USCasesTable", "USCasesInput", 1);' 
+        placeholder="Search for a state/territory.">
+
+        <table id="USCasesTable" class="table table-striped">
 
             <thead>
                 <tr>
