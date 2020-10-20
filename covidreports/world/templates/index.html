@@ -7,14 +7,13 @@
     <div class="data-table">
 
         <!--Search box-->
-        <input type="text" class="form-control" id="WorldInput" onkeyup='findCountry("WorldSummaryTable", "WorldInput");' placeholder="Search for a country.">
+        <input type="text" class="form-control" id="WorldInput" onkeyup='findData("WorldSummaryTable", "WorldInput", 0);' placeholder="Search for a country.">
 
         <table class="table table-striped">
 
             <!--Totals for all fields (except Country)-->
             <thead class="table-header">
                 <tr class="table-header">
-                    <th></th>
                     <th>Total Global New Confirmed Cases</th>
                     <th>Total Global Confirmed Cases</th>
                     <th>Total Global New Deaths</th>
@@ -26,7 +25,6 @@
             <tbody>
                 <tr>
                     <!--Totals for all metrics-->
-                    <td></td>
                     <td>{{total.NewConfirmed}}</td>
                     <td>{{total.TotalConfirmed}}</td>
                     <td>{{total.NewDeaths}}</td>
