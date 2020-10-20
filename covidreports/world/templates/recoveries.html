@@ -5,7 +5,12 @@
 <h2>Recoveries by Country</h2>
 
     <div class="data-table">
-        <table class="table table-striped">
+
+        <!--Search box-->
+        <input type="text" class="form-control" id="WorldRecoveriesInput" onkeyup='findData("WorldRecoveriesTable", "WorldRecoveriesInput", 1);' 
+        placeholder="Search for a country.">
+
+        <table id="WorldRecoveriesTable" class="table table-striped">
 
             <thead>
                 <tr>
@@ -20,7 +25,7 @@
             <tbody>
                 <tr>
                     <td>{{nation.Rank}}</td>
-                    <td><a href="{{ url_for('world.country_history', country=nation.Country)}}">{{nation.Country}}</a></td>
+                    <td><a href="{{ url_for('world.country_history', country=nation.Country) }}">{{nation.Country}}</a></td>
                     <td>{{nation.TotalRecovered}}</td>
                     <td>{{nation.NewRecovered}}</td>
                 </tr>

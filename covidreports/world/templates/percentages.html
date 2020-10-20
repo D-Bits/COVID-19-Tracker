@@ -7,7 +7,12 @@
 <h2>Worldwide Percentages</h2>
 
     <div class="data-table">
-        <table class="table table-striped">
+
+        <!--Search box-->
+        <input type="text" class="form-control" id="WorldPercentagesInput" onkeyup='findData("WorldPercentagesTable", "WorldPercentagesInput", 0);' 
+        placeholder="Search for a country.">
+
+        <table id="WorldPercentagesTable" class="table table-striped">
 
             <thead>
                     <tr>
