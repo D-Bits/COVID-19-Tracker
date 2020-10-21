@@ -43,6 +43,14 @@ def index():
     return render_template('index.html', data=df_dict, total=total, title="Home")
 
 
+# Continent-specific data
+@world_bp.route('/continents')
+def continents():
+
+    data = get("https://corona.lmao.ninja/v2/continents?yesterday=true&sort").json()
+    df = pd.DataFrame(data)
+
+
 # Route for about page
 @world_bp.route('/about')
 def about():
@@ -112,7 +120,7 @@ def recoveries():
     # Convert the DataFrame to a dictionary
     df_dict = sorted_data.to_dict(orient='records')
 
-    return render_template('recoveries.html', data=df_dict, title="Global Reocveries")
+    return render_template('recoveries.html', data=df_dict, title="Global Recoveries")
 
 
 # Route to show how many cases, deaths, and recoveries a country had for each day, since first confirmed cases

@@ -2,7 +2,7 @@ from flask import Blueprint, render_template
 from requests import get
 from plotly.utils import PlotlyJSONEncoder
 import plotly.express as px
-import pandas as pd 
+import pandas as pd
 import numpy as np
 import json
 
@@ -10,7 +10,7 @@ import json
 # Define Blueprint for U.S. specific data
 usa_bp = Blueprint(
     'usa',
-    __name__, 
+    __name__,
     template_folder="templates",
     static_folder="static",
 )
@@ -20,10 +20,10 @@ usa_bp = Blueprint(
 # Summary of current data for all states
 states_summary = get("https://api.covidtracking.com/v1/states/current.json").json()
 
+
 # Summarize current U.S. data for COVID-19, per state/territory
 @usa_bp.route('/us/summary')
 def us_summary():
-
     df = pd.DataFrame(states_summary)
     df_dict = df.to_dict(orient='records')
 
@@ -33,12 +33,11 @@ def us_summary():
 # Summary data, sorted by cases per state ascending 
 @usa_bp.route('/us/cases')
 def us_cases():
-
     df = pd.DataFrame(states_summary)
     # Order by positive cases ascending
     sorted_df = df.sort_values(by='positive', ascending=False)
     # Create a column to show a countries rank in no. of cases
-    sorted_df['Rank'] = np.arange(start=1, stop=int(len(df))+1)
+    sorted_df['Rank'] = np.arange(start=1, stop=int(len(df)) + 1)
     df_dict = sorted_df.to_dict(orient='records')
 
     return render_template("us_cases.html", data=df_dict, title="U.S. Cases")
@@ -47,12 +46,11 @@ def us_cases():
 # Summary data, sorted by deaths per state ascending
 @usa_bp.route('/us/deaths')
 def us_deaths():
-
     df = pd.DataFrame(states_summary)
     # Order by positive cases ascending
     sorted_df = df.sort_values(by='death', ascending=False)
     # Create a column to show a countries rank in no. of cases
-    sorted_df['Rank'] = np.arange(start=1, stop=int(len(df))+1)
+    sorted_df['Rank'] = np.arange(start=1, stop=int(len(df)) + 1)
     df_dict = sorted_df.to_dict(orient='records')
 
     return render_template("us_deaths.html", data=df_dict, title="U.S. Deaths")
@@ -61,7 +59,6 @@ def us_deaths():
 # Show historical data for a specific state
 @usa_bp.route('/us/<string:state>')
 def state_history(state):
-
     data = get(f"https://api.covidtracking.com/v1/states/{state}/daily.json").json()
     df = pd.DataFrame(data)
     df_dict = df.to_dict(orient='records')
@@ -72,11 +69,9 @@ def state_history(state):
 # Route for data visualizations for U.S. states
 @usa_bp.route('/us/graphs/<string:state>')
 def state_visualizations(state):
-
     # Method to generate plots
     # "field" param can be equal to: "Confirmed", "Recovered", or "Deaths"
     def gen_plot(state, field):
-
         data = get(f"https://api.covidtracking.com/v1/states/{state}/daily.json").json()
         df = pd.DataFrame(data)
         dates = df["dateChecked"]
@@ -96,4 +91,3 @@ def state_visualizations(state):
         hospitalizations=gen_plot(state, "hospitalizedCurrently"),
         title=f"{state} Visualizations"
     )
-    

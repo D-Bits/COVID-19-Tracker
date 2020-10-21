@@ -1,7 +1,6 @@
 """ Application initialization """
 from flask import Flask, current_app
 from flask_assets import Environment, Bundle
-from requests import get
 from .world import world
 from .usa import usa
 
