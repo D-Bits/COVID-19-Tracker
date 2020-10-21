@@ -43,14 +43,6 @@ def index():
     return render_template('index.html', data=df_dict, total=total, title="Home")
 
 
-# Continent-specific data
-@world_bp.route('/continents')
-def continents():
-
-    data = get("https://corona.lmao.ninja/v2/continents?yesterday=true&sort").json()
-    df = pd.DataFrame(data)
-
-
 # Route for about page
 @world_bp.route('/about')
 def about():
@@ -68,7 +60,7 @@ def cases():
 
     df = pd.DataFrame(summary_json['Countries'])
     # Show only "NewConfirmed" and "TotalConfirmed", and countries names
-    filtered_data = df.filter(items=['Country', 'NewConfirmed', 'TotalConfirmed', 'Rank'])
+    filtered_data = df.filter(items=['Country', 'Slug', 'NewConfirmed', 'TotalConfirmed', 'Rank'])
     # Sort TotalConfirmed in descending order
     sorted_data = filtered_data.sort_values(by='TotalConfirmed', ascending=False)
     # Create a column to show a countries rank in no. of cases
@@ -89,7 +81,7 @@ def deaths():
 
     df = pd.DataFrame(summary_json['Countries'])
     # Show only "NewConfirmed" and "TotalConfirmed", and countries names
-    filtered_data = df.filter(items=['Country', 'NewDeaths', 'TotalDeaths'])
+    filtered_data = df.filter(items=['Country', 'Slug', 'NewDeaths', 'TotalDeaths'])
     # Sort TotalConfirmed in descending order
     sorted_data = filtered_data.sort_values(by='TotalDeaths', ascending=False)
     # Create a column to show a countries rank in no. of deaths
@@ -111,7 +103,7 @@ def recoveries():
     df = pd.DataFrame(summary_json['Countries'])
     # Show only "NewDeaths" and "TotalDeaths", and countries names
     filtered_data = df.filter(
-        items=['Country', 'NewRecovered', 'TotalRecovered'])
+        items=['Country', 'Slug', 'NewRecovered', 'TotalRecovered'])
     # Sort TotalConfirmed in descending order
     sorted_data = filtered_data.sort_values(
         by='TotalRecovered', ascending=False)
@@ -136,7 +128,7 @@ def country_history(country):
     sorted_data = df.sort_values('Date', ascending=False)
     df_dict = sorted_data.to_dict(orient='records')
 
-    return render_template('totals.html', data=df_dict, nation=country, title=f"{country} COVID History")
+    return render_template('totals.html', data=df_dict, nation=country, title=f"{country.title()} COVID History")
 
 
 # Show percentage of case, deaths, and recoveries that countries constitute
