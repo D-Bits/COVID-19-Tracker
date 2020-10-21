@@ -33,8 +33,6 @@ def index():
         return render_template("maintenance.html")
 
     df = pd.DataFrame(summary_json['Countries'])
-    # Order countries in alphabetical order
-    ordered_df = df.sort_values('Country', ascending=True)
     # Show totals for all columns
     total = df.sum(axis=0)
     # Convert the DataFrame to a dictionary
