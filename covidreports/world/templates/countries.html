@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block title %}About {% endblock %}
+
+{% block content %}
+
+    <h2>Non-COVID Country Data</h2>
+
+    <div class="data-table">
+
+        <!--Search box-->
+        <input type="text" class="form-control" id="CountriesInput" onkeyup='findData("CountriesTable", "CountriesInput", 0);' 
+        placeholder="Search for a country.">
+
+        <table id="CountriesTable" class="table table-striped">
+
+            <thead>
+                <tr>
+                    <th class="header-row">Country</th>
+                    <th class="header-row">Continent</th>
+                    <th class="header-row">Population</th>
+                    <th class="header-row">Pop Density</th>
+                    <th class="header-row">Median Age</th>
+                    <th class="header-row">GDP per Capita</th>
+                    <th class="header-row">Life Expectancy</th>
+                    <th class="header-row">Cardiovascular Death Rate</th>
+                    <th class="header-row">Diabetes Prevalence</th>
+                </tr>
+            </thead>
+            
+        {% for nation in data %}
+            <tbody>
+                <tr>
+                    <td class="country_name"><a href="{{ url_for('world.country_history', country=nation.Slug)}}">{{nation.location}}</a></td>
+                    <td>{{nation.continent}}</td>
+                    <td>{{nation.population}}</td>
+                    <td>{{nation.population_density}}</td>
+                    <td>{{nation.median_age}}</td>
+                    <td>${{nation.gdp_per_capita}}</td>
+                    <td>{{nation.life_expectancy}}</td>
+                    <td>{{nation.cardiovasc_death_rate}}</td>
+                    <td>{{nation.diabetes_prevalence}}</td>
+                </tr>
+            </tbody>
+        {% endfor %}
+        
+        </table>
+    </div>
+
+{% endblock %}
