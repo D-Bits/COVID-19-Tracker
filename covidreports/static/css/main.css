@@ -36,7 +36,7 @@ body {
 
 /*For current date*/
 #now {
-    margin-bottom: 2.5%;
+    margin-bottom: 5.5%;
 }
 
 .jumbotron {
@@ -74,7 +74,7 @@ btn:hover {
 .about {
     font-size: 18pt;
     font-family: 'PT Serif', serif;
-    margin-top: 5%;
+    margin-top: 7.5%;
     margin-bottom: 5%;
 }
 
