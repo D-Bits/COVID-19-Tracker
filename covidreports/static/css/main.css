@@ -16,6 +16,10 @@ body {
     color: azure;
 }
 
+#main-title {
+    font-family: 'Montserrat', sans-serif;
+}
+
 .country_name {
     text-transform: capitalize;
 }
@@ -39,8 +43,8 @@ body {
     margin-bottom: 0;
     padding-top: .005%;
     padding-bottom: 3.5%;
-    background-color: #555551;
-    color: azure;
+    background-color: #225475;
+    color: #ffffff;
 }
 
 #footer {
@@ -69,6 +73,7 @@ btn:hover {
 /*For <p> tags on about page */
 .about {
     font-size: 18pt;
+    font-family: 'PT Serif', serif;
     margin-top: 5%;
     margin-bottom: 5%;
 }
