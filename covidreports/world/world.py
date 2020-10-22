@@ -28,6 +28,7 @@ summary_json = get("https://api.covid19api.com/summary").json()
 @world_bp.route('/')
 def index():
 
+    # Redirect to maintenance page if API is down
     if summary_json['Message'] == "Caching in progress":
 
         return render_template("maintenance.html")
@@ -47,6 +48,17 @@ def about():
 
     return render_template('about.html', title="About")
 
+
+# Route for non-COVID data about countries
+@world_bp.route('/countries')
+def countries():
+
+    data = get("https://covid.ourworldindata.org/data/owid-covid-data.json").json()
+    df = pd.DataFrame(data).drop(['data']).transpose()
+    df_dict = df.to_dict(orient="records")
+
+    return render_template("countries.html", data=df_dict, title="Countries")
+    
 
 # Route for cases page
 @world_bp.route('/cases')
