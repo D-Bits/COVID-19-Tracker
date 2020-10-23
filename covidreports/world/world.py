@@ -50,14 +50,14 @@ def about():
 
 
 # Route for non-COVID data about countries
-@world_bp.route('/countries')
-def countries():
+@world_bp.route('/demographic')
+def demographic():
 
     data = get("https://covid.ourworldindata.org/data/owid-covid-data.json").json()
     df = pd.DataFrame(data).drop(['data']).transpose().sort_values(by="location", ascending=True)
     df_dict = df.to_dict(orient="records")
 
-    return render_template("countries.html", data=df_dict, title="Countries")
+    return render_template("demographic.html", data=df_dict, title="Demographics")
 
 
 # Route for cases page
@@ -215,12 +215,11 @@ def download_summary():
     # Order countries in alphabetical order
     ordered_df = df.sort_values('Country', ascending=True)
     # Dump the DataFrame to a CSV file, in a location of the user's choosing
-    filename = f"/dumps/summary_dump_{date.today()}.csv"
+    filename = f"./dumps/summary_dump_{date.today()}.csv"
     ordered_df.to_csv(filename, sep=",")
 
     # Download the data dump to user's client
     return send_from_directory('dumps/', f'summary_dump_{date.today()}.csv')
-    remove(f"/dumps/summary_dump_{date.today()}.csv")
 
 
 """
