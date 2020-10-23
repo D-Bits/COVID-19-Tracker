@@ -54,7 +54,7 @@ def about():
 def countries():
 
     data = get("https://covid.ourworldindata.org/data/owid-covid-data.json").json()
-    df = pd.DataFrame(data).drop(['data']).transpose()
+    df = pd.DataFrame(data).drop(['data']).transpose().sort_values(by="location", ascending=True)
     df_dict = df.to_dict(orient="records")
 
     return render_template("countries.html", data=df_dict, title="Countries")
