@@ -133,6 +133,9 @@ def country_history(country):
     # Define API endpoint, and fetch data
     endpoint = get(f'https://api.covid19api.com/total/country/{country}')
     data = endpoint.json()
+    # Redirect to 404 template if country doesn't exist
+    if endpoint.status_code == 404:
+        return render_template("404.html", title="404")
     df = pd.DataFrame(data)
     # Sort records from most recent cases to oldest cases
     sorted_data = df.sort_values('Date', ascending=False)
@@ -178,8 +181,9 @@ def country_graphs(country):
     def gen_plot(country, field):
 
         # Define API endpoint, and fetch data
-        endpoint = get(f'https://api.covid19api.com/total/country/{country}')
-        data = endpoint.json()
+        data = get(f'https://api.covid19api.com/total/country/{country}').json()
+        if data["Message"] == "Not Found":
+            return render_template("404.html", title="404")
         df = pd.DataFrame(data)
         dates = df["Date"]
         case_type = df[field]
