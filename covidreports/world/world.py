@@ -53,12 +53,19 @@ def about():
 @world_bp.route('/countries')
 def countries():
 
-    data = get("https://covid.ourworldindata.org/data/owid-covid-data.json").json()
-    df = pd.DataFrame(data).drop(['data']).transpose()
-    df_dict = df.to_dict(orient="records")
+    # Our World in Data API data
+    owid_data = get("https://covid.ourworldindata.org/data/owid-covid-data.json").json()
+    # Postman API data
+    covid_data = get("https://api.covid19api.com/summary").json()
+    owid_df = pd.DataFrame(owid_data).drop(['data']).transpose()
+    # Drop all fields, except "Slug"
+    covid_df = pd.DataFrame(covid_data['Countries']).drop(['Country', 'CountryCode', 'NewConfirmed', 'TotalConfirmed', 'NewDeaths', 'TotalDeaths', 'NewRecovered', 'TotalRecovered', 'Date', 'Premium'], axis=1)
+    # Merge remain OWID and Postman fields
+    merged_df = pd.concat([covid_df, owid_df], axis=1)
+    df_dict = merged_df.to_dict(orient="records")
 
-    return render_template("countries.html", data=df_dict, title="Countries")
-    
+    return render_template("countries.html", data=df_dict, title="Non-COVID Country Data")
+
 
 # Route for cases page
 @world_bp.route('/cases')
