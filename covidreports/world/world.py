@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, send_from_directory, jsonify
+from flask import Blueprint, render_template, send_from_directory, send_file
 from werkzeug.exceptions import HTTPException, NotFound, InternalServerError
 from dotenv import load_dotenv
 from requests import get
@@ -182,8 +182,6 @@ def country_graphs(country):
 
         # Define API endpoint, and fetch data
         data = get(f'https://api.covid19api.com/total/country/{country}').json()
-        if data["Message"] == "Not Found":
-            return render_template("404.html", title="404")
         df = pd.DataFrame(data)
         dates = df["Date"]
         case_type = df[field]
@@ -207,7 +205,7 @@ def country_graphs(country):
 
 
 # Download data from summary endpoint, and save to CSV
-@world_bp.route(f"/dumps/covid19_summary_{date.today()}.csv")
+@world_bp.route(f"/dumps/summary_dump_{date.today()}.csv")
 def download_summary():
 
     df = pd.DataFrame(summary_json['Countries'])
@@ -219,7 +217,7 @@ def download_summary():
     ordered_df.to_csv(filename, sep=",")
 
     # Download the data dump to user's client
-    return send_from_directory('dumps/', f'summary_dump_{date.today()}.csv')
+    return send_from_directory('./dumps/', f'summary_dump_{date.today()}.csv')
 
 
 """
