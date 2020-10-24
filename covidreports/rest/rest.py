@@ -85,7 +85,7 @@ U.S. data API endpoints
 states_summary = get("https://api.covidtracking.com/v1/states/current.json").json()
 
 # Current nationwide data for each state
-@rest_bp.route('/api/us/summary')
+@rest_bp.route('/api/us/summary/')
 def us_api_summary():
 
     return jsonify(states_summary)
