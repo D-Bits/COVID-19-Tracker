@@ -78,6 +78,15 @@ def world_api_percentages():
     return jsonify(merged_df_dict)
 
 
+@rest_bp.route('/api/world/demographic/')
+def world_api_demographic():
+
+    data = get("https://covid.ourworldindata.org/data/owid-covid-data.json").json()
+    df = pd.DataFrame(data).drop(['data']).transpose().sort_values(by="location", ascending=True)
+    df_dict = df.to_dict(orient="records")
+
+    return jsonify(df_dict)
+
 """
 U.S. data API endpoints
 """
