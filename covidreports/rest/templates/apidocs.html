@@ -11,11 +11,24 @@
 
         <p>
             This project now has a RESTful component to it. This API will essential act as a 
-            wrapper around the third party APIs that this website gets its data from. 
+            wrapper around the third party APIs that this website gets its data from, as well
+            as allow users to access the same data rendered in the tables via JSON. 
+        </p>
+        <p>
+            All API endpoints use the <code>GET</code> method, and do not require a key.
         </p>
 
-    </div>
+        <br>
 
-    <h2>Endpoints</h2>
+        <h3 class="doctitle">World Data Endpoints</h3>
+
+        <ul class="endpoints">
+            <li><code>/api/world/summary/</code>: Summary of current data for all countries.</li>
+            <li><code>/api/world/country_name/</code>: COVID case history for a specific country.</li>
+            <li><code>/api/world/percentages/</code>: What percentages of global cases, deaths, etc different countries constitute.</li>
+            
+        </ul>
+
+    </div>
 
 {% endblock %}

@@ -74,7 +74,7 @@ btn:hover {
 .about {
     font-size: 18pt;
     font-family: 'PT Serif', serif;
-    margin-top: 7.5%;
+    margin-top: 5%;
     margin-bottom: 5%;
 }
 
@@ -169,3 +169,17 @@ Drop menu styles
     color: azure;
 }
 
+code {
+    color: #1b90c2;
+}
+
+.endpoints {
+    list-style-type: none;
+}
+
+/*For certain <h> tags*/
+.doctitle {
+    text-decoration: underline;
+    margin-bottom: 2.5%;
+    margin-top: 1.5%;
+}
