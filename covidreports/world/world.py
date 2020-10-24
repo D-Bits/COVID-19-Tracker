@@ -13,13 +13,13 @@ import json
 
 # Define Blueprint for world data
 world_bp = Blueprint(
-    'world', 
-    __name__, 
+    'world',
+    __name__,
     template_folder="templates",
     static_folder="static",
 )
 
-# All available data, for all countries 
+# All available data, for all countries
 summary_json = get("https://api.covid19api.com/summary").json()
 
 """ Routing logic """
@@ -49,12 +49,26 @@ def about():
     return render_template('about.html', title="About")
 
 
+# Current case data for continents
+@world_bp.route('/continents')
+def continents():
+
+    data = get("https://disease.sh/v3/covid-19/continents").json()
+    df = pd.DataFrame(data).drop([
+        'continentInfo', 'countries', 'updated'
+    ], axis=1).sort_values(by='continent', ascending=True)
+    df_dict = df.to_dict(orient='records')
+
+    return render_template("continents.html", data=df_dict, title="Continents")
+
+
 # Route for non-COVID data about countries
 @world_bp.route('/demographic')
 def demographic():
 
     data = get("https://covid.ourworldindata.org/data/owid-covid-data.json").json()
-    df = pd.DataFrame(data).drop(['data']).transpose().sort_values(by="location", ascending=True)
+    df = pd.DataFrame(data).drop(['data']).transpose(
+    ).sort_values(by="location", ascending=True)
     df_dict = df.to_dict(orient="records")
 
     return render_template("demographic.html", data=df_dict, title="Demographics")
@@ -70,9 +84,11 @@ def cases():
 
     df = pd.DataFrame(summary_json['Countries'])
     # Show only "NewConfirmed" and "TotalConfirmed", and countries names
-    filtered_data = df.filter(items=['Country', 'Slug', 'NewConfirmed', 'TotalConfirmed', 'Rank'])
+    filtered_data = df.filter(
+        items=['Country', 'Slug', 'NewConfirmed', 'TotalConfirmed', 'Rank'])
     # Sort TotalConfirmed in descending order
-    sorted_data = filtered_data.sort_values(by='TotalConfirmed', ascending=False)
+    sorted_data = filtered_data.sort_values(
+        by='TotalConfirmed', ascending=False)
     # Create a column to show a countries rank in no. of cases
     sorted_data['Rank'] = np.arange(start=1, stop=int(len(df))+1)
     # Convert the DataFrame to a dictionary
@@ -91,7 +107,8 @@ def deaths():
 
     df = pd.DataFrame(summary_json['Countries'])
     # Show only "NewConfirmed" and "TotalConfirmed", and countries names
-    filtered_data = df.filter(items=['Country', 'Slug', 'NewDeaths', 'TotalDeaths'])
+    filtered_data = df.filter(
+        items=['Country', 'Slug', 'NewDeaths', 'TotalDeaths'])
     # Sort TotalConfirmed in descending order
     sorted_data = filtered_data.sort_values(by='TotalDeaths', ascending=False)
     # Create a column to show a countries rank in no. of deaths
@@ -181,7 +198,8 @@ def country_graphs(country):
     def gen_plot(country, field):
 
         # Define API endpoint, and fetch data
-        data = get(f'https://api.covid19api.com/total/country/{country}').json()
+        data = get(
+            f'https://api.covid19api.com/total/country/{country}').json()
         df = pd.DataFrame(data)
         dates = df["Date"]
         case_type = df[field]
@@ -224,6 +242,8 @@ def download_summary():
 Error handling routes
 """
 # 404 Handler
+
+
 @world_bp.errorhandler(NotFound)
 def not_found(e):
 

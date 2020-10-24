@@ -1,0 +1,53 @@
+{% extends "layout.html" %} 
+
+{% block content %}
+
+    <h2>Data by Continent</h2>
+
+    <div class="data-table">
+
+        <table id="ContinentsTable" class="table table-striped">
+            <thead>
+                <tr class="field-names">
+                    <th class="header-row">Continent</th>
+                    <th class="header-row">Population</th>
+                    <th class="header-row">Total Cases</th>
+                    <th class="header-row">New Cases</th>
+                    <th class="header-row">Active Cases</th>
+                    <th class="header-row">Critical Cases</th>
+                    <th class="header-row">Cases per Million</th>
+                    <th class="header-row">Total Deaths</th>
+                    <th class="header-row">New Deaths</th>
+                    <th class="header-row">Deaths per Million</th>
+                    <th class="header-row">Total Recoveries</th>
+                    <th class="header-row">New Recoveries</th>
+                    <th class="header-row">Total Tests</th>
+                    <th class="header-row">Tests per Million</th>
+                </tr>
+            </thead>
+
+        {% for continent in data %}
+            <tbody>
+                <tr>
+                    <td>{{continent.continent}}</td>
+                    <td>{{continent.population}}</td>
+                    <td>{{continent.cases}}</td>
+                    <td>{{continent.todayCases}}</td>
+                    <td>{{continent.active}}</td>
+                    <td>{{continent.critical}}</td>
+                    <td>{{continent.casesPerOneMillion}}</td>
+                    <td>{{continent.deaths}}</td>
+                    <td>{{continent.todayDeaths}}</td>
+                    <td>{{continent.deathsPerOneMillion}}</td>
+                    <td>{{continent.recovered}}</td>
+                    <td>{{continent.todayRecovered}}</td>
+                    <td>{{continent.tests}}</td>
+                    <td>{{continent.testsPerOneMillion}}</td> 
+                </tr>
+            </tbody>    
+        {% endfor %}
+        </table>
+
+    </div>
+
+{% endblock %}
