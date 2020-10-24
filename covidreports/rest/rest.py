@@ -26,7 +26,7 @@ def api_docs():
     return render_template("apidocs.html", title="API Documentation")
 
 
-@rest_bp.route('/api/world/summary', methods=["GET"])
+@rest_bp.route('/api/world/summary/', methods=["GET"])
 def world_api_summary():
 
     df = pd.DataFrame(world_summary['Countries']).drop(["Premium"], axis=1)
