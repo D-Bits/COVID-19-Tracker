@@ -40,6 +40,14 @@ class WorldRoutesTests(TestCase):
             response = tc.get('/recoveries')
             self.assertEqual(response.status_code, 200)
 
+    # Test demographic route
+    def test_demographic_route(self):
+
+        with app.test_client() as tc:
+
+             response = tc.get('/recoveries')
+             self.assertEqual(response.status_code, 200)
+
     # Test deaths route
     def test_deaths_route(self):
 
