@@ -81,9 +81,19 @@ btn:hover {
 /*Styles for index page*/
 .data-table {
     overflow-x: auto;
-    height: 45em;
+    overflow-y: auto;
+    height: 25em; 
     margin-top: 2.5%;
     border-radius: 1.5%;
+}
+
+.search-input {
+    width: 75%;
+    text-align: center;
+    margin-bottom: 5%;
+    margin-top: 2.5%;
+    border-radius: 2.5%;
+    border: 2.5px solid #008cff;
 }
 
 /*Styles for table header row*/
