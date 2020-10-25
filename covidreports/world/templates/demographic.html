@@ -4,11 +4,11 @@
 
     <h2>Non-COVID Country Data</h2>
 
-    <div class="data-table">
+    <!--Search box-->
+    <input type="text" class="form-control" id="CountriesInput" onkeyup='findData("CountriesTable", "CountriesInput", 0);' 
+    placeholder="Search for a country.">
 
-        <!--Search box-->
-        <input type="text" class="form-control" id="CountriesInput" onkeyup='findData("CountriesTable", "CountriesInput", 0);' 
-        placeholder="Search for a country.">
+    <div class="data-table">
 
         <table id="CountriesTable" class="table table-striped">
 

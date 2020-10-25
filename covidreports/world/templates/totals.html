@@ -2,13 +2,13 @@
 
 {% block content %}
 
-<h2 class="country_name">{{nation.title()}} Total COVID-19 History</h2>
-
  <!--Search box-->
  <input type="text" class="form-control" id="CountryHistoryInput" 
  onkeyup='findData("CountryHistoryTable", "CountryHistoryInput", 0);' 
  placeholder="Search a date. Always use two digits for the day (Ex: 8-04)."
  >
+
+<h2 class="country_name">{{nation.title()}} Total COVID-19 History</h2>
 
 <h4><a href="{{ url_for('world.country_graphs', country=nation )}}">View Data Visualizations</a></h4>
 
