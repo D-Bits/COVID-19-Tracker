@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+    <h2 class="country_name">U.S. County Summary</h2>
+                
+    <div class="data-table">
+
+        <!--Search box-->
+        <input type="text" class="form-control" id="CountyInput" onkeyup='findData("CountyTable", "CountyInput", 0);' placeholder="Search for a state/territory.">
+
+        <table id="CountyTable" class="table data-table table-striped">
+
+            <thead>
+                    <tr>
+                        <th class="header-row">County</th>
+                        <th class="header-row">State</th>
+                        <th class="header-row">Cases</th>
+                        <th class="header-row">Deaths</th>
+                    </tr>  
+            </thead>
+
+            {% for county in data %}
+                <!--Table for summary data-->
+                <tbody>
+                    <tr>
+                        <td>{{county.county}}</td>
+                        <td>{{county.state}}</td>
+                        <td>{{county.cases}}</td>
+                        <td>{{county.deaths}}</td>
+                    </tr>
+                </tbody>
+            {% endfor %}
+
+        </table>
+           
+    </div>
+
+{% endblock %}

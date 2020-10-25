@@ -24,6 +24,14 @@ class WorldRoutesTests(TestCase):
             response = tc.get('/about')
             self.assertEqual(response.status_code, 200)
 
+    # Test about continents route
+    def test_continents_route(self):
+
+        with app.test_client() as tc:
+
+            response = tc.get('/continents')
+            self.assertEqual(response.status_code, 200)
+
     # Test cases route
     def test_cases_route(self):
 

@@ -97,3 +97,14 @@ def state_visualizations(state):
         hospitalizations=gen_plot(state, "hospitalizedCurrently"),
         title=f"{state} Visualizations"
     )
+
+
+# Get current data for all U.S. counties
+@usa_bp.route('/us/counties/')
+def counties():
+
+    data = get("https://disease.sh/v3/covid-19/nyt/counties?lastdays=1").json()
+    df = pd.DataFrame(data)
+    df_dict = df.to_dict(orient="records")
+
+    return render_template("counties.html", data=df_dict, title="U.S. Counties Current")
