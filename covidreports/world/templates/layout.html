@@ -13,7 +13,10 @@
       type="text/css"
       href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css"
     />
-    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.18.0/dist/bootstrap-table.min.css">
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/bootstrap-table@1.18.0/dist/bootstrap-table.min.css"
+    />
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/main.css') }}"
@@ -50,7 +53,7 @@
     <div class="jumbotron jumbotron-fluid">
       <div class="container">
         <h1 id="main-title"><strong>COVID-19 Reports</strong></h1>
-        <p>Tracking the novel coronavirus, one day at a time.</p>
+        <p>Tracking the novel coronavirus worldwide, one day at a time.</p>
       </div>
     </div>
 
@@ -70,7 +73,9 @@
             <a class="nav-link" href="{{ url_for('world.about') }}">About</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('world.continents') }}">Continents</a>
+            <a class="nav-link" href="{{ url_for('world.continents') }}"
+              >Continents</a
+            >
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('world.cases') }}">Cases</a>
