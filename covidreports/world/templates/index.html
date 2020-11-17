@@ -5,11 +5,8 @@
     <h2>Global Data Summary by {{sorting.title()}}</h2>
 
     <!--Search box-->
-    {% if sorting == "cases" or "deaths" or "recoveries" %}
-        <input type="text" class="form-control" id="WorldInput" onkeyup='findData("WorldSummaryTable", "WorldInput", 1);' placeholder="Search for a country.">
-    {% elif sorting == "country" %}
-        <input type="text" class="form-control" id="WorldInput" onkeyup='findData("WorldSummaryTable", "WorldInput", 0);' placeholder="Search for a country.">
-    {% endif %}
+    <input type="text" class="form-control" id="WorldInput" onkeyup='findData("WorldSummaryTable", "WorldInput", 1);' placeholder="Search for a country.">
+    
     <div class="data-table">
 
         <table class="table table-striped">
