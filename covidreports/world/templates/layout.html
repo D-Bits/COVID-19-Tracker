@@ -53,7 +53,7 @@
     <div class="jumbotron jumbotron-fluid">
       <div class="container">
         <h1 id="main-title"><strong>COVID-19 Reports</strong></h1>
-        <p>Tracking the novel coronavirus worldwide, one day at a time.</p>
+        <p>Tracking the novel coronavirus worldwide.</p>
       </div>
     </div>
 
@@ -78,13 +78,13 @@
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('world.cases') }}">Cases</a>
+            <a class="nav-link" href="{{ url_for('world.world_data', sorting='cases') }}">Cases</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('world.deaths') }}">Deaths</a>
+            <a class="nav-link" href="{{ url_for('world.world_data', sorting='deaths') }}">Deaths</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('world.recoveries') }}"
+            <a class="nav-link" href="{{ url_for('world.world_data', sorting='recoveries') }}"
               >Recoveries</a
             >
           </li>

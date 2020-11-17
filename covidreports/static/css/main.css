@@ -80,6 +80,7 @@ btn:hover {
 
 /*Styles for index page*/
 .data-table {
+    counter-reset: rowNumber;
     overflow-x: auto;
     overflow-y: auto;
     height: 25em; 
