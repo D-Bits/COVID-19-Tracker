@@ -38,6 +38,8 @@ def index():
     df = pd.DataFrame(summary_json["Countries"])
     # Show totals for all columns
     total = df.sum(axis=0)
+    # Create a column to show a countries rank in no. of countries
+    df["Rank"] = np.arange(start=1, stop=int(len(df)) + 1)
     # Convert the DataFrame to a dictionary
     df_dict = df.to_dict(orient="records")
 
@@ -45,7 +47,7 @@ def index():
         "index.html",
         data=df_dict, 
         total=total,
-        sorting="Country", 
+        sorting="country", 
         title="Home"
     )
 
@@ -74,17 +76,17 @@ def world_data(sorting):
         elif sorting == "deaths":
             df.sort_values(by="TotalDeaths", ascending=False)
             sorted_data = df.sort_values(by="TotalDeaths", ascending=False)
-            # Create a column to show a countries rank in no. of cases
+            # Create a column to show a countries rank in no. of deaths
             sorted_data["Rank"] = np.arange(start=1, stop=int(len(df)) + 1)
             return sorted_data.to_dict(orient="records")
         elif sorting == "recoveries":
             df.sort_values(by="TotalRecovered", ascending=False)
             sorted_data = df.sort_values(by="TotalRecovered", ascending=False)
-            # Create a column to show a countries rank in no. of cases
+            # Create a column to show a countries rank in no. of recoveries
             sorted_data["Rank"] = np.arange(start=1, stop=int(len(df)) + 1)
             return sorted_data.to_dict(orient="records")
         else:
-            df.sort_values(by="TotalRecovered", ascending=False)
+            df.sort_values(by="Country", ascending=False)
             return df.to_dict(orient="records")
 
     return render_template(
