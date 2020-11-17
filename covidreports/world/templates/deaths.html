@@ -4,11 +4,11 @@
 
 <h2>Deaths by Country</h2>
 
-    <div class="data-table">
+    <!--Search box-->
+    <input type="text" class="form-control" id="WorldDeathsInput" onkeyup='findData("WorldDeathsTable", "WorldDeathsInput", 1);' 
+    placeholder="Search for a country.">
 
-        <!--Search box-->
-        <input type="text" class="form-control" id="WorldDeathsInput" onkeyup='findData("WorldDeathsTable", "WorldDeathsInput", 1);' 
-        placeholder="Search for a country.">
+    <div class="data-table">
 
         <table id="WorldDeathsTable" class="table table-striped">
 
