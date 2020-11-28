@@ -59,7 +59,7 @@ def world_data(sorting):
     # Redirect to maintenance page if API is down
     if summary_json["Message"] == "Caching in progress":
 
-        return render_template("maintenance.html")
+        return render_template("maintenance.html", title="Maintenance Error")
 
     df = pd.DataFrame(summary_json["Countries"])
     total = df.sum(axis=0)
