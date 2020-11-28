@@ -229,28 +229,6 @@ def country_graphs(country):
     )
 
 
-# Historical testing data for a country
-@world_bp.route("/testing/<string:country>")
-def country_testing(country):
-
-    src = get(
-        "https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/testing/covid-testing-all-observations.csv"
-    ).content
-    df = pd.DataFrame(io.StringIO(src.decode("utf-8"))).drop(
-        ["Notes", "Source URL", "Source label"], axis=1
-    )
-    # Clean data so it only shows data for a specific country
-    country_data = df[df["Entity"] == f"{country} - tests performed"]
-    df_dict = country_data.to_dict()
-
-    return render_template(
-        "testing.html", 
-        title=f"{country.title()} Testing Data", 
-        nation=country, 
-        data=df_dict
-    )
-
-
 # Download data from summary endpoint, and save to CSV
 @world_bp.route(f"/dumps/summary_dump_{date.today()}.csv")
 def download_summary():
