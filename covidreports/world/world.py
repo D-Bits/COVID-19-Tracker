@@ -54,7 +54,7 @@ def index():
 
 # Route for summary presented in different ordering
 @world_bp.route("/<string:sorting>")
-def world_data(sorting):
+def world_data(sorting: str):
 
     # Redirect to maintenance page if API is down
     if summary_json["Message"] == "Caching in progress":
@@ -85,9 +85,12 @@ def world_data(sorting):
             # Create a column to show a countries rank in no. of recoveries
             sorted_data["Rank"] = np.arange(start=1, stop=int(len(df)) + 1)
             return sorted_data.to_dict(orient="records")
-        else:
+        elif sorting == "countries":
             df.sort_values(by="Country", ascending=False)
             return df.to_dict(orient="records")
+        else:
+            return render_template("404.html", title="404")
+
 
     return render_template(
         "index.html",
@@ -139,7 +142,7 @@ def demographic():
 # Route to show how many cases, deaths, and recoveries a country had for each day, since first confirmed cases
 # TODO: Format dates to strip out "T00:00:00Z"
 @world_bp.route("/country/<string:country>")
-def country_history(country):
+def country_history(country: str):
 
     # Define API endpoint, and fetch data
     endpoint = get(f"https://api.covid19api.com/total/country/{country}")
@@ -201,7 +204,7 @@ def percentages():
 
 # Route for showing line graph data for individual countries
 @world_bp.route("/graphs/<string:country>")
-def country_graphs(country):
+def country_graphs(country: str):
 
     # Method to generate plots
     # "field" param can be equal to: "Confirmed", "Recovered", or "Deaths"
@@ -213,7 +216,7 @@ def country_graphs(country):
         dates = df["Date"]
         case_type = df[field]
         # Create the plot, and convert it to a JSON object to iterate over in HTML
-        graph_data = px.line(data_frame=df, x=df["Date"], y=df[field])
+        graph_data = px.line(data_frame=df, x=dates, y=case_type)
         graph_JSON = json.dumps(graph_data, cls=PlotlyJSONEncoder)
 
         return graph_JSON
@@ -226,28 +229,6 @@ def country_graphs(country):
         recoveries=gen_plot(country, "Recovered"),
         active=gen_plot(country, "Active"),
         title=f"{country.title()} Visualizations",
-    )
-
-
-# Historical testing data for a country
-@world_bp.route("/testing/<string:country>")
-def country_testing(country):
-
-    src = get(
-        "https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/testing/covid-testing-all-observations.csv"
-    ).content
-    df = pd.DataFrame(io.StringIO(src.decode("utf-8"))).drop(
-        ["Notes", "Source URL", "Source label"], axis=1
-    )
-    # Clean data so it only shows data for a specific country
-    country_data = df[df["Entity"] == f"{country} - tests performed"]
-    df_dict = country_data.to_dict()
-
-    return render_template(
-        "testing.html", 
-        title=f"{country.title()} Testing Data", 
-        nation=country, 
-        data=df_dict
     )
 
 
