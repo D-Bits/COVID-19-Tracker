@@ -32,20 +32,36 @@ class WorldRoutesTests(TestCase):
             response = tc.get('/continents')
             self.assertEqual(response.status_code, 200)
 
-    # Test cases route
-    def test_cases_route(self):
+    # Test total cases route
+    def test_total_cases_route(self):
 
         with app.test_client() as tc:
 
-            response = tc.get('/cases')
+            response = tc.get('/total_cases')
             self.assertEqual(response.status_code, 200)
 
-    # Test recoveries route
+    # Test new cases route
+    def test_new_cases_route(self):
+
+        with app.test_client() as tc:
+
+            response = tc.get('/new_cases')
+            self.assertEqual(response.status_code, 200)
+
+    # Test total recoveries route
     def test_recoveries_route(self):
 
         with app.test_client() as tc:
 
-            response = tc.get('/recoveries')
+            response = tc.get('/total_recoveries')
+            self.assertEqual(response.status_code, 200)
+
+    # Test new cases route
+    def test_new_recoveries_route(self):
+
+        with app.test_client() as tc:
+
+            response = tc.get('/new_recoveries')
             self.assertEqual(response.status_code, 200)
 
     # Test demographic route
@@ -56,12 +72,20 @@ class WorldRoutesTests(TestCase):
              response = tc.get('/recoveries')
              self.assertEqual(response.status_code, 200)
 
-    # Test deaths route
-    def test_deaths_route(self):
+    # Test total deaths route
+    def test_total_deaths_route(self):
 
         with app.test_client() as tc:
 
-            response = tc.get('/deaths')
+            response = tc.get('/total_deaths')
+            self.assertEqual(response.status_code, 200)
+
+    # Test new cases route
+    def test_new_cases_route(self):
+
+        with app.test_client() as tc:
+
+            response = tc.get('/new_deaths')
             self.assertEqual(response.status_code, 200)
 
     # Test country specific cases route, with Denmark as an example
