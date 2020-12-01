@@ -47,8 +47,9 @@ def index():
         "index.html",
         data=df_dict, 
         total=total,
-        sorting="country", 
-        title="Home"
+        sorting="Country", 
+        title="Home",
+        length=len(df_dict)
     )
 
 
@@ -67,23 +68,41 @@ def world_data(sorting: str):
     # Nested function for manipulating data
     def transform_data(sorting):  
         
-        if sorting == "cases":
+        if sorting == "total_cases":
             sorted_data = df.sort_values(by="TotalConfirmed", ascending=False)
             # Create a column to show a countries rank in no. of cases
             sorted_data["Rank"] = np.arange(start=1, stop=int(len(df)) + 1)
             # Convert the DataFrame to a dictionary
             return sorted_data.to_dict(orient="records")
-        elif sorting == "deaths":
+        elif sorting == "new_cases":
+            sorted_data = df.sort_values(by="NewConfirmed", ascending=False)
+            # Create a column to show a countries rank in no. of cases
+            sorted_data["Rank"] = np.arange(start=1, stop=int(len(df)) + 1)
+            # Convert the DataFrame to a dictionary
+            return sorted_data.to_dict(orient="records")
+        elif sorting == "total_deaths":
             df.sort_values(by="TotalDeaths", ascending=False)
             sorted_data = df.sort_values(by="TotalDeaths", ascending=False)
             # Create a column to show a countries rank in no. of deaths
             sorted_data["Rank"] = np.arange(start=1, stop=int(len(df)) + 1)
             return sorted_data.to_dict(orient="records")
-        elif sorting == "recoveries":
+        elif sorting == "new_deaths":
+            sorted_data = df.sort_values(by="NewDeaths", ascending=False)
+            # Create a column to show a countries rank in no. of cases
+            sorted_data["Rank"] = np.arange(start=1, stop=int(len(df)) + 1)
+            # Convert the DataFrame to a dictionary
+            return sorted_data.to_dict(orient="records")
+        elif sorting == "total_recoveries":
             df.sort_values(by="TotalRecovered", ascending=False)
             sorted_data = df.sort_values(by="TotalRecovered", ascending=False)
             # Create a column to show a countries rank in no. of recoveries
             sorted_data["Rank"] = np.arange(start=1, stop=int(len(df)) + 1)
+            return sorted_data.to_dict(orient="records")
+        elif sorting == "new_recoveries":
+            sorted_data = df.sort_values(by="NewRecovered", ascending=False)
+            # Create a column to show a countries rank in no. of cases
+            sorted_data["Rank"] = np.arange(start=1, stop=int(len(df)) + 1)
+            # Convert the DataFrame to a dictionary
             return sorted_data.to_dict(orient="records")
         elif sorting == "countries":
             df.sort_values(by="Country", ascending=False)
@@ -97,7 +116,7 @@ def world_data(sorting: str):
         data=transform_data(sorting),
         total=total,
         sorting=sorting,
-        title=f"Global {sorting.title()}"
+        title=f"Global Data by {sorting.title()}"
     )
 
 

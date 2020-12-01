@@ -4,7 +4,8 @@
 
     <h2>Global Data Summary by {{sorting.title()}}</h2>
 
- 
+    <p><em>Click the table headers to sort data.</em></p>
+    
    <!--Search box-->
     <input type="text" class="form-control" id="WorldInput" onkeyup='findData("WorldSummaryTable", "WorldInput", 1);' placeholder="Search for a country.">
     
@@ -38,102 +39,17 @@
 
         <!--Table for summary data-->
         <table id="WorldSummaryTable" class="table table-striped">
-    
-            <!--Sort by cases desc-->
-            {% if sorting == "cases" %}
+
                 <thead>
                     <tr class="field-names">
-                        <th class="header-row" onclick="w3.sortHTML('#WorldSummaryTable','td.item', 'td:nth-child(1)')">Rank</th>
-                        <th class="header-row" onclick="w3.sortHTML('#WorldSummaryTable','td.item', 'td:nth-child(1)')">Country</th>
-                        <th class="header-row" onclick="w3.sortHTML('#WorldSummaryTable','td.item', 'td:nth-child(2)')">New Confirmed</th>
-                        <th class="header-row" onclick="w3.sortHTML('#WorldSummaryTable','td.item', 'td:nth-child(3)')">Total Confirmed</th>
-                        <th class="header-row" onclick="w3.sortHTML('#WorldSummaryTable','.item', 'td:nth-child(4)')">New Deaths</th>
-                        <th class="header-row" onclick="w3.sortHTML('#WorldSummaryTable','.item', 'td:nth-child(5)')">Total Deaths</th>
-                        <th class="header-row" onclick="w3.sortHTML('#WorldSummaryTable','.item', 'td:nth-child(6)')">New Recovered</th>
-                        <th class="header-row" onclick="w3.sortHTML('#WorldSummaryTable','.item', 'td:nth-child(6)')">Total Recovered</th>
-                    </tr>  
-                </thead>
-                {% for nation in data %}
-                    <tbody>
-                        <tr>
-                            <td class="country_name item">{{nation.Rank}}</td>
-                            <td class="country_name item"><a href="{{ url_for('world.country_history', country=nation.Slug )}}">{{nation.Country}}</a></td>
-                            <td class="item">{{nation.NewConfirmed}}</td>
-                            <td class="item">{{nation.TotalConfirmed}}</td>
-                            <td class="item">{{nation.NewDeaths}}</td>
-                            <td class="item">{{nation.TotalDeaths}}</td>
-                            <td class="item">{{nation.NewRecovered}}</td>
-                            <td class="item">{{nation.TotalRecovered}}</td>
-                        </tr>
-                    </tbody>
-                {% endfor %}
-            <!--Sort by deaths desc-->
-            {% elif sorting == "deaths" %}
-                    <thead>
-                        <tr class="field-names">
-                            <th class="header-row" onclick="w3.sortHTML('#WorldSummaryTable','td.item', 'td:nth-child(1)')">Rank</th>
-                            <th class="header-row" onclick="w3.sortHTML('#WorldSummaryTable','td.item', 'td:nth-child(1)')">Country</th>
-                            <th class="header-row" onclick="w3.sortHTML('#WorldSummaryTable','.item', 'td:nth-child(4)')">New Deaths</th>
-                            <th class="header-row" onclick="w3.sortHTML('#WorldSummaryTable','.item', 'td:nth-child(5)')">Total Deaths</th>
-                            <th class="header-row" onclick="w3.sortHTML('#WorldSummaryTable','td.item', 'td:nth-child(2)')">New Confirmed</th>
-                            <th class="header-row" onclick="w3.sortHTML('#WorldSummaryTable','td.item', 'td:nth-child(3)')">Total Confirmed</th>
-                            <th class="header-row" onclick="w3.sortHTML('#WorldSummaryTable','.item', 'td:nth-child(6)')">New Recovered</th>
-                            <th class="header-row" onclick="w3.sortHTML('#WorldSummaryTable','.item', 'td:nth-child(6)')">Total Recovered</th>
-                        </tr>  
-                    </thead>
-                {% for nation in data %}
-                    <tbody>
-                        <tr>
-                            <td class="country_name item">{{nation.Rank}}</td>
-                            <td class="country_name item"><a href="{{ url_for('world.country_history', country=nation.Slug )}}">{{nation.Country}}</a></td>
-                            <td class="item">{{nation.NewDeaths}}</td>
-                            <td class="item">{{nation.TotalDeaths}}</td>
-                            <td class="item">{{nation.NewConfirmed}}</td>
-                            <td class="item">{{nation.TotalConfirmed}}</td>
-                            <td class="item">{{nation.NewRecovered}}</td>
-                            <td class="item">{{nation.TotalRecovered}}</td>
-                        </tr>
-                    </tbody>
-                {% endfor %}
-            <!--Sort by recoveries desc-->
-            {% elif sorting == "recoveries" %}
-                <thead>
-                    <tr class="field-names">
-                        <th class="header-row" onclick="w3.sortHTML('#WorldSummaryTable','td.item', 'td:nth-child(1)')">Rank</th>
-                        <th class="header-row" onclick="w3.sortHTML('#WorldSummaryTable','td.item', 'td:nth-child(1)')">Country</th>
-                        <th class="header-row" onclick="w3.sortHTML('#WorldSummaryTable','.item', 'td:nth-child(6)')">New Recovered</th>
-                        <th class="header-row" onclick="w3.sortHTML('#WorldSummaryTable','.item', 'td:nth-child(6)')">Total Recovered</th>
-                        <th class="header-row" onclick="w3.sortHTML('#WorldSummaryTable','.item', 'td:nth-child(4)')">New Deaths</th>
-                        <th class="header-row" onclick="w3.sortHTML('#WorldSummaryTable','.item', 'td:nth-child(5)')">Total Deaths</th>
-                        <th class="header-row" onclick="w3.sortHTML('#WorldSummaryTable','td.item', 'td:nth-child(2)')">New Confirmed</th>
-                        <th class="header-row" onclick="w3.sortHTML('#WorldSummaryTable','td.item', 'td:nth-child(3)')">Total Confirmed</th>  
-                    </tr>  
-                </thead>
-                {% for nation in data %}
-                    <tbody>
-                        <tr>
-                            <td class="country_name item">{{nation.Rank}}</td>
-                            <td class="country_name item"><a href="{{ url_for('world.country_history', country=nation.Slug )}}">{{nation.Country}}</a></td>
-                            <td class="item">{{nation.NewRecovered}}</td>
-                            <td class="item">{{nation.TotalRecovered}}</td>
-                            <td class="item">{{nation.NewConfirmed}}</td>
-                            <td class="item">{{nation.TotalConfirmed}}</td>
-                            <td class="item">{{nation.NewDeaths}}</td>
-                            <td class="item">{{nation.TotalDeaths}}</td>
-                        </tr>
-                    </tbody>
-                {% endfor %}
-            {% else %}
-                <thead>
-                    <tr class="field-names">
-                        <th class="header-row" onclick="w3.sortHTML('#WorldSummaryTable','td.item', 'td:nth-child(1)')">Rank</th>
-                        <th class="header-row" onclick="w3.sortHTML('#WorldSummaryTable','td.item', 'td:nth-child(1)')">Country</th>
-                        <th class="header-row" onclick="w3.sortHTML('#WorldSummaryTable','td.item', 'td:nth-child(2)')">New Confirmed</th>
-                        <th class="header-row" onclick="w3.sortHTML('#WorldSummaryTable','td.item', 'td:nth-child(3)')">Total Confirmed</th>
-                        <th class="header-row" onclick="w3.sortHTML('#WorldSummaryTable','.item', 'td:nth-child(4)')">New Deaths</th>
-                        <th class="header-row" onclick="w3.sortHTML('#WorldSummaryTable','.item', 'td:nth-child(5)')">Total Deaths</th>
-                        <th class="header-row" onclick="w3.sortHTML('#WorldSummaryTable','.item', 'td:nth-child(6)')">New Recovered</th>
-                        <th class="header-row" onclick="w3.sortHTML('#WorldSummaryTable','.item', 'td:nth-child(6)')">Total Recovered</th>
+                        <th class="header-row">Rank</th>
+                        <th class="header-row"><a class="header-row" href="{{ url_for('world.index') }}">Country</a> </th>
+                        <th class="header-row"><a class="header-row" href="{{ url_for('world.world_data', sorting='new_cases') }}">New Confirmed</a></th>
+                        <th class="header-row"><a class="header-row" href="{{ url_for('world.world_data', sorting='total_cases') }}">Total Confirmed</a></th>
+                        <th class="header-row"><a class="header-row" href="{{ url_for('world.world_data', sorting='new_deaths') }}">New Deaths</a></th>
+                        <th class="header-row"><a class="header-row" href="{{ url_for('world.world_data', sorting='total_deaths') }}">Total Deaths</a></th>
+                        <th class="header-row"><a class="header-row" href="{{ url_for('world.world_data', sorting='new_recoveries') }}">New Recovered</a></th>
+                        <th class="header-row"><a class="header-row" href="{{ url_for('world.world_data', sorting='total_recoveries') }}">Total Recovered</a></th>
                     </tr>  
                 </thead>
                 {% for nation in data %}
@@ -149,8 +65,7 @@
                             <td class="item">{{nation.TotalRecovered}}</td>
                         </tr>
                     </tbody>
-                {% endfor %}
-            {% endif %}
+                {% endfor %}    
         </table>   
     </div>   
 
