@@ -49,7 +49,7 @@ class WorldRoutesTests(TestCase):
             self.assertEqual(response.status_code, 200)
 
     # Test total recoveries route
-    def test_recoveries_route(self):
+    def test_total_recoveries_route(self):
 
         with app.test_client() as tc:
 
@@ -69,7 +69,7 @@ class WorldRoutesTests(TestCase):
 
         with app.test_client() as tc:
 
-             response = tc.get('/recoveries')
+             response = tc.get('/demographics')
              self.assertEqual(response.status_code, 200)
 
     # Test total deaths route
@@ -81,7 +81,7 @@ class WorldRoutesTests(TestCase):
             self.assertEqual(response.status_code, 200)
 
     # Test new cases route
-    def test_new_cases_route(self):
+    def test_new_deaths_route(self):
 
         with app.test_client() as tc:
 
