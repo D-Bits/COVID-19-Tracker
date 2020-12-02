@@ -89,35 +89,8 @@
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('api.api_docs') }}">API</a>
           </li>
-          <li class="dropdown">
-            <span
-              type="button"
-              class="nav-item btn btn-primary dropdown-toggle"
-              data-toggle="dropdown"
-              >U.S. Data</span
-            >
-            <div id="dropdown-menu" class="dropdown-menu">
-              <a
-                class="dropdown-item nav-item"
-                href="{{ url_for('usa.us_summary') }}"
-                >States/Territories Summary</a
-              >
-              <a
-                class="dropdown-item nav-item"
-                href="{{ url_for('usa.us_cases') }}"
-                >Cases</a
-              >
-              <a
-                class="dropdown-item nav-item"
-                href="{{ url_for('usa.us_deaths') }}"
-                >Deaths</a
-              >
-              <a
-                class="dropdown-item nav-item"
-                href="{{ url_for('usa.counties') }}"
-                >By County</a
-              >
-            </div>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('usa.us_summary', sorting='state') }}">U.S. Data</a>
           </li>
         </ul>
       </div>
