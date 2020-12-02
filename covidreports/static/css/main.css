@@ -111,9 +111,13 @@ th.header-row {
     position: sticky;
     position: -webkit-sticky;
     top: 0;
-    background-color: #0f3650;
-    border-bottom: 3px solid #2d2d2d;
+    background-color: #225475;
+    border-bottom: 3px solid #0f3650;
     color: azure;
+}
+
+a.header-row {
+    color: azure !important;
 }
 
 /*For 404 template img*/
@@ -176,7 +180,7 @@ Drop menu styles
 
 /*For table column names*/
 .field-names {
-    color: azure;
+    color: azure !important;
 }
 
 code {
