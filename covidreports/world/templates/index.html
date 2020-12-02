@@ -3,8 +3,6 @@
 {% block content %}
 
     <h2>Global Data Summary by {{sorting.title()}}</h2>
-
-    <p><em>Click the table headers to sort data.</em></p>
     
    <!--Search box-->
     <input type="text" class="form-control" id="WorldInput" onkeyup='findData("WorldSummaryTable", "WorldInput", 1);' placeholder="Search for a country.">
@@ -39,6 +37,8 @@
 
         <!--Table for summary data-->
         <table id="WorldSummaryTable" class="table table-striped">
+
+                <p><em>Click on column names to sort data.</em></p>
 
                 <thead>
                     <tr class="field-names">

@@ -2,42 +2,47 @@
 
 {% block content %}
 
-<h2>U.S. States and Territories Current Summary</h2>
+    <h2>{{title}}</h2>
+
+    <h4><a href="{{ url_for('usa.counties') }}">View County Data</a></h4>
                 
     <div class="data-table">
 
         <!--Search box-->
-        <input type="text" class="form-control" id="USInput" onkeyup='findData("USSummaryTable", "USInput", 0);' placeholder="Search for a state/territory.">
+        <input type="text" class="form-control" id="USInput" onkeyup='findData("USSummaryTable", "USInput", 1);' placeholder="Search for a state/territory.">
 
         <table id="USSummaryTable" class="table table-striped">
 
+            <p><em>Click on column names to sort data.</em></p>
+
             <thead>
-                <tr>
-                    <th class="header-row">State</th>
-                    <th class="header-row" onclick='sortTable("USInput", 1);'>Total Cases</th>
-                    <th class="header-row">Total Currently Hospitalized</th>
-                    <th class="header-row">Hospitalization Increase</th>
-                    <th class="header-row">Total Deaths</th>
-                    <th class="header-row">Death Increase</th>
+                <tr class="field-names">
+                    <th class="header-row">Rank</th>
+                    <th class="header-row"><a class="header-row" href="{{ url_for('usa.us_summary', sorting='state') }}">State</a></th>
+                    <th class="header-row"><a class="header-row" href="{{ url_for('usa.us_summary', sorting='cases') }}">Total Cases</a></th>
+                    <th class="header-row"><a class="header-row" href="{{ url_for('usa.us_summary', sorting='hospitalized') }}">Total Currently Hospitalized</a></th>
+                    <th class="header-row"><a class="header-row" href="{{ url_for('usa.us_summary', sorting='hospitalization_increase') }}">Hospitalization Increase</a></th>
+                    <th class="header-row"><a class="header-row" href="{{ url_for('usa.us_summary', sorting='deaths') }}">Total Deaths</a></th>
+                    <th class="header-row"><a class="header-row" href="{{ url_for('usa.us_summary', sorting='deaths_increase') }}">Death Increase</a></th>
                 </tr>  
             </thead>
 
-            {% for day in data %}
+            {% for state in data %}
                 <!--Table for summary data-->
                 <tbody>
                     <tr>
-                        <td class="country_name"><a href="{{ url_for('usa.state_history', state=day.state) }}">{{day.state}}</a></td>
-                        <td>{{day.positive}}</td>
-                        <td>{{day.hospitalizedCurrently}}</td>
-                        <td>{{day.hospitalizedIncrease}}</td>
-                        <td>{{day.death}}</td>
-                        <td>{{day.deathIncrease}}</td>
+                        <td>{{state.Rank}}</td>
+                        <td class="country_name"><a href="{{ url_for('usa.state_history', state=state.state) }}">{{state.state}}</a></td>
+                        <td>{{state.positive}}</td>
+                        <td>{{state.hospitalizedCurrently}}</td>
+                        <td>{{state.hospitalizedIncrease}}</td>
+                        <td>{{state.death}}</td>
+                        <td>{{state.deathIncrease}}</td>
                     </tr>
                 </tbody>
             {% endfor %}
 
-        </table>
-        
+        </table> 
     </div>
 
 {% endblock %}
