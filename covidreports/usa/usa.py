@@ -143,11 +143,40 @@ def state_visualizations(state):
 
 
 # Get current data for all U.S. counties
-@usa_bp.route('/us/counties/')
-def counties():
+@usa_bp.route('/us/counties/<string:sorting>')
+def counties(sorting):
 
     data = get("https://disease.sh/v3/covid-19/nyt/counties?lastdays=1").json()
     df = pd.DataFrame(data)
-    df_dict = df.to_dict(orient="records")
 
-    return render_template("counties.html", data=df_dict, title="U.S. Counties Current")
+    # Nested function for sorting data
+    def transform_data(sorting):
+
+        if sorting == "cases":
+            sorted_data = df.sort_values(by="cases", ascending=False)
+            # Create a column to show a countries rank in no. of cases
+            sorted_data["Rank"] = np.arange(start=1, stop=int(len(df)) + 1)
+            # Convert the DataFrame to a dictionary
+            return sorted_data.to_dict(orient="records")
+        elif sorting == "deaths":
+            sorted_data = df.sort_values(by="deaths", ascending=False)
+            # Create a column to show a countries rank in no. of cases
+            sorted_data["Rank"] = np.arange(start=1, stop=int(len(df)) + 1)
+            # Convert the DataFrame to a dictionary
+            return sorted_data.to_dict(orient="records")
+        elif sorting == "county":
+            sorted_data = df.sort_values(by="county", ascending=True)
+            # Create a column to show a countries rank in no. of cases
+            sorted_data["Rank"] = np.arange(start=1, stop=int(len(df)) + 1)
+            # Convert the DataFrame to a dictionary
+            return sorted_data.to_dict(orient="records")
+        elif sorting == "state":
+            sorted_data = df.sort_values(by="state", ascending=True)
+            # Create a column to show a countries rank in no. of cases
+            sorted_data["Rank"] = np.arange(start=1, stop=int(len(df)) + 1)
+            # Convert the DataFrame to a dictionary
+            return sorted_data.to_dict(orient="records")
+        else:
+            pass
+
+    return render_template("counties.html", data=transform_data(sorting), title=f"U.S. Counties by {sorting.title()}")

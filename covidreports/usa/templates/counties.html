@@ -2,28 +2,32 @@
 
 {% block content %}
 
-    <h2 class="country_name">U.S. County Summary</h2>
+    <h2 class="country_name">{{title}}</h2>
                 
     <div class="data-table">
 
         <!--Search box-->
-        <input type="text" class="form-control" id="CountyInput" onkeyup='findData("CountyTable", "CountyInput", 0);' placeholder="Search for a state/territory.">
+        <input type="text" class="form-control" id="CountyInput" onkeyup='findData("CountyTable", "CountyInput", 1);' placeholder="Search for a state/territory.">
 
         <table id="CountyTable" class="table data-table table-striped">
 
+            <p><em>Click a column to sort data</em></p>
+
             <thead>
                     <tr>
-                        <th class="header-row">County</th>
-                        <th class="header-row">State</th>
-                        <th class="header-row">Cases</th>
-                        <th class="header-row">Deaths</th>
+                        <th class="header-row">Rank</th>
+                        <th class="header-row"><a class="header-row" href="{{ url_for('usa.counties', sorting='county') }}">County</a></th>
+                        <th class="header-row"><a class="header-row" href="{{ url_for('usa.counties', sorting='state') }}">State</a></th>
+                        <th class="header-row"><a class="header-row" href="{{ url_for('usa.counties', sorting='cases') }}">Cases</a></th>
+                        <th class="header-row"><a class="header-row" href="{{ url_for('usa.counties', sorting='deaths') }}">Deaths</a></th>
                     </tr>  
             </thead>
 
             {% for county in data %}
-                <!--Table for summary data-->
+                <!--Table for county data-->
                 <tbody>
                     <tr>
+                        <td>{{county.Rank}}</td>
                         <td>{{county.county}}</td>
                         <td>{{county.state}}</td>
                         <td>{{county.cases}}</td>
@@ -32,8 +36,7 @@
                 </tbody>
             {% endfor %}
 
-        </table>
-           
+        </table> 
     </div>
 
 {% endblock %}
