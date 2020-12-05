@@ -4,7 +4,7 @@ A client for tracking the novel coronavirus, and various other tools for it.
 
 ## Project Goal
 
-Build a web client to analyze and store global data for the SARS2-CoV-2 (COVID-19) pandemic, using [Postman's APIs](https://documenter.getpostman.com/view/10808728/SzS8rjbc?version=latest). This started out as a simple console program to obtain, and analyze data. It has since evolved into a Flask application.
+Build a web client to analyze and store global data for the SARS2-CoV-2 (COVID-19) pandemic, using various REST APIs. This started out as a simple console program to obtain, and analyze data. It has since evolved into a Flask application.
 
 ## Core Tools
 
