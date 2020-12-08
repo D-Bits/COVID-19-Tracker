@@ -33,7 +33,7 @@ def index():
     # Redirect to maintenance page if API is down
     if summary_json["Message"] == "Caching in progress":
 
-        return render_template("maintenance.html")
+        return render_template("maintenance.html", title="Maintenance Error")
 
     df = pd.DataFrame(summary_json["Countries"])
     # Show totals for all columns
@@ -143,19 +143,53 @@ def continents():
 
 
 # Route for non-COVID data about countries
-@world_bp.route("/demographic")
-def demographic():
+@world_bp.route("/demographic/<string:sorting>")
+def demographic(sorting):
 
     data = get("https://covid.ourworldindata.org/data/owid-covid-data.json").json()
     df = (
         pd.DataFrame(data)
         .drop(["data"])
         .transpose()
-        .sort_values(by="location", ascending=True)
     )
-    df_dict = df.to_dict(orient="records")
 
-    return render_template("demographic.html", data=df_dict, title="Demographics")
+    def transform_data(sorting):
+
+        if sorting == "continent":
+            sorted_data = df.sort_values(by="continent")
+            # Create a column to show a countries rank in no. of cases
+            sorted_data["Rank"] = np.arange(start=1, stop=int(len(df)) + 1)
+            # Convert the DataFrame to a dictionary
+            return sorted_data.to_dict(orient="records")
+        elif sorting == "population":
+            sorted_data = df.sort_values(by="population", ascending=False)
+            # Create a column to show a countries rank in no. of cases
+            sorted_data["Rank"] = np.arange(start=1, stop=int(len(df)) + 1)
+            # Convert the DataFrame to a dictionary
+            return sorted_data.to_dict(orient="records")
+        elif sorting == "population_density":
+            sorted_data = df.sort_values(by="population_density", ascending=False)
+            # Create a column to show a countries rank in no. of deaths
+            sorted_data["Rank"] = np.arange(start=1, stop=int(len(df)) + 1)
+            return sorted_data.to_dict(orient="records")
+        elif sorting == "median_age":
+            sorted_data = df.sort_values(by="median_age", ascending=False)
+            # Create a column to show a countries rank in no. of cases
+            sorted_data["Rank"] = np.arange(start=1, stop=int(len(df)) + 1)
+            # Convert the DataFrame to a dictionary
+            return sorted_data.to_dict(orient="records")
+        elif sorting == "median_age":
+            sorted_data = df.sort_values(by="median_age", ascending=False)
+            # Create a column to show a countries rank in no. of cases
+            sorted_data["Rank"] = np.arange(start=1, stop=int(len(df)) + 1)
+            # Convert the DataFrame to a dictionary
+            return sorted_data.to_dict(orient="records")
+        else:
+            sorted_data = df.sort_values(by="location", ascending=False)
+            sorted_data["Rank"] = np.arange(start=1, stop=int(len(df)) + 1)
+            return df.to_dict(orient="records")                
+
+    return render_template("demographic.html", data=transform_data(sorting), title=f"Demographics by {sorting.title()}")
 
 
 # Route to show how many cases, deaths, and recoveries a country had for each day, since first confirmed cases
