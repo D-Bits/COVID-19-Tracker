@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    <h2>Non-COVID Country Data</h2>
+    <h2>{{title}}</h2>
 
     <!--Search box-->
     <input type="text" class="form-control" id="CountriesInput" onkeyup='findData("CountriesTable", "CountriesInput", 0);' 
@@ -14,21 +14,23 @@
 
             <thead>
                 <tr>
-                    <th class="header-row">Country</th>
-                    <th class="header-row">Continent</th>
-                    <th class="header-row">Population</th>
-                    <th class="header-row">Pop Density</th>
-                    <th class="header-row">Median Age</th>
-                    <th class="header-row">GDP per Capita</th>
-                    <th class="header-row">Life Expectancy</th>
-                    <th class="header-row">Cardiovascular Death Rate</th>
-                    <th class="header-row">Diabetes Prevalence</th>
+                    <th class="header-row">Rank</th>
+                    <th class="header-row"><a class="header-row" href="{{ url_for('world.demographic', sorting='country') }}">Country</a></th>
+                    <th class="header-row"><a class="header-row" href="{{ url_for('world.demographic', sorting='continent') }}">Continent</a></th>
+                    <th class="header-row"><a class="header-row" href="{{ url_for('world.demographic', sorting='population') }}">Population</a></th>
+                    <th class="header-row"><a class="header-row" href="{{ url_for('world.demographic', sorting='population_density') }}">Pop Density</a></th>
+                    <th class="header-row"><a class="header-row" href="{{ url_for('world.demographic', sorting='median_age') }}">Median Age</a></th>
+                    <th class="header-row"><a class="header-row" href="{{ url_for('world.demographic', sorting='gdp_per_capita') }}">GDP per Capita</a></th>
+                    <th class="header-row"><a class="header-row" href="{{ url_for('world.demographic', sorting='life_expectancy') }}">Life Expectancy</a></th>
+                    <th class="header-row"><a class="header-row" href="{{ url_for('world.demographic', sorting='cardiovasc_death_rate') }}">Cardiovascular Death Rate</a></th>
+                    <th class="header-row"><a class="header-row" href="{{ url_for('world.demographic', sorting='diabetes_prevalence') }}">Diabetes Prevalence</a></th>
                 </tr>
             </thead>
             
         {% for nation in data %}
             <tbody>
                 <tr>
+                    <td>{{nation.Rank}}</td>
                     <td class="country_name"><a href="{{ url_for('world.country_history', country=nation.location)}}">{{nation.location}}</a></td>
                     <td>{{nation.continent}}</td>
                     <td>{{nation.population}}</td>

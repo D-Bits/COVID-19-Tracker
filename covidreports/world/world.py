@@ -1,10 +1,7 @@
 from flask import Blueprint, render_template, send_from_directory
-from numpy.core.fromnumeric import sort
 from werkzeug.exceptions import NotFound, InternalServerError
-from dotenv import load_dotenv
 from requests import get
-from os import getenv, remove
-from datetime import date
+from datetime import date, datetime, timedelta
 from plotly.utils import PlotlyJSONEncoder
 import plotly.express as px
 import pandas as pd
@@ -33,7 +30,7 @@ def index():
     # Redirect to maintenance page if API is down
     if summary_json["Message"] == "Caching in progress":
 
-        return render_template("maintenance.html")
+        return render_template("maintenance.html", title="Maintenance Error")
 
     df = pd.DataFrame(summary_json["Countries"])
     # Show totals for all columns
@@ -143,19 +140,53 @@ def continents():
 
 
 # Route for non-COVID data about countries
-@world_bp.route("/demographic")
-def demographic():
+@world_bp.route("/demographic/<string:sorting>")
+def demographic(sorting):
 
     data = get("https://covid.ourworldindata.org/data/owid-covid-data.json").json()
     df = (
         pd.DataFrame(data)
         .drop(["data"])
         .transpose()
-        .sort_values(by="location", ascending=True)
     )
-    df_dict = df.to_dict(orient="records")
 
-    return render_template("demographic.html", data=df_dict, title="Demographics")
+    def transform_data(sorting):
+
+        if sorting == "continent":
+            sorted_data = df.sort_values(by="continent")
+            # Create a column to show a countries rank in no. of cases
+            sorted_data["Rank"] = np.arange(start=1, stop=int(len(df)) + 1)
+            # Convert the DataFrame to a dictionary
+            return sorted_data.to_dict(orient="records")
+        elif sorting == "population":
+            sorted_data = df.sort_values(by="population", ascending=False)
+            # Create a column to show a countries rank in no. of cases
+            sorted_data["Rank"] = np.arange(start=1, stop=int(len(df)) + 1)
+            # Convert the DataFrame to a dictionary
+            return sorted_data.to_dict(orient="records")
+        elif sorting == "population_density":
+            sorted_data = df.sort_values(by="population_density", ascending=False)
+            # Create a column to show a countries rank in no. of deaths
+            sorted_data["Rank"] = np.arange(start=1, stop=int(len(df)) + 1)
+            return sorted_data.to_dict(orient="records")
+        elif sorting == "median_age":
+            sorted_data = df.sort_values(by="median_age", ascending=False)
+            # Create a column to show a countries rank in no. of cases
+            sorted_data["Rank"] = np.arange(start=1, stop=int(len(df)) + 1)
+            # Convert the DataFrame to a dictionary
+            return sorted_data.to_dict(orient="records")
+        elif sorting == "median_age":
+            sorted_data = df.sort_values(by="median_age", ascending=False)
+            # Create a column to show a countries rank in no. of cases
+            sorted_data["Rank"] = np.arange(start=1, stop=int(len(df)) + 1)
+            # Convert the DataFrame to a dictionary
+            return sorted_data.to_dict(orient="records")
+        else:
+            sorted_data = df.sort_values(by="location", ascending=False)
+            sorted_data["Rank"] = np.arange(start=1, stop=int(len(df)) + 1)
+            return df.to_dict(orient="records")                
+
+    return render_template("demographic.html", data=transform_data(sorting), title=f"Demographics by {sorting.title()}")
 
 
 # Route to show how many cases, deaths, and recoveries a country had for each day, since first confirmed cases
@@ -218,6 +249,26 @@ def percentages():
 
     return render_template(
         "percentages.html", data=merged_df_dict, title="Global Proportions"
+    )
+
+
+# Summary of global vaccination data
+@world_bp.route("/vaccinations")
+def vaccinations():
+
+    # Fetch data from CSV on GitHub, and load into DataFrame
+    data = get("https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.csv").content
+    df = pd.read_csv(io.StringIO(data.decode('UTF-8')))
+    # Get yesterday's data, as data for today might not yet be available
+    yesterday = datetime.today() - timedelta(1) 
+    yesterday_formatted = yesterday.strftime('%Y-%m-%d')
+    current_data = df[df['date']==yesterday_formatted]
+    df_dict = current_data.to_dict(orient="records")
+
+    return render_template(
+        "world_vaccinations.html", 
+        data=df_dict, 
+        title="World Vaccinations"
     )
 
 

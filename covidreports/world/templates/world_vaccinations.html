@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+    <h2>Global Vaccination Data</h2>
+
+    <!--Search box-->
+    <input type="text" class="form-control" id="WorldVaccinationInput" onkeyup='findData("WorldVaccinationsTable", "WorldVaccinationInput", 0);' placeholder="Search for a country.">
+
+    <div class="data-table">
+
+        <!--Table for summary data-->
+        <table id="WorldVaccinationsTable" class="table table-striped">
+
+            <thead>
+                <tr class="field-names">
+                    <th class="header-row">Country</th>
+                    <th class="header-row">Date</th>
+                    <th class="header-row">Total Vaccinated</th>
+                    <th class="header-row">Total Fully Vaccinated</th>
+                    <th class="header-row">Daily Vaccinations</th>
+                    <th class="header-row">Daily Vaccinations per Million</th>
+                    <th class="header-row">Fully Vaccinated per Hundred</th>
+                </tr>  
+            </thead>
+            {% for nation in data %}
+                <tbody>
+                    <tr>
+                    <td class="item">{{nation.location}}</td>
+                    <td class="item">{{nation.date}}</td>
+                    <td class="item">{{nation.people_vaccinated}}</td>
+                    <td class="item">{{nation.people_fully_vaccinated}}</td>
+                    <td class="item">{{nation.daily_vaccinations}}</td>
+                    <td class="item">{{nation.daily_vaccinations_per_million}}</td>
+                    <td class="item">{{nation.people_fully_vaccinated_per_hundred}}</td>
+                    </tr>
+                </tbody>
+            {% endfor %}   
+
+        </table> 
+
+    </div>    
+
+{% endblock %}
