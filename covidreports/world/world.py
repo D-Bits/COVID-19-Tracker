@@ -1,10 +1,7 @@
 from flask import Blueprint, render_template, send_from_directory
-from numpy.core.fromnumeric import sort
 from werkzeug.exceptions import NotFound, InternalServerError
-from dotenv import load_dotenv
 from requests import get
-from os import getenv, remove
-from datetime import date
+from datetime import date, datetime, timedelta
 from plotly.utils import PlotlyJSONEncoder
 import plotly.express as px
 import pandas as pd
@@ -252,6 +249,26 @@ def percentages():
 
     return render_template(
         "percentages.html", data=merged_df_dict, title="Global Proportions"
+    )
+
+
+# Summary of global vaccination data
+@world_bp.route("/vaccinations")
+def vaccinations():
+
+    # Fetch data from CSV on GitHub, and load into DataFrame
+    data = get("https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.csv").content
+    df = pd.read_csv(io.StringIO(data.decode('UTF-8')))
+    # Get yesterday's data, as data for today might not yet be available
+    yesterday = datetime.today() - timedelta(1) 
+    yesterday_formatted = yesterday.strftime('%Y-%m-%d')
+    current_data = df[df['date']==yesterday_formatted]
+    df_dict = current_data.to_dict(orient="records")
+
+    return render_template(
+        "world_vaccinations.html", 
+        data=df_dict, 
+        title="World Vaccinations"
     )
 
 
