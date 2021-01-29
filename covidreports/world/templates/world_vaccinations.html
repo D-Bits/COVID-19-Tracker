@@ -16,11 +16,11 @@
                 <tr class="field-names">
                     <th class="header-row">Country</th>
                     <th class="header-row">Date</th>
-                    <th class="header-row">Total Vaccinated</th>
-                    <th class="header-row">Total Fully Vaccinated</th>
-                    <th class="header-row">Daily Vaccinations</th>
-                    <th class="header-row">Daily Vaccinations per Million</th>
-                    <th class="header-row">Fully Vaccinated per Hundred</th>
+                    <th class="header-row"><a class="header-row" href="{{ url_for('world.vaccinations', sorting='people_vaccinated') }}">Total Vaccinated</a></th>
+                    <th class="header-row"><a class="header-row" href="{{ url_for('world.vaccinations', sorting='people_fully_vaccinated') }}">Total Fully Vaccinated</a></th>
+                    <th class="header-row"><a class="header-row" href="{{ url_for('world.vaccinations', sorting='daily_vaccinations') }}">Daily Vaccinations</a></th>
+                    <th class="header-row"><a class="header-row" href="{{ url_for('world.vaccinations', sorting='daily_vaccinations_per_million') }}">Daily Vaccinations per Million</a></th>
+                    <th class="header-row"><a class="header-row" href="{{ url_for('world.vaccinations', sorting='people_fully_vaccinated_per_hundred') }}">Fully Vaccinations per Hundred</a></th>
                 </tr>  
             </thead>
             {% for nation in data %}
