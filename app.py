@@ -1,14 +1,18 @@
 from os import getenv
 from dotenv import load_dotenv
+from flask.app import Flask
 from covidreports import create_app
 from covidreports.world.world import not_found, server_error
 
+
+load_dotenv()
 
 # Load environment type from environment var
 ENV = getenv("ENV")
 
 app = create_app()
 
+app.env = ENV
 # Load secret key
 app.config['SECRET_KEY'] = getenv("SECRET_KEY")
 
