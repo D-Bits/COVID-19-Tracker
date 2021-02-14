@@ -286,7 +286,7 @@ def vaccination_history(country: str):
     return render_template(
         "vaccination_history.html", 
         country=country,
-        values=country_data,
+        data=country_data,
         title=f"{country.title()} Vaccination History"
     )
 
