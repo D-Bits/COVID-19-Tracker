@@ -16,7 +16,6 @@
 
             <thead>
                 <tr class="field-names">
-                    <th class="header-row">Country</th>
                     <th class="header-row">Date</th>
                     <th class="header-row">Total Fully Vaccinated</th>
                     <th class="header-row">Total Partially Vaccinated</th>
@@ -28,13 +27,12 @@
             {% for nation in data %}
                 <tbody>
                     <tr>
-                    <td class="item"><a href="{{ url_for('world.vaccination_history', country=nation.location) }}">{{nation.location}}</a></td>
-                    <td class="item">{{nation.date}}</td>
-                    <td class="item">{{nation.people_fully_vaccinated}}</td>
-                    <td class="item">{{nation.people_vaccinated}}</td>
-                    <td class="item">{{nation.daily_vaccinations}}</td>
-                    <td class="item">{{nation.daily_vaccinations_per_million}}</td>
-                    <td class="item">{{nation.people_fully_vaccinated_per_hundred}}</td>
+                        <td class="item">{{nation.date}}</td>
+                        <td class="item">{{nation.people_fully_vaccinated}}</td>
+                        <td class="item">{{nation.people_vaccinated}}</td>
+                        <td class="item">{{nation.daily_vaccinations}}</td>
+                        <td class="item">{{nation.daily_vaccinations_per_million}}</td>
+                        <td class="item">{{nation.people_fully_vaccinated_per_hundred}}</td>
                     </tr>
                 </tbody>
             {% endfor %}   

@@ -28,7 +28,7 @@
             {% for nation in data %}
                 <tbody>
                     <tr>
-                    <td class="item">{{nation.location}}</td>
+                    <td class="item"><a href="{{ url_for('world.vaccination_history', country=nation.location) }}">{{nation.location}}</a></td>
                     <td class="item">{{nation.date}}</td>
                     <td class="item">{{nation.people_fully_vaccinated}}</td>
                     <td class="item">{{nation.people_vaccinated}}</td>
