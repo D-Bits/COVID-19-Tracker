@@ -253,57 +253,41 @@ def percentages():
 
 
 # Summary of global vaccination data
-@world_bp.route("/vaccinations/<string:sorting>")
-def vaccinations(sorting: str):
+@world_bp.route("/vaccinations")
+def vaccinations():
 
-    # Nested function for manipulating data
-    def transform_data(sorting: str):
-
-        # Fetch data from CSV on GitHub, and load into DataFrame
-        data = get("https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.csv").content
-        df = pd.read_csv(io.StringIO(data.decode('UTF-8')))
-        yesterday = datetime.today() - timedelta(1) 
-        yesterday_formatted = yesterday.strftime('%Y-%m-%d')
-        current_data = df[df['date']==yesterday_formatted] 
-            
-        if sorting == "location":
-            sorted_data = current_data.sort_values(by="location", ascending=True)
-            # Create a column to show a countries rank in no. of cases
-            # Convert the DataFrame to a dictionary
-            return sorted_data.to_dict(orient="records")
-        elif sorting == "people_vaccinated":
-            sorted_data = current_data.sort_values(by="people_vaccinated", ascending=False)
-            # Create a column to show a countries rank in no. of cases
-            # Convert the DataFrame to a dictionary
-            return sorted_data.to_dict(orient="records")
-        elif sorting == "people_fully_vaccinated":
-            sorted_data = current_data.sort_values(by="people_fully_vaccinated", ascending=False)
-            # Create a column to show a countries rank in no. of cases
-            # Convert the DataFrame to a dictionary
-            return sorted_data.to_dict(orient="records")
-        elif sorting == "daily_vaccinations":
-            sorted_data = current_data.sort_values(by="daily_vaccinations", ascending=False)
-            # Create a column to show a countries rank in no. of cases
-            # Convert the DataFrame to a dictionary
-            return sorted_data.to_dict(orient="records")
-        elif sorting == "daily_vaccinations_per_million":
-            sorted_data = current_data.sort_values(by="daily_vaccinations_per_million", ascending=False)
-            # Create a column to show a countries rank in no. of cases
-            # Convert the DataFrame to a dictionary
-            return sorted_data.to_dict(orient="records")
-        elif sorting == "people_fully_vaccinated_per_hundred":
-            sorted_data = current_data.sort_values(by="people_fully_vaccinated_per_hundred", ascending=False)
-            # Create a column to show a countries rank in no. of cases
-            # Convert the DataFrame to a dictionary
-            return sorted_data.to_dict(orient="records")
-        else:
-            return render_template("404.html", title="404")
+    # Fetch data from CSV on GitHub, and load into DataFrame
+    data = get("https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.csv").content
+    df = pd.read_csv(io.StringIO(data.decode('UTF-8')))
+    # Data might be available for today for some countries
+    yesterday = datetime.today() - timedelta(1) 
+    yesterday_formatted = yesterday.strftime('%Y-%m-%d')
+    current_data = df[df['date']==yesterday_formatted]
+    df_dict = current_data.to_dict(orient="records") 
 
     return render_template(
         "world_vaccinations.html", 
-        data=transform_data(sorting),
-        sorting=sorting, 
+        data=df_dict,
         title="World Vaccinations"
+    )
+
+
+# Vaccination history for a given country
+@world_bp.route("/vaccinations/<string:country>")
+def vaccination_history(country: str):
+
+    # Fetch data from CSV on GitHub, and load into DataFrame
+    data = get("https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.csv").content
+    df = pd.read_csv(io.StringIO(data.decode('UTF-8')))
+    nation = df[df['location']==country] 
+    history = nation.sort_values(by="date", ascending=False)
+    country_data = history.to_dict(orient="records")
+
+    return render_template(
+        "vaccination_history.html", 
+        country=country,
+        values=country_data,
+        title=f"{country.title()} Vaccination History"
     )
 
 
@@ -373,4 +357,3 @@ def server_error(e):
 def api_unavailable(e):
 
     return render_template("maintenance.html", e=e, title="503"), 503
-    
