@@ -17,12 +17,15 @@ Build a web client to analyze and store global data for the SARS2-CoV-2 (COVID-1
 
 Required Technologies:
 
-- Python 3
+- Python 3 (with venv and pip3)
 
 Steps:
 
 - Clone repository.
 - Open a terminal, and cd into repo.
+
+*If you have GNU Make on your system, you can simply run `make init` from the project root to set up your dev environment.*
+
 - Create, and activate a `venv`.
 - Run `pip install -r requirements.txt` to install dependencies.
 - Create a `.env` file in the root of the project directory, and add the following environment variables:
