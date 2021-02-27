@@ -23,6 +23,9 @@ Steps:
 
 - Clone repository.
 - Open a terminal, and cd into repo.
+
+*If you have GNU Make on your system, you can simply run `make init` from the project root to set up your dev environment.*
+
 - Create, and activate a `venv`.
 - Run `pip install -r requirements.txt` to install dependencies.
 - Create a `.env` file in the root of the project directory, and add the following environment variables:
