@@ -1,5 +1,6 @@
 SHELL := /bin/bash
 
+
 # Setup dev environment
 init:
 	sudo python3 -m venv env
