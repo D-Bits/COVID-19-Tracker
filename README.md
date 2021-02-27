@@ -17,7 +17,7 @@ Build a web client to analyze and store global data for the SARS2-CoV-2 (COVID-1
 
 Required Technologies:
 
-- Python 3
+- Python 3 (with venv and pip3)
 
 Steps:
 
