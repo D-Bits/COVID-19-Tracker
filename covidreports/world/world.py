@@ -19,7 +19,7 @@ world_bp = Blueprint(
 )
 
 # All available data, for all countries
-summary_json = get("https://api.covid19api.com/summary").json()
+summary_json = get("https://disease.sh/v3/covid-19/countries").json()
 
 """ Routing logic """
 
@@ -27,12 +27,7 @@ summary_json = get("https://api.covid19api.com/summary").json()
 @world_bp.route("/")
 def index():
 
-    # Redirect to maintenance page if API is down
-    if summary_json["Message"] == "Caching in progress":
-
-        return render_template("maintenance.html", title="Maintenance Error")
-
-    df = pd.DataFrame(summary_json["Countries"])
+    df = pd.DataFrame(summary_json)
     # Show totals for all columns
     total = df.sum(axis=0)
     # Create a column to show a countries rank in no. of countries
@@ -54,59 +49,51 @@ def index():
 @world_bp.route("/<string:sorting>")
 def world_data(sorting: str):
 
-    # Redirect to maintenance page if API is down
-    if summary_json["Message"] == "Caching in progress":
-
-        return render_template("maintenance.html", title="Maintenance Error")
-
-    df = pd.DataFrame(summary_json["Countries"])
+    df = pd.DataFrame(summary_json)
     total = df.sum(axis=0)
 
     # Nested function for manipulating data
     def transform_data(sorting):  
         
         if sorting == "total_cases":
-            sorted_data = df.sort_values(by="TotalConfirmed", ascending=False)
+            sorted_data = df.sort_values(by="cases", ascending=False)
             # Create a column to show a countries rank in no. of cases
             sorted_data["Rank"] = np.arange(start=1, stop=int(len(df)) + 1)
             # Convert the DataFrame to a dictionary
             return sorted_data.to_dict(orient="records")
         elif sorting == "new_cases":
-            sorted_data = df.sort_values(by="NewConfirmed", ascending=False)
+            sorted_data = df.sort_values(by="todayCases", ascending=False)
             # Create a column to show a countries rank in no. of cases
             sorted_data["Rank"] = np.arange(start=1, stop=int(len(df)) + 1)
             # Convert the DataFrame to a dictionary
             return sorted_data.to_dict(orient="records")
         elif sorting == "total_deaths":
-            df.sort_values(by="TotalDeaths", ascending=False)
-            sorted_data = df.sort_values(by="TotalDeaths", ascending=False)
+            sorted_data = df.sort_values(by="deaths", ascending=False)
             # Create a column to show a countries rank in no. of deaths
             sorted_data["Rank"] = np.arange(start=1, stop=int(len(df)) + 1)
             return sorted_data.to_dict(orient="records")
         elif sorting == "new_deaths":
-            sorted_data = df.sort_values(by="NewDeaths", ascending=False)
+            sorted_data = df.sort_values(by="todayDeaths", ascending=False)
             # Create a column to show a countries rank in no. of cases
             sorted_data["Rank"] = np.arange(start=1, stop=int(len(df)) + 1)
             # Convert the DataFrame to a dictionary
             return sorted_data.to_dict(orient="records")
         elif sorting == "total_recoveries":
-            df.sort_values(by="TotalRecovered", ascending=False)
-            sorted_data = df.sort_values(by="TotalRecovered", ascending=False)
+            sorted_data = df.sort_values(by="recovered", ascending=False)
             # Create a column to show a countries rank in no. of recoveries
             sorted_data["Rank"] = np.arange(start=1, stop=int(len(df)) + 1)
             return sorted_data.to_dict(orient="records")
         elif sorting == "new_recoveries":
-            sorted_data = df.sort_values(by="NewRecovered", ascending=False)
+            sorted_data = df.sort_values(by="todayRecovered", ascending=False)
             # Create a column to show a countries rank in no. of cases
             sorted_data["Rank"] = np.arange(start=1, stop=int(len(df)) + 1)
             # Convert the DataFrame to a dictionary
             return sorted_data.to_dict(orient="records")
         elif sorting == "countries":
-            df.sort_values(by="Country", ascending=False)
+            df.sort_values(by="country", ascending=False)
             return df.to_dict(orient="records")
         else:
             return render_template("404.html", title="404")
-
 
     return render_template(
         "index.html",
@@ -186,7 +173,11 @@ def demographic(sorting):
             sorted_data["Rank"] = np.arange(start=1, stop=int(len(df)) + 1)
             return df.to_dict(orient="records")                
 
-    return render_template("demographic.html", data=transform_data(sorting), title=f"Demographics by {sorting.title()}")
+    return render_template(
+        "demographic.html", 
+        data=transform_data(sorting),
+        title=f"Demographics by {sorting.title()}"
+    )
 
 
 # Route to show how many cases, deaths, and recoveries a country had for each day, since first confirmed cases
@@ -195,15 +186,14 @@ def demographic(sorting):
 def country_history(country: str):
 
     # Define API endpoint, and fetch data
-    endpoint = get(f"https://api.covid19api.com/total/country/{country}")
+    endpoint = get(f"https://disease.sh/v3/covid-19/historical/{country}?lastdays=all")
     data = endpoint.json()
     # Redirect to 404 template if country doesn't exist
     if endpoint.status_code == 404:
         return render_template("404.html", title="404")
-    df = pd.DataFrame(data)
-    # Sort records from most recent cases to oldest cases
-    sorted_data = df.sort_values("Date", ascending=False)
-    df_dict = sorted_data.to_dict(orient="records")
+    df = pd.DataFrame(data['timeline']).sort_values(by='cases', ascending=False)
+    df['dates'] = df.index
+    df_dict = df.to_dict(orient="records")
 
     return render_template(
         "totals.html",
@@ -296,16 +286,16 @@ def vaccination_history(country: str):
 def country_graphs(country: str):
 
     # Method to generate plots
-    # "field" param can be equal to: "Confirmed", "Recovered", or "Deaths"
+    # "field" param can be equal to: "cases", "recovered", or "deaths"
     def gen_plot(country, field):
 
         # Define API endpoint, and fetch data
-        data = get(f"https://api.covid19api.com/total/country/{country}").json()
-        df = pd.DataFrame(data)
-        dates = df["Date"]
+        data = get(f"https://disease.sh/v3/covid-19/historical/{country}?lastdays=all").json()
+        df = pd.DataFrame(data['timeline'])
+        df['dates'] = df.index
         case_type = df[field]
         # Create the plot, and convert it to a JSON object to iterate over in HTML
-        graph_data = px.line(data_frame=df, x=dates, y=case_type)
+        graph_data = px.line(data_frame=df, x=df['dates'], y=case_type)
         graph_JSON = json.dumps(graph_data, cls=PlotlyJSONEncoder)
 
         return graph_JSON
@@ -313,10 +303,9 @@ def country_graphs(country: str):
     return render_template(
         "country_graphs.html",
         nation=country,
-        cases=gen_plot(country, "Confirmed"),
-        deaths=gen_plot(country, "Deaths"),
-        recoveries=gen_plot(country, "Recovered"),
-        active=gen_plot(country, "Active"),
+        cases=gen_plot(country, "cases"),
+        deaths=gen_plot(country, "deaths"),
+        recoveries=gen_plot(country, "recovered"),
         title=f"{country.title()} Visualizations",
     )
 
@@ -357,3 +346,4 @@ def server_error(e):
 def api_unavailable(e):
 
     return render_template("maintenance.html", e=e, title="503"), 503
+    

@@ -25,12 +25,12 @@
             <tbody>
                 <tr>
                     <!--Totals for all metrics-->
-                    <td>{{total.NewConfirmed}}</td>
-                    <td>{{total.TotalConfirmed}}</td>
-                    <td>{{total.NewDeaths}}</td>
-                    <td>{{total.TotalDeaths}}</td>
-                    <td>{{total.NewRecovered}}</td>
-                    <td>{{total.TotalRecovered}}</td>
+                    <td>{{total.todayCases}}</td>
+                    <td>{{total.cases}}</td>
+                    <td>{{total.todayDeaths}}</td>
+                    <td>{{total.deaths}}</td>
+                    <td>{{total.todayRecovered}}</td>
+                    <td>{{total.recovered}}</td>
                 </tr>
             </tbody>
         </table>
@@ -56,13 +56,13 @@
                     <tbody>
                         <tr>
                             <td class="item">{{nation.Rank}}</td>
-                            <td class="country_name item"><a href="{{ url_for('world.country_history', country=nation.Slug )}}">{{nation.Country}}</a></td>
-                            <td class="item">{{nation.NewConfirmed}}</td>
-                            <td class="item">{{nation.TotalConfirmed}}</td>
-                            <td class="item">{{nation.NewDeaths}}</td>
-                            <td class="item">{{nation.TotalDeaths}}</td>
-                            <td class="item">{{nation.NewRecovered}}</td>
-                            <td class="item">{{nation.TotalRecovered}}</td>
+                            <td class="country_name item"><a href="{{ url_for('world.country_history', country=nation.country )}}">{{nation.country}}</a></td>
+                            <td class="item">{{nation.todayCases}}</td>
+                            <td class="item">{{nation.cases}}</td>
+                            <td class="item">{{nation.todayDeaths}}</td>
+                            <td class="item">{{nation.deaths}}</td>
+                            <td class="item">{{nation.todayRecovered}}</td>
+                            <td class="item">{{nation.recovered}}</td>
                         </tr>
                     </tbody>
                 {% endfor %}    
