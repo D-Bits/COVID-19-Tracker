@@ -24,7 +24,7 @@ app.register_error_handler(500, server_error)
 if __name__ == "__main__":
 
     # Ensure app.run() is only used in development.
-    if ENV == "dev":
+    if ENV == "development":
         app.run(debug=True, load_dotenv=True)
     else:
         pass
