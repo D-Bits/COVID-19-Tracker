@@ -54,35 +54,6 @@ def us_summary(sorting: str):
         title=f"U.S. Summary by {sorting.title()}"
     )
 
-'''
-# Summary data, sorted by cases per state ascending 
-@usa_bp.route('/us/cases')
-def us_cases():
-
-    df = pd.DataFrame(states_summary)
-    # Order by positive cases ascending
-    sorted_df = df.sort_values(by='positive', ascending=False)
-    # Create a column to show a countries rank in no. of cases
-    sorted_df['Rank'] = np.arange(start=1, stop=int(len(df)) + 1)
-    df_dict = sorted_df.to_dict(orient='records')
-
-    return render_template("us_cases.html", data=df_dict, title="U.S. Cases")
-
-
-# Summary data, sorted by deaths per state ascending
-@usa_bp.route('/us/deaths')
-def us_deaths():
-
-    df = pd.DataFrame(states_summary)
-    # Order by positive cases ascending
-    sorted_df = df.sort_values(by='death', ascending=False)
-    # Create a column to show a countries rank in no. of cases
-    sorted_df['Rank'] = np.arange(start=1, stop=int(len(df)) + 1)
-    df_dict = sorted_df.to_dict(orient='records')
-
-    return render_template("us_deaths.html", data=df_dict, title="U.S. Deaths")
-'''
-
 # Show historical data for a specific state
 @usa_bp.route('/us/<string:state>')
 def state_history(state):
