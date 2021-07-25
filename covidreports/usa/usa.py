@@ -18,7 +18,7 @@ usa_bp = Blueprint(
 """ Routing logic """
 
 # Summary of current data for all states
-states_summary = get("https://api.covidtracking.com/v1/states/current.json").json()
+states_summary = get("https://disease.sh/v3/covid-19/nyt/states?lastdays=1").json()
 
 
 # Summarize current U.S. data for COVID-19, per state/territory
@@ -30,45 +30,31 @@ def us_summary(sorting: str):
     def transform_data(sorting):
 
         if sorting == "cases":
-            sorted_data = df.sort_values(by="positive", ascending=False)
-            # Create a column to show a countries rank in no. of cases
-            sorted_data["Rank"] = np.arange(start=1, stop=int(len(df)) + 1)
-            # Convert the DataFrame to a dictionary
-            return sorted_data.to_dict(orient="records")
-        elif sorting == "hospitalized":
-            sorted_data = df.sort_values(by="hospitalizedCurrently", ascending=False)
-            # Create a column to show a countries rank in no. of cases
-            sorted_data["Rank"] = np.arange(start=1, stop=int(len(df)) + 1)
-            # Convert the DataFrame to a dictionary
-            return sorted_data.to_dict(orient="records")
-        elif sorting == "hospitalization_increase":
-            sorted_data = df.sort_values(by="hospitalizedIncrease", ascending=False)
+            sorted_data = df.sort_values(by="cases", ascending=False)
             # Create a column to show a countries rank in no. of cases
             sorted_data["Rank"] = np.arange(start=1, stop=int(len(df)) + 1)
             # Convert the DataFrame to a dictionary
             return sorted_data.to_dict(orient="records")
         elif sorting == "deaths":
-            sorted_data = df.sort_values(by="death", ascending=False)
-            # Create a column to show a countries rank in no. of cases
-            sorted_data["Rank"] = np.arange(start=1, stop=int(len(df)) + 1)
-            # Convert the DataFrame to a dictionary
-            return sorted_data.to_dict(orient="records")
-        elif sorting == "deaths_increase":
-            sorted_data = df.sort_values(by="deathIncrease", ascending=False)
-            # Create a column to show a countries rank in no. of cases
+            sorted_data = df.sort_values(by="deaths", ascending=False)
+            # Create a column to show a countries rank in no. of deaths
             sorted_data["Rank"] = np.arange(start=1, stop=int(len(df)) + 1)
             # Convert the DataFrame to a dictionary
             return sorted_data.to_dict(orient="records")
         else:
             sorted_data = df.sort_values(by="state", ascending=True)
-            # Create a column to show a countries rank in no. of cases
+            # Create a column to show a countries rank in no. of recoveries
             sorted_data["Rank"] = np.arange(start=1, stop=int(len(df)) + 1)
             # Convert the DataFrame to a dictionary
             return sorted_data.to_dict(orient="records")
 
-    return render_template("us_summary.html", data=transform_data(sorting), title=f"U.S. Summary by {sorting.title()}")
+    return render_template(
+        "us_summary.html", 
+        data=transform_data(sorting), 
+        title=f"U.S. Summary by {sorting.title()}"
+    )
 
-
+'''
 # Summary data, sorted by cases per state ascending 
 @usa_bp.route('/us/cases')
 def us_cases():
@@ -95,15 +81,16 @@ def us_deaths():
     df_dict = sorted_df.to_dict(orient='records')
 
     return render_template("us_deaths.html", data=df_dict, title="U.S. Deaths")
-
+'''
 
 # Show historical data for a specific state
 @usa_bp.route('/us/<string:state>')
 def state_history(state):
 
-    data = get(f"https://api.covidtracking.com/v1/states/{state}/daily.json").json()
+    data = get(f"https://disease.sh/v3/covid-19/nyt/states/{state}?lastdays=all").json()
     df = pd.DataFrame(data)
-    df_dict = df.to_dict(orient='records')
+    sorted_values = df.sort_values(by="date", ascending=False)
+    df_dict = sorted_values.to_dict(orient='records')
 
     return render_template(
         "state_history.html", 
@@ -121,13 +108,13 @@ def state_visualizations(state):
     # "field" param can be equal to: "Confirmed", "Recovered", or "Deaths"
     def gen_plot(state, field):
 
-        data = get(f"https://api.covidtracking.com/v1/states/{state}/daily.json").json()
+        data = get(f"https://disease.sh/v3/covid-19/nyt/states/{state}?lastdays=all").json()
         df = pd.DataFrame(data)
-        dates = df["dateChecked"]
+        dates = df["date"]
         case_type = df[field]
         # Merge the "Date" and "Confirmed" fields into one df
         merged_df = pd.concat([dates, case_type], axis=1)
-        graph_data = px.line(data_frame=df, x=df["dateChecked"], y=df[field])
+        graph_data = px.line(data_frame=df, x=df["date"], y=df[field])
         graph_JSON = json.dumps(graph_data, cls=PlotlyJSONEncoder)
 
         return graph_JSON
@@ -135,9 +122,8 @@ def state_visualizations(state):
     return render_template(
         "state_graphs.html",
         state=state,
-        cases=gen_plot(state, "positive"),
-        deaths=gen_plot(state, "death"),
-        hospitalizations=gen_plot(state, "hospitalizedCurrently"),
+        cases=gen_plot(state, "cases"),
+        deaths=gen_plot(state, "deaths"),
         title=f"{state} Visualizations"
     )
 

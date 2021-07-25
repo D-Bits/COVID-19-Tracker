@@ -11,26 +11,20 @@
         <table class="table data-table table-striped">
 
             <thead>
-                    <tr>
-                        <th class="header-row">Date</th>
-                        <th class="header-row">Total Cases</th>
-                        <th class="header-row">Total Currently Hospitalized</th>
-                        <th class="header-row">Hospitalization Increase</th>
-                        <th class="header-row">Total Deaths</th>
-                        <th class="header-row">Death Increase</th>
-                    </tr>  
+                <tr class="field-names">
+                    <th class="header-row">Date</th>
+                    <th class="header-row">Total Cases</th>
+                    <th class="header-row">Total Deaths</th>
+                </tr>  
             </thead>
 
             {% for day in data %}
                 <!--Table for summary data-->
                 <tbody>
                     <tr>
-                        <td>{{day.dateChecked}}</td>
-                        <td>{{day.positive}}</td>
-                        <td>{{day.hospitalizedCurrently}}</td>
-                        <td>{{day.hospitalizedIncrease}}</td>
-                        <td>{{day.death}}</td>
-                        <td>{{day.deathIncrease}}</td>
+                        <td>{{day.date}}</td>
+                        <td>{{day.cases}}</td>
+                        <td>{{day.deaths}}</td>
                     </tr>
                 </tbody>
             {% endfor %}

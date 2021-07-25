@@ -53,5 +53,5 @@ class USRoutesTests(TestCase):
 
         with app.test_client() as tc:
 
-            response = tc.get('/us/graphs/wa')
+            response = tc.get('/us/graphs/Washington')
             self.assertEqual(response.status_code, 200)

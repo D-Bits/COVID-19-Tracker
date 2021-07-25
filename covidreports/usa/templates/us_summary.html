@@ -20,10 +20,7 @@
                     <th class="header-row">Rank</th>
                     <th class="header-row"><a class="header-row" href="{{ url_for('usa.us_summary', sorting='state') }}">State</a></th>
                     <th class="header-row"><a class="header-row" href="{{ url_for('usa.us_summary', sorting='cases') }}">Total Cases</a></th>
-                    <th class="header-row"><a class="header-row" href="{{ url_for('usa.us_summary', sorting='hospitalized') }}">Total Currently Hospitalized</a></th>
-                    <th class="header-row"><a class="header-row" href="{{ url_for('usa.us_summary', sorting='hospitalization_increase') }}">Hospitalization Increase</a></th>
                     <th class="header-row"><a class="header-row" href="{{ url_for('usa.us_summary', sorting='deaths') }}">Total Deaths</a></th>
-                    <th class="header-row"><a class="header-row" href="{{ url_for('usa.us_summary', sorting='deaths_increase') }}">Death Increase</a></th>
                 </tr>  
             </thead>
 
@@ -33,11 +30,8 @@
                     <tr>
                         <td>{{state.Rank}}</td>
                         <td class="country_name"><a href="{{ url_for('usa.state_history', state=state.state) }}">{{state.state}}</a></td>
-                        <td>{{state.positive}}</td>
-                        <td>{{state.hospitalizedCurrently}}</td>
-                        <td>{{state.hospitalizedIncrease}}</td>
-                        <td>{{state.death}}</td>
-                        <td>{{state.deathIncrease}}</td>
+                        <td>{{state.cases}}</td>
+                        <td>{{state.deaths}}</td>
                     </tr>
                 </tbody>
             {% endfor %}
